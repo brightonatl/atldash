@@ -1,0 +1,1922 @@
+<!DOCTYPE html>
+<html lang="en" class="h-full">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>atldash - Tasks & Leaderboard Hub</title>
+
+    <!-- PWA Meta Tags & Manifest -->
+    <meta name="theme-color" content="#D99B38">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <meta name="apple-mobile-web-app-title" content="atldash">
+    <link rel="apple-touch-icon" href="https://placehold.co/192x192/D99B38/282522?text=ATL">
+    <link rel="manifest" id="manifestLink">
+
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Google Fonts: Space Grotesk & Outfit -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@500;600;700;800;900&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Space Grotesk', 'sans-serif'],
+                        heading: ['Outfit', 'sans-serif'],
+                    },
+                    colors: {
+                        earth: {
+                            ochre: '#D99B38',       /* Warm Ochre / Amber Earth */
+                            ochreLight: '#F3E5AB',
+                            sage: '#6C8360',        /* Calm Olive / Sage Green */
+                            sageLight: '#E2EBDD',
+                            terracotta: '#C86D51',  /* Warm Clay / Terracotta */
+                            terracottaLight: '#F8E2DC',
+                            stone: '#5E7A75',       /* River Stone / Slate */
+                            stoneLight: '#E0EAE8',
+                            sand: '#E3DAC9',        /* Warm Taupe / Sand */
+                            sandLight: '#F5F0E6',
+                            bg: '#F9F7F2',          /* Soft Cream Canvas */
+                            card: '#FFFFFF',
+                            border: '#282522',      /* Deep Charcoal Earth Border */
+                            darkBg: '#18181A',
+                            darkCard: '#242428',
+                            darkBorder: '#F2EDE4'
+                        }
+                    },
+                    boxShadow: {
+                        'neo-sm': '2px 2px 0px 0px #282522',
+                        'neo': '3.5px 3.5px 0px 0px #282522',
+                        'neo-lg': '5px 5px 0px 0px #282522',
+                        'neo-xl': '7px 7px 0px 0px #282522',
+                        'neo-dark-sm': '2px 2px 0px 0px #F2EDE4',
+                        'neo-dark': '3.5px 3.5px 0px 0px #F2EDE4',
+                        'neo-dark-lg': '5px 5px 0px 0px #F2EDE4',
+                    },
+                    keyframes: {
+                        shake: {
+                            '0%, 100%': { transform: 'translateX(0)' },
+                            '20%, 60%': { transform: 'translateX(-7px)' },
+                            '40%, 80%': { transform: 'translateX(7px)' },
+                        }
+                    },
+                    animation: {
+                        shake: 'shake 0.35s ease-in-out',
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            font-family: 'Space Grotesk', sans-serif;
+            -webkit-tap-highlight-color: transparent;
+            overflow-x: hidden;
+        }
+        .font-heading {
+            font-family: 'Outfit', sans-serif;
+        }
+        /* Custom Calm Earthy scrollbar */
+        ::-webkit-scrollbar {
+            width: 7px;
+            height: 7px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #F9F7F2;
+            border-left: 2px solid #282522;
+        }
+        .dark ::-webkit-scrollbar-track {
+            background: #18181A;
+            border-left: 2px solid #F2EDE4;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #D99B38;
+            border: 2px solid #282522;
+        }
+        .dark ::-webkit-scrollbar-thumb {
+            background: #D99B38;
+            border: 2px solid #F2EDE4;
+        }
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .no-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+    </style>
+</head>
+<body class="bg-earth-bg dark:bg-earth-darkBg text-earth-border dark:text-earth-darkBorder min-h-screen antialiased flex flex-col transition-colors duration-150">
+
+    <!-- ========================================== -->
+    <!-- SECURITY PIN LOGIN OVERLAY                 -->
+    <!-- ========================================== -->
+    <div id="pinOverlay" class="fixed inset-0 z-[100] bg-earth-border/80 backdrop-blur-xs flex items-center justify-center p-4">
+        <div id="pinCard" class="bg-white dark:bg-earth-darkCard rounded-2xl p-6 sm:p-7 max-w-xs w-full border-[2.5px] border-earth-border dark:border-earth-darkBorder shadow-neo-lg dark:shadow-neo-dark text-center relative max-h-[95vh] overflow-y-auto">
+            
+            <div class="w-12 h-12 sm:w-14 sm:h-14 bg-earth-ochre text-earth-border border-2 border-earth-border rounded-xl flex items-center justify-center mx-auto mb-3 shadow-neo-sm">
+                <i data-lucide="lock" class="w-6 h-6 sm:w-7 sm:h-7 stroke-[2.5]"></i>
+            </div>
+
+            <h2 class="text-xl sm:text-2xl font-black font-heading tracking-tight text-earth-border dark:text-earth-darkBorder uppercase mb-1">atldash</h2>
+            <p class="text-xs font-bold text-neutral-600 dark:text-neutral-300 mb-4">Enter 4-Digit Security PIN</p>
+
+            <!-- Hidden Input for Mobile Keypads -->
+            <input type="password" id="pinInput" maxlength="4" pattern="[0-9]*" inputmode="numeric" class="opacity-0 absolute inset-0 w-full h-full cursor-pointer z-10" autofocus oninput="handlePinInput(this.value)">
+
+            <!-- PIN Display Boxes -->
+            <div class="flex justify-center items-center space-x-2.5 sm:space-x-3 mb-4">
+                <div id="dot-0" class="w-9 h-9 sm:w-10 sm:h-10 rounded-lg border-2 border-earth-border dark:border-earth-darkBorder bg-earth-sandLight dark:bg-neutral-800 flex items-center justify-center font-black text-lg transition-all"></div>
+                <div id="dot-1" class="w-9 h-9 sm:w-10 sm:h-10 rounded-lg border-2 border-earth-border dark:border-earth-darkBorder bg-earth-sandLight dark:bg-neutral-800 flex items-center justify-center font-black text-lg transition-all"></div>
+                <div id="dot-2" class="w-9 h-9 sm:w-10 sm:h-10 rounded-lg border-2 border-earth-border dark:border-earth-darkBorder bg-earth-sandLight dark:bg-neutral-800 flex items-center justify-center font-black text-lg transition-all"></div>
+                <div id="dot-3" class="w-9 h-9 sm:w-10 sm:h-10 rounded-lg border-2 border-earth-border dark:border-earth-darkBorder bg-earth-sandLight dark:bg-neutral-800 flex items-center justify-center font-black text-lg transition-all"></div>
+            </div>
+
+            <p id="pinError" class="text-xs font-bold text-earth-terracotta bg-earth-terracottaLight dark:bg-red-950/60 border border-earth-terracotta py-1 px-2 rounded-md mb-3 opacity-0 transition-opacity">Wrong PIN. Try again.</p>
+
+            <!-- Touch Keypad -->
+            <div class="grid grid-cols-3 gap-2 relative z-20">
+                <button onclick="keypadPress('1')" class="py-2.5 sm:py-3 bg-earth-sandLight dark:bg-neutral-800 hover:bg-earth-ochre dark:hover:bg-earth-ochre hover:text-earth-border text-earth-border dark:text-earth-darkBorder font-extrabold text-base sm:text-lg rounded-xl border-2 border-earth-border dark:border-earth-darkBorder shadow-neo-sm active:translate-x-[1px] active:translate-y-[1px] active:shadow-none transition-all">1</button>
+                <button onclick="keypadPress('2')" class="py-2.5 sm:py-3 bg-earth-sandLight dark:bg-neutral-800 hover:bg-earth-ochre dark:hover:bg-earth-ochre hover:text-earth-border text-earth-border dark:text-earth-darkBorder font-extrabold text-base sm:text-lg rounded-xl border-2 border-earth-border dark:border-earth-darkBorder shadow-neo-sm active:translate-x-[1px] active:translate-y-[1px] active:shadow-none transition-all">2</button>
+                <button onclick="keypadPress('3')" class="py-2.5 sm:py-3 bg-earth-sandLight dark:bg-neutral-800 hover:bg-earth-ochre dark:hover:bg-earth-ochre hover:text-earth-border text-earth-border dark:text-earth-darkBorder font-extrabold text-base sm:text-lg rounded-xl border-2 border-earth-border dark:border-earth-darkBorder shadow-neo-sm active:translate-x-[1px] active:translate-y-[1px] active:shadow-none transition-all">3</button>
+                <button onclick="keypadPress('4')" class="py-2.5 sm:py-3 bg-earth-sandLight dark:bg-neutral-800 hover:bg-earth-ochre dark:hover:bg-earth-ochre hover:text-earth-border text-earth-border dark:text-earth-darkBorder font-extrabold text-base sm:text-lg rounded-xl border-2 border-earth-border dark:border-earth-darkBorder shadow-neo-sm active:translate-x-[1px] active:translate-y-[1px] active:shadow-none transition-all">4</button>
+                <button onclick="keypadPress('5')" class="py-2.5 sm:py-3 bg-earth-sandLight dark:bg-neutral-800 hover:bg-earth-ochre dark:hover:bg-earth-ochre hover:text-earth-border text-earth-border dark:text-earth-darkBorder font-extrabold text-base sm:text-lg rounded-xl border-2 border-earth-border dark:border-earth-darkBorder shadow-neo-sm active:translate-x-[1px] active:translate-y-[1px] active:shadow-none transition-all">5</button>
+                <button onclick="keypadPress('6')" class="py-2.5 sm:py-3 bg-earth-sandLight dark:bg-neutral-800 hover:bg-earth-ochre dark:hover:bg-earth-ochre hover:text-earth-border text-earth-border dark:text-earth-darkBorder font-extrabold text-base sm:text-lg rounded-xl border-2 border-earth-border dark:border-earth-darkBorder shadow-neo-sm active:translate-x-[1px] active:translate-y-[1px] active:shadow-none transition-all">6</button>
+                <button onclick="keypadPress('7')" class="py-2.5 sm:py-3 bg-earth-sandLight dark:bg-neutral-800 hover:bg-earth-ochre dark:hover:bg-earth-ochre hover:text-earth-border text-earth-border dark:text-earth-darkBorder font-extrabold text-base sm:text-lg rounded-xl border-2 border-earth-border dark:border-earth-darkBorder shadow-neo-sm active:translate-x-[1px] active:translate-y-[1px] active:shadow-none transition-all">7</button>
+                <button onclick="keypadPress('8')" class="py-2.5 sm:py-3 bg-earth-sandLight dark:bg-neutral-800 hover:bg-earth-ochre dark:hover:bg-earth-ochre hover:text-earth-border text-earth-border dark:text-earth-darkBorder font-extrabold text-base sm:text-lg rounded-xl border-2 border-earth-border dark:border-earth-darkBorder shadow-neo-sm active:translate-x-[1px] active:translate-y-[1px] active:shadow-none transition-all">8</button>
+                <button onclick="keypadPress('9')" class="py-2.5 sm:py-3 bg-earth-sandLight dark:bg-neutral-800 hover:bg-earth-ochre dark:hover:bg-earth-ochre hover:text-earth-border text-earth-border dark:text-earth-darkBorder font-extrabold text-base sm:text-lg rounded-xl border-2 border-earth-border dark:border-earth-darkBorder shadow-neo-sm active:translate-x-[1px] active:translate-y-[1px] active:shadow-none transition-all">9</button>
+                <button onclick="keypadClear()" class="py-2.5 sm:py-3 bg-earth-sand hover:bg-earth-terracotta hover:text-white text-earth-border dark:text-earth-darkBorder font-bold text-xs rounded-xl border-2 border-earth-border dark:border-earth-darkBorder shadow-neo-sm active:translate-x-[1px] active:translate-y-[1px] active:shadow-none transition-all uppercase">Clr</button>
+                <button onclick="keypadPress('0')" class="py-2.5 sm:py-3 bg-earth-sandLight dark:bg-neutral-800 hover:bg-earth-ochre dark:hover:bg-earth-ochre hover:text-earth-border text-earth-border dark:text-earth-darkBorder font-extrabold text-base sm:text-lg rounded-xl border-2 border-earth-border dark:border-earth-darkBorder shadow-neo-sm active:translate-x-[1px] active:translate-y-[1px] active:shadow-none transition-all">0</button>
+                <button onclick="keypadBackspace()" class="py-2.5 sm:py-3 bg-earth-sand hover:bg-earth-ochre text-earth-border dark:text-earth-darkBorder font-bold text-sm rounded-xl border-2 border-earth-border dark:border-earth-darkBorder shadow-neo-sm active:translate-x-[1px] active:translate-y-[1px] active:shadow-none transition-all flex items-center justify-center">
+                    <i data-lucide="delete" class="w-4 h-4 sm:w-5 sm:h-5"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ========================================== -->
+    <!-- TOP NAVIGATION BAR                         -->
+    <!-- ========================================== -->
+    <header class="sticky top-0 z-30 bg-white dark:bg-earth-darkCard border-b-[2.5px] border-earth-border dark:border-earth-darkBorder transition-all">
+        <div class="w-full px-3 sm:px-6 lg:px-8 xl:px-12 2xl:px-16 py-2.5 sm:py-3 flex flex-col md:flex-row md:items-center justify-between gap-2.5">
+            
+            <!-- Row 1 (Mobile): Brand & Action Buttons -->
+            <div class="flex items-center justify-between w-full md:w-auto gap-2">
+                <!-- Brand / Logo -->
+                <div class="flex items-center space-x-2.5 shrink-0">
+                    <div class="w-9 h-9 sm:w-11 sm:h-11 bg-earth-ochre text-earth-border border-2 border-earth-border rounded-xl flex items-center justify-center font-black shadow-neo-sm shrink-0">
+                        <i data-lucide="leaf" class="w-5 h-5 sm:w-6 sm:h-6 stroke-[2.5]"></i>
+                    </div>
+                    <div>
+                        <h1 class="font-heading font-black text-lg sm:text-2xl tracking-tighter text-earth-border dark:text-earth-darkBorder uppercase leading-none">
+                            atldash
+                        </h1>
+                        <p class="text-[9px] sm:text-xs font-bold text-neutral-600 dark:text-neutral-300 hidden sm:block tracking-wide uppercase">Tasks & Marks Tracker</p>
+                    </div>
+                </div>
+
+                <!-- Action Controls -->
+                <div class="flex items-center space-x-1 sm:space-x-2 shrink-0">
+                    <!-- Sync Status Pill -->
+                    <div id="syncStatusBadge" onclick="openModal('settingsModal')" class="hidden lg:flex items-center space-x-1.5 px-3 py-1.5 rounded-xl text-xs font-extrabold uppercase bg-earth-sandLight dark:bg-neutral-800 border-2 border-earth-border dark:border-earth-darkBorder shadow-neo-sm cursor-pointer hover:bg-earth-ochre hover:text-earth-border transition-colors" title="Google Sheets Sync Settings">
+                        <span id="syncDot" class="w-2.5 h-2.5 rounded-full bg-earth-sage border border-earth-border"></span>
+                        <span id="syncStatusText">Synced</span>
+                    </div>
+
+                    <!-- PWA Install -->
+                    <button id="pwaInstallBtn" onclick="installPWA()" class="hidden px-2.5 sm:px-3 py-1.5 sm:py-2 bg-earth-sage text-white border-2 border-earth-border rounded-xl text-xs font-black uppercase shadow-neo-sm active:translate-x-[1px] active:translate-y-[1px] active:shadow-none transition-all items-center gap-1">
+                        <i data-lucide="download" class="w-3.5 h-3.5 sm:w-4 sm:h-4 stroke-[2.5]"></i>
+                        <span class="hidden sm:inline">Install</span>
+                    </button>
+
+                    <!-- Refresh Data -->
+                    <button onclick="triggerCurrentTabSync()" class="p-1.5 sm:p-2 bg-earth-sandLight dark:bg-neutral-800 hover:bg-earth-stone hover:text-white text-earth-border dark:text-earth-darkBorder border-2 border-earth-border dark:border-earth-darkBorder rounded-xl shadow-neo-sm active:translate-x-[1px] active:translate-y-[1px] active:shadow-none transition-all" title="Refresh Live Data">
+                        <i id="syncIcon" data-lucide="refresh-cw" class="w-4 h-4 stroke-[2.5]"></i>
+                    </button>
+
+                    <!-- Dark Mode -->
+                    <button onclick="toggleDarkMode()" class="p-1.5 sm:p-2 bg-earth-sandLight dark:bg-neutral-800 hover:bg-earth-terracotta hover:text-white text-earth-border dark:text-earth-darkBorder border-2 border-earth-border dark:border-earth-darkBorder rounded-xl shadow-neo-sm active:translate-x-[1px] active:translate-y-[1px] active:shadow-none transition-all" title="Toggle Theme">
+                        <i id="themeIcon" data-lucide="moon" class="w-4 h-4 stroke-[2.5]"></i>
+                    </button>
+
+                    <!-- Settings Modal -->
+                    <button onclick="openModal('settingsModal')" class="p-1.5 sm:p-2 bg-earth-sandLight dark:bg-neutral-800 hover:bg-earth-sand hover:text-earth-border text-earth-border dark:text-earth-darkBorder border-2 border-earth-border dark:border-earth-darkBorder rounded-xl shadow-neo-sm active:translate-x-[1px] active:translate-y-[1px] active:shadow-none transition-all" title="Settings & Sync URLs">
+                        <i data-lucide="settings" class="w-4 h-4 stroke-[2.5]"></i>
+                    </button>
+
+                    <!-- Lock App -->
+                    <button onclick="lockApp()" class="p-1.5 sm:p-2 bg-earth-sandLight dark:bg-neutral-800 hover:bg-earth-terracotta hover:text-white text-earth-border dark:text-earth-darkBorder border-2 border-earth-border dark:border-earth-darkBorder rounded-xl shadow-neo-sm active:translate-x-[1px] active:translate-y-[1px] active:shadow-none transition-all" title="Lock Dashboard">
+                        <i data-lucide="lock" class="w-4 h-4 stroke-[2.5]"></i>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Tab Switcher Navigation -->
+            <div class="flex items-center justify-center bg-earth-sandLight dark:bg-neutral-900 p-1 rounded-xl border-2 border-earth-border dark:border-earth-darkBorder shadow-neo-sm w-full md:w-auto">
+                <button id="tabBtnTasks" onclick="switchTab('tasks')" class="flex-1 md:flex-none flex items-center justify-center gap-1.5 px-4 sm:px-6 py-1.5 rounded-lg text-xs sm:text-sm font-black uppercase transition-all bg-earth-ochre text-earth-border border-2 border-earth-border shadow-neo-sm">
+                    <i data-lucide="check-square" class="w-4 h-4 stroke-[2.5]"></i>
+                    <span>Tasks</span>
+                </button>
+                <button id="tabBtnLeaderboard" onclick="switchTab('leaderboard')" class="flex-1 md:flex-none flex items-center justify-center gap-1.5 px-4 sm:px-6 py-1.5 rounded-lg text-xs sm:text-sm font-black uppercase transition-all text-neutral-600 dark:text-neutral-300 hover:text-earth-border dark:hover:text-white">
+                    <i data-lucide="award" class="w-4 h-4 stroke-[2.5]"></i>
+                    <span>Leaderboard</span>
+                </button>
+            </div>
+
+        </div>
+    </header>
+
+    <!-- ========================================== -->
+    <!-- TAB 1: TASK MANAGEMENT (TaskPulse)         -->
+    <!-- ========================================== -->
+    <div id="tabContentTasks" class="flex-1 flex flex-col">
+        <main class="flex-1 w-full px-3 sm:px-6 lg:px-8 xl:px-12 2xl:px-16 py-4 sm:py-6 flex flex-col gap-4 sm:gap-5 pb-36 sm:pb-32">
+            
+            <!-- Quick Add Task Form -->
+            <section class="bg-white dark:bg-earth-darkCard border-[2.5px] border-earth-border dark:border-earth-darkBorder rounded-2xl p-4 sm:p-5 shadow-neo">
+                <form id="taskForm" onsubmit="handleAddTask(event)" class="flex flex-col gap-3">
+                    <div class="flex items-center gap-2.5 bg-earth-sandLight/60 dark:bg-neutral-900 px-3.5 py-2.5 sm:py-3 rounded-xl border-2 border-earth-border dark:border-earth-darkBorder focus-within:bg-earth-ochre/10 transition-colors">
+                        <i data-lucide="plus-circle" class="w-5 h-5 text-neutral-500 dark:text-neutral-400 stroke-[2.5] shrink-0"></i>
+                        <input type="text" id="taskInput" placeholder="What needs to be done?" required class="w-full bg-transparent border-none outline-none text-earth-border dark:text-earth-darkBorder placeholder-neutral-500 font-bold text-xs sm:text-base">
+                    </div>
+
+                    <div class="grid grid-cols-1 sm:grid-cols-3 gap-2.5 pt-1">
+                        <!-- Priority Selector -->
+                        <div class="relative">
+                            <select id="taskPriority" class="w-full appearance-none bg-earth-sandLight/60 dark:bg-neutral-900 text-xs sm:text-sm font-bold text-earth-border dark:text-earth-darkBorder pl-3.5 pr-8 py-2.5 rounded-xl border-2 border-earth-border dark:border-earth-darkBorder focus:outline-none cursor-pointer">
+                                <option value="High">🔴 High Priority</option>
+                                <option value="Medium" selected>🟡 Med Priority</option>
+                                <option value="Low">🟢 Low Priority</option>
+                            </select>
+                            <i data-lucide="chevron-down" class="w-4 h-4 absolute right-3 top-3 pointer-events-none text-earth-border dark:text-earth-darkBorder stroke-[2.5]"></i>
+                        </div>
+
+                        <!-- Due Date Selector -->
+                        <div class="relative flex items-center bg-earth-sandLight/60 dark:bg-neutral-900 px-3.5 py-2.5 rounded-xl border-2 border-earth-border dark:border-earth-darkBorder text-xs sm:text-sm font-bold text-earth-border dark:text-earth-darkBorder">
+                            <input type="date" id="taskDueDate" class="w-full bg-transparent border-none outline-none text-xs sm:text-sm text-earth-border dark:text-earth-darkBorder cursor-pointer font-bold">
+                        </div>
+
+                        <!-- Add Button -->
+                        <button type="submit" class="w-full py-2.5 rounded-xl bg-earth-ochre text-earth-border font-black uppercase text-xs sm:text-sm border-2 border-earth-border shadow-neo-sm hover:shadow-neo active:translate-x-[1px] active:translate-y-[1px] active:shadow-none transition-all flex items-center justify-center gap-2 shrink-0">
+                            <i data-lucide="plus" class="w-4 h-4 stroke-[3]"></i>
+                            <span>Add Task</span>
+                        </button>
+                    </div>
+                </form>
+            </section>
+
+            <!-- Filters, Chips & Search Toolbar -->
+            <section class="bg-white dark:bg-earth-darkCard rounded-2xl p-3.5 sm:p-4 border-[2.5px] border-earth-border dark:border-earth-darkBorder shadow-neo flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+                <!-- Filter Chips -->
+                <div class="flex items-center gap-2 overflow-x-auto pb-1 no-scrollbar w-full sm:w-auto">
+                    <button onclick="setTaskFilter('all')" id="filter-all" class="task-filter-chip px-3.5 py-1.5 rounded-xl text-xs font-black uppercase whitespace-nowrap transition-all border-2 border-earth-border shadow-neo-sm bg-earth-ochre text-earth-border shrink-0">
+                        All Tasks
+                    </button>
+                    <button onclick="setTaskFilter('active')" id="filter-active" class="task-filter-chip px-3.5 py-1.5 rounded-xl text-xs font-black uppercase whitespace-nowrap transition-all border-2 border-earth-border dark:border-earth-darkBorder bg-earth-sandLight dark:bg-neutral-800 text-earth-border dark:text-earth-darkBorder shrink-0">
+                        Active
+                    </button>
+                    <button onclick="setTaskFilter('completed')" id="filter-completed" class="task-filter-chip px-3.5 py-1.5 rounded-xl text-xs font-black uppercase whitespace-nowrap transition-all border-2 border-earth-border dark:border-earth-darkBorder bg-earth-sandLight dark:bg-neutral-800 text-earth-border dark:text-earth-darkBorder shrink-0">
+                        Completed
+                    </button>
+                    <button onclick="setTaskFilter('high')" id="filter-high" class="task-filter-chip px-3.5 py-1.5 rounded-xl text-xs font-black uppercase whitespace-nowrap transition-all border-2 border-earth-border dark:border-earth-darkBorder bg-earth-sandLight dark:bg-neutral-800 text-earth-border dark:text-earth-darkBorder shrink-0">
+                        🔴 High
+                    </button>
+                </div>
+
+                <!-- Search Input -->
+                <div class="relative w-full sm:w-64 shrink-0">
+                    <i data-lucide="search" class="w-4 h-4 text-earth-border dark:text-earth-darkBorder absolute left-3 top-2.5 stroke-[2.5]"></i>
+                    <input type="text" id="taskSearchInput" oninput="renderTasks()" placeholder="Search tasks..." class="w-full pl-9 pr-3 py-1.5 sm:py-2 text-xs sm:text-sm font-bold bg-earth-sandLight/60 dark:bg-neutral-900 border-2 border-earth-border dark:border-earth-darkBorder rounded-xl outline-none focus:bg-white dark:focus:bg-neutral-800 text-earth-border dark:text-earth-darkBorder transition-all">
+                </div>
+            </section>
+
+            <!-- Task List Container (Responsive grid) -->
+            <section class="flex-1 min-h-[200px]">
+                <div id="taskList" class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 gap-3">
+                    <!-- Dynamic task cards -->
+                </div>
+
+                <!-- Empty State -->
+                <div id="taskEmptyState" class="hidden flex-col items-center justify-center py-10 text-center bg-white dark:bg-earth-darkCard rounded-2xl border-[2.5px] border-earth-border dark:border-earth-darkBorder shadow-neo p-6">
+                    <div class="w-14 h-14 bg-earth-ochre text-earth-border border-2 border-earth-border rounded-2xl flex items-center justify-center mx-auto mb-3 shadow-neo-sm">
+                        <i data-lucide="check-circle-2" class="w-7 h-7 stroke-[2.5]"></i>
+                    </div>
+                    <h3 class="text-base font-black font-heading uppercase text-earth-border dark:text-earth-darkBorder mb-1">No Tasks Found</h3>
+                    <p class="text-xs font-bold text-neutral-600 dark:text-neutral-400 max-w-xs">Create a new task above or adjust your search filter.</p>
+                </div>
+            </section>
+        </main>
+
+        <!-- Persistent Bottom Productivity Bar -->
+        <footer class="fixed bottom-0 left-0 right-0 bg-white dark:bg-earth-darkCard border-t-[2.5px] border-earth-border dark:border-earth-darkBorder px-3 sm:px-6 lg:px-8 xl:px-12 2xl:px-16 py-2.5 sm:py-3 z-20 shadow-neo-lg">
+            <div class="w-full flex items-center justify-between text-xs sm:text-sm gap-2">
+                
+                <!-- Total Tasks -->
+                <div class="flex items-center gap-2">
+                    <div class="p-1.5 sm:p-2 rounded-xl bg-earth-stoneLight text-earth-stone border-2 border-earth-border shadow-neo-sm shrink-0">
+                        <i data-lucide="list-todo" class="w-4 h-4 sm:w-5 sm:h-5 stroke-[2.5]"></i>
+                    </div>
+                    <div>
+                        <div class="text-[9px] sm:text-[10px] font-black uppercase text-neutral-500 dark:text-neutral-400 leading-none">Total</div>
+                        <div id="statTaskTotal" class="font-black text-earth-border dark:text-earth-darkBorder text-xs sm:text-base">0</div>
+                    </div>
+                </div>
+
+                <!-- Progress Bar -->
+                <div class="flex-1 max-w-md mx-3 sm:mx-6 hidden sm:block">
+                    <div class="flex justify-between text-xs font-black uppercase text-neutral-600 dark:text-neutral-300 mb-1">
+                        <span>Task Completion</span>
+                        <span id="statTaskRateText">0%</span>
+                    </div>
+                    <div class="w-full bg-earth-sandLight dark:bg-neutral-800 h-3 rounded-full border-2 border-earth-border dark:border-earth-darkBorder overflow-hidden p-0.5">
+                        <div id="taskProgressBar" class="bg-earth-sage h-full rounded-full transition-all duration-300 w-0 border border-earth-border"></div>
+                    </div>
+                </div>
+
+                <!-- Done Stat -->
+                <div class="flex items-center gap-2">
+                    <div class="p-1.5 sm:p-2 rounded-xl bg-earth-sageLight text-earth-sage border-2 border-earth-border shadow-neo-sm shrink-0">
+                        <i data-lucide="check-check" class="w-4 h-4 sm:w-5 sm:h-5 stroke-[2.5]"></i>
+                    </div>
+                    <div>
+                        <div class="text-[9px] sm:text-[10px] font-black uppercase text-neutral-500 dark:text-neutral-400 leading-none">Done</div>
+                        <div id="statTaskCompleted" class="font-black text-earth-border dark:text-earth-darkBorder text-xs sm:text-base">0</div>
+                    </div>
+                </div>
+
+                <!-- Rate Badge -->
+                <div class="flex items-center gap-1 bg-earth-ochreLight text-earth-border px-2.5 sm:px-3 py-1 sm:py-1.5 rounded-xl font-black border-2 border-earth-border shadow-neo-sm text-xs shrink-0">
+                    <i data-lucide="trending-up" class="w-3.5 h-3.5 sm:w-4 sm:h-4 stroke-[2.5]"></i>
+                    <span id="statTaskRate">0%</span>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+
+    <!-- ========================================== -->
+    <!-- TAB 2: LEADERBOARD & MARKS TRACKER         -->
+    <!-- ========================================== -->
+    <div id="tabContentLeaderboard" class="hidden flex-1 flex flex-col">
+        <main class="flex-1 w-full px-3 sm:px-6 lg:px-8 xl:px-12 2xl:px-16 py-4 sm:py-6 space-y-4 sm:space-y-5 pb-12">
+
+            <!-- Overview Metric Cards -->
+            <section class="grid grid-cols-2 md:grid-cols-4 gap-2.5 sm:gap-4">
+                <div class="bg-white dark:bg-earth-darkCard p-3.5 sm:p-5 rounded-2xl border-[2.5px] border-earth-border dark:border-earth-darkBorder shadow-neo flex items-center space-x-3">
+                    <div class="p-2 sm:p-3 bg-earth-stoneLight text-earth-stone border-2 border-earth-border rounded-xl shadow-neo-sm shrink-0">
+                        <i data-lucide="users" class="w-4 h-4 sm:w-5 sm:h-5 stroke-[2.5]"></i>
+                    </div>
+                    <div class="min-w-0">
+                        <p class="text-[9px] sm:text-xs font-black uppercase text-neutral-500 dark:text-neutral-400 truncate">Total Students</p>
+                        <p id="statTotalStudents" class="text-lg sm:text-2xl font-heading font-black text-earth-border dark:text-earth-darkBorder">0</p>
+                    </div>
+                </div>
+
+                <div class="bg-white dark:bg-earth-darkCard p-3.5 sm:p-5 rounded-2xl border-[2.5px] border-earth-border dark:border-earth-darkBorder shadow-neo flex items-center space-x-3">
+                    <div class="p-2 sm:p-3 bg-earth-ochreLight text-earth-ochre border-2 border-earth-border rounded-xl shadow-neo-sm shrink-0">
+                        <i data-lucide="star" class="w-4 h-4 sm:w-5 sm:h-5 stroke-[2.5]"></i>
+                    </div>
+                    <div class="min-w-0">
+                        <p class="text-[9px] sm:text-xs font-black uppercase text-neutral-500 dark:text-neutral-400 truncate">Top Scorer</p>
+                        <p id="statTopStudent" class="text-xs sm:text-sm font-heading font-black text-earth-border dark:text-earth-darkBorder truncate">None</p>
+                    </div>
+                </div>
+
+                <div class="bg-white dark:bg-earth-darkCard p-3.5 sm:p-5 rounded-2xl border-[2.5px] border-earth-border dark:border-earth-darkBorder shadow-neo flex items-center space-x-3">
+                    <div class="p-2 sm:p-3 bg-earth-terracottaLight text-earth-terracotta border-2 border-earth-border rounded-xl shadow-neo-sm shrink-0">
+                        <i data-lucide="bar-chart-2" class="w-4 h-4 sm:w-5 sm:h-5 stroke-[2.5]"></i>
+                    </div>
+                    <div class="min-w-0">
+                        <p class="text-[9px] sm:text-xs font-black uppercase text-neutral-500 dark:text-neutral-400 truncate">Class Avg</p>
+                        <p id="statAvgScore" class="text-lg sm:text-2xl font-heading font-black text-earth-border dark:text-earth-darkBorder">0</p>
+                    </div>
+                </div>
+
+                <div class="bg-white dark:bg-earth-darkCard p-3.5 sm:p-5 rounded-2xl border-[2.5px] border-earth-border dark:border-earth-darkBorder shadow-neo flex items-center space-x-3">
+                    <div class="p-2 sm:p-3 bg-earth-sageLight text-earth-sage border-2 border-earth-border rounded-xl shadow-neo-sm shrink-0">
+                        <i data-lucide="calculator" class="w-4 h-4 sm:w-5 sm:h-5 stroke-[2.5]"></i>
+                    </div>
+                    <div class="min-w-0">
+                        <p class="text-[9px] sm:text-xs font-black uppercase text-neutral-500 dark:text-neutral-400 truncate">Total Points</p>
+                        <p id="statTotalPoints" class="text-lg sm:text-2xl font-heading font-black text-earth-border dark:text-earth-darkBorder">0</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Search, Filters & Action Toolbar -->
+            <div class="bg-white dark:bg-earth-darkCard rounded-2xl p-3.5 sm:p-4 border-[2.5px] border-earth-border dark:border-earth-darkBorder shadow-neo flex flex-col gap-3">
+                <!-- Search & Filters Row -->
+                <div class="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-2.5">
+                    <div class="relative flex-1">
+                        <i data-lucide="search" class="w-4 h-4 absolute left-3.5 top-3 text-earth-border dark:text-earth-darkBorder stroke-[2.5]"></i>
+                        <input type="text" id="leaderboardSearchInput" oninput="renderStudentList()" placeholder="Search student name..." class="w-full bg-earth-sandLight/60 dark:bg-neutral-900 border-2 border-earth-border dark:border-earth-darkBorder rounded-xl pl-10 pr-4 py-2 text-xs sm:text-sm font-bold text-earth-border dark:text-earth-darkBorder placeholder-neutral-500 outline-none transition">
+                    </div>
+
+                    <div class="flex items-center gap-2 w-full sm:w-auto">
+                        <select id="groupFilter" onchange="renderStudentList()" class="flex-1 sm:flex-none bg-earth-sandLight/60 dark:bg-neutral-900 border-2 border-earth-border dark:border-earth-darkBorder text-earth-border dark:text-earth-darkBorder text-xs font-bold rounded-xl px-3 py-2 outline-none">
+                            <option value="ALL">All Classes</option>
+                        </select>
+
+                        <select id="sortBy" onchange="renderStudentList()" class="flex-1 sm:flex-none bg-earth-sandLight/60 dark:bg-neutral-900 border-2 border-earth-border dark:border-earth-darkBorder text-earth-border dark:text-earth-darkBorder text-xs font-bold rounded-xl px-3 py-2 outline-none">
+                            <option value="pointsDesc">Points (High-Low)</option>
+                            <option value="pointsAsc">Points (Low-High)</option>
+                            <option value="name">Name (A-Z)</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- View Toggle & Action Buttons Row -->
+                <div class="flex flex-wrap items-center justify-between gap-2 border-t-2 border-neutral-100 dark:border-neutral-800 pt-2.5">
+                    <div class="bg-earth-sandLight dark:bg-neutral-900 p-1 rounded-xl border-2 border-earth-border dark:border-earth-darkBorder flex items-center shadow-neo-sm">
+                        <button id="viewCardBtn" onclick="setLeaderboardViewMode('cards')" class="px-2.5 sm:px-3 py-1 rounded-lg text-xs font-black uppercase bg-earth-ochre text-earth-border border-2 border-earth-border shadow-neo-sm transition">
+                            <i data-lucide="layout-grid" class="w-3.5 h-3.5 inline mr-1 stroke-[2.5]"></i> Cards
+                        </button>
+                        <button id="viewTableBtn" onclick="setLeaderboardViewMode('table')" class="px-2.5 sm:px-3 py-1 rounded-lg text-xs font-black uppercase text-neutral-600 dark:text-neutral-400 hover:text-earth-border dark:hover:text-white transition">
+                            <i data-lucide="list" class="w-3.5 h-3.5 inline mr-1 stroke-[2.5]"></i> Table
+                        </button>
+                    </div>
+
+                    <div class="flex flex-wrap items-center gap-1.5 sm:gap-2">
+                        <button onclick="openModal('addStudentModal')" class="px-3 py-1.5 sm:py-2 bg-earth-ochre text-earth-border border-2 border-earth-border rounded-xl text-xs font-black uppercase shadow-neo-sm hover:shadow-neo active:translate-x-[1px] active:translate-y-[1px] active:shadow-none transition-all flex items-center gap-1">
+                            <i data-lucide="user-plus" class="w-3.5 h-3.5 stroke-[2.5]"></i>
+                            <span>Add Student</span>
+                        </button>
+                        <button onclick="quickBatchUpdateModal()" class="px-3 py-1.5 sm:py-2 bg-earth-stone text-white border-2 border-earth-border rounded-xl text-xs font-black uppercase shadow-neo-sm hover:shadow-neo active:translate-x-[1px] active:translate-y-[1px] active:shadow-none transition-all flex items-center gap-1">
+                            <i data-lucide="edit-3" class="w-3.5 h-3.5 stroke-[2.5]"></i>
+                            <span>Daily Marks</span>
+                        </button>
+                        <button onclick="exportCSV()" class="p-1.5 sm:p-2 bg-earth-sandLight dark:bg-neutral-800 hover:bg-earth-sage hover:text-white text-earth-border dark:text-earth-darkBorder border-2 border-earth-border dark:border-earth-darkBorder rounded-xl shadow-neo-sm active:translate-x-[1px] active:translate-y-[1px] active:shadow-none transition-all" title="Export CSV">
+                            <i data-lucide="download" class="w-4 h-4 stroke-[2.5]"></i>
+                        </button>
+                        <button onclick="openModal('importCsvModal')" class="p-1.5 sm:p-2 bg-earth-sandLight dark:bg-neutral-800 hover:bg-earth-terracotta hover:text-white text-earth-border dark:text-earth-darkBorder border-2 border-earth-border dark:border-earth-darkBorder rounded-xl shadow-neo-sm active:translate-x-[1px] active:translate-y-[1px] active:shadow-none transition-all" title="Import CSV">
+                            <i data-lucide="upload" class="w-4 h-4 stroke-[2.5]"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Cards View Container -->
+            <div id="studentCardsContainer" class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 gap-3 sm:gap-3.5">
+                <!-- Dynamically populated cards -->
+            </div>
+
+            <!-- Table View Container -->
+            <div id="tableContainer" class="hidden bg-white dark:bg-earth-darkCard rounded-2xl overflow-hidden border-[2.5px] border-earth-border dark:border-earth-darkBorder shadow-neo">
+                <div class="overflow-x-auto">
+                    <table class="w-full text-left text-xs sm:text-sm text-earth-border dark:text-earth-darkBorder min-w-[500px]">
+                        <thead class="bg-earth-sandLight dark:bg-neutral-900 text-xs uppercase font-black text-earth-border dark:text-earth-darkBorder border-b-2 border-earth-border dark:border-earth-darkBorder">
+                            <tr>
+                                <th class="px-3.5 py-3">Rank</th>
+                                <th class="px-3.5 py-3">Student Name</th>
+                                <th class="px-3.5 py-3">Class</th>
+                                <th class="px-3.5 py-3 text-center">Points</th>
+                                <th class="px-3.5 py-3 text-center">Quick Add Points</th>
+                                <th class="px-3.5 py-3 text-center">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tableBody" class="divide-y-2 divide-earth-border dark:divide-earth-darkBorder font-bold">
+                            <!-- Dynamically populated rows -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Empty State Container -->
+            <div id="leaderboardEmptyState" class="hidden bg-white dark:bg-earth-darkCard rounded-2xl p-8 sm:p-10 text-center border-[2.5px] border-earth-border dark:border-earth-darkBorder shadow-neo my-4">
+                <div class="w-14 h-14 bg-earth-ochre text-earth-border border-2 border-earth-border rounded-2xl flex items-center justify-center mx-auto mb-3 shadow-neo-sm">
+                    <i data-lucide="users" class="w-7 h-7 stroke-[2.5]"></i>
+                </div>
+                <h3 class="text-base sm:text-lg font-black font-heading uppercase text-earth-border dark:text-earth-darkBorder mb-1">No Students Found</h3>
+                <p class="text-xs font-bold text-neutral-600 dark:text-neutral-400 mb-4 max-w-xs mx-auto">Get started by adding students or syncing with your Google Sheet.</p>
+                <button onclick="openModal('addStudentModal')" class="px-4 py-2 bg-earth-ochre text-earth-border font-black uppercase text-xs rounded-xl border-2 border-earth-border shadow-neo-sm hover:shadow-neo inline-flex items-center gap-1.5 transition-all">
+                    <i data-lucide="user-plus" class="w-4 h-4 stroke-[2.5]"></i> Add Student
+                </button>
+            </div>
+
+        </main>
+    </div>
+
+    <!-- ========================================== -->
+    <!-- MODALS SECTION                             -->
+    <!-- ========================================== -->
+
+    <!-- MODAL: Edit Existing Task (NEW) -->
+    <div id="editTaskModal" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-earth-border/80 backdrop-blur-xs hidden">
+        <div class="bg-white dark:bg-earth-darkCard border-[2.5px] border-earth-border dark:border-earth-darkBorder rounded-2xl max-w-md w-full p-5 sm:p-6 shadow-neo-xl relative max-h-[90vh] overflow-y-auto animate-in fade-in zoom-in duration-150">
+            <button onclick="closeModal('editTaskModal')" class="absolute top-4 right-4 p-1.5 bg-earth-sandLight dark:bg-neutral-800 border-2 border-earth-border dark:border-earth-darkBorder text-earth-border dark:text-earth-darkBorder rounded-lg shadow-neo-sm hover:bg-earth-terracotta hover:text-white transition-all">
+                <i data-lucide="x" class="w-4 h-4 stroke-[3]"></i>
+            </button>
+            <h2 class="text-lg sm:text-xl font-black font-heading uppercase text-earth-border dark:text-earth-darkBorder mb-4 flex items-center gap-2">
+                <i data-lucide="edit-3" class="w-5 h-5 text-earth-ochre stroke-[2.5]"></i> Edit Task
+            </h2>
+            
+            <form id="editTaskForm" onsubmit="handleSaveTaskEdit(event)" class="space-y-3.5">
+                <input type="hidden" id="editTaskId" value="">
+                
+                <div>
+                    <label class="block text-[11px] font-black uppercase text-neutral-700 dark:text-neutral-300 mb-1">Task Description *</label>
+                    <input type="text" id="editTaskTitle" required placeholder="What needs to be done?" class="w-full bg-earth-sandLight/60 dark:bg-neutral-900 border-2 border-earth-border dark:border-earth-darkBorder rounded-xl px-3.5 py-2.5 text-xs sm:text-sm font-bold text-earth-border dark:text-earth-darkBorder outline-none focus:bg-earth-ochre/10 transition">
+                </div>
+
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+                    <div>
+                        <label class="block text-[11px] font-black uppercase text-neutral-700 dark:text-neutral-300 mb-1">Priority</label>
+                        <div class="relative">
+                            <select id="editTaskPriority" class="w-full appearance-none bg-earth-sandLight/60 dark:bg-neutral-900 text-xs sm:text-sm font-bold text-earth-border dark:text-earth-darkBorder pl-3.5 pr-8 py-2.5 rounded-xl border-2 border-earth-border dark:border-earth-darkBorder focus:outline-none cursor-pointer">
+                                <option value="High">🔴 High Priority</option>
+                                <option value="Medium">🟡 Med Priority</option>
+                                <option value="Low">🟢 Low Priority</option>
+                            </select>
+                            <i data-lucide="chevron-down" class="w-4 h-4 absolute right-3 top-3 pointer-events-none text-earth-border dark:text-earth-darkBorder stroke-[2.5]"></i>
+                        </div>
+                    </div>
+                    <div>
+                        <label class="block text-[11px] font-black uppercase text-neutral-700 dark:text-neutral-300 mb-1">Due Date</label>
+                        <input type="date" id="editTaskDueDate" class="w-full bg-earth-sandLight/60 dark:bg-neutral-900 border-2 border-earth-border dark:border-earth-darkBorder rounded-xl px-3.5 py-2 text-xs sm:text-sm font-bold text-earth-border dark:text-earth-darkBorder outline-none">
+                    </div>
+                </div>
+
+                <div class="pt-3 flex justify-end space-x-2 border-t-2 border-earth-border dark:border-earth-darkBorder">
+                    <button type="button" onclick="closeModal('editTaskModal')" class="px-4 py-2 bg-earth-sandLight dark:bg-neutral-800 text-earth-border dark:text-earth-darkBorder border-2 border-earth-border dark:border-earth-darkBorder text-xs font-black uppercase rounded-xl shadow-neo-sm transition">Cancel</button>
+                    <button type="submit" class="px-5 py-2 bg-earth-ochre text-earth-border border-2 border-earth-border text-xs font-black uppercase rounded-xl shadow-neo-sm hover:shadow-neo transition-all">Save Changes</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- MODAL 1: Add / Edit Student -->
+    <div id="addStudentModal" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-earth-border/80 backdrop-blur-xs hidden">
+        <div class="bg-white dark:bg-earth-darkCard border-[2.5px] border-earth-border dark:border-earth-darkBorder rounded-2xl max-w-sm w-full p-5 sm:p-6 shadow-neo-xl relative max-h-[90vh] overflow-y-auto animate-in fade-in zoom-in duration-150">
+            <button onclick="closeModal('addStudentModal')" class="absolute top-4 right-4 p-1.5 bg-earth-sandLight dark:bg-neutral-800 border-2 border-earth-border dark:border-earth-darkBorder text-earth-border dark:text-earth-darkBorder rounded-lg shadow-neo-sm hover:bg-earth-terracotta hover:text-white transition-all">
+                <i data-lucide="x" class="w-4 h-4 stroke-[3]"></i>
+            </button>
+            <h2 id="modalStudentTitle" class="text-lg sm:text-xl font-black font-heading uppercase text-earth-border dark:text-earth-darkBorder mb-4">Add Student</h2>
+            
+            <form id="studentForm" onsubmit="handleSaveStudent(event)" class="space-y-3.5">
+                <input type="hidden" id="studentEditId" value="">
+                
+                <div>
+                    <label class="block text-[11px] font-black uppercase text-neutral-700 dark:text-neutral-300 mb-1">Full Name *</label>
+                    <input type="text" id="inputStudentName" required placeholder="e.g. Rahul Sharma" class="w-full bg-earth-sandLight/60 dark:bg-neutral-900 border-2 border-earth-border dark:border-earth-darkBorder rounded-xl px-3.5 py-2.5 text-xs sm:text-sm font-bold text-earth-border dark:text-earth-darkBorder outline-none focus:bg-earth-ochre/10 transition">
+                </div>
+
+                <div class="grid grid-cols-2 gap-2.5">
+                    <div>
+                        <label class="block text-[11px] font-black uppercase text-neutral-700 dark:text-neutral-300 mb-1">Class *</label>
+                        <input type="text" id="inputStudentGroup" placeholder="e.g. Class 10" class="w-full bg-earth-sandLight/60 dark:bg-neutral-900 border-2 border-earth-border dark:border-earth-darkBorder rounded-xl px-3.5 py-2.5 text-xs sm:text-sm font-bold text-earth-border dark:text-earth-darkBorder outline-none focus:bg-earth-ochre/10 transition">
+                    </div>
+                    <div>
+                        <label class="block text-[11px] font-black uppercase text-neutral-700 dark:text-neutral-300 mb-1">Points *</label>
+                        <input type="number" id="inputStudentScore" required value="0" class="w-full bg-earth-sandLight/60 dark:bg-neutral-900 border-2 border-earth-border dark:border-earth-darkBorder rounded-xl px-3.5 py-2.5 text-xs sm:text-sm font-bold text-earth-border dark:text-earth-darkBorder outline-none focus:bg-earth-ochre/10 transition">
+                    </div>
+                </div>
+
+                <div class="pt-3 flex justify-end space-x-2 border-t-2 border-earth-border dark:border-earth-darkBorder">
+                    <button type="button" onclick="closeModal('addStudentModal')" class="px-4 py-2 bg-earth-sandLight dark:bg-neutral-800 text-earth-border dark:text-earth-darkBorder border-2 border-earth-border dark:border-earth-darkBorder text-xs font-black uppercase rounded-xl shadow-neo-sm transition">Cancel</button>
+                    <button type="submit" class="px-5 py-2 bg-earth-ochre text-earth-border border-2 border-earth-border text-xs font-black uppercase rounded-xl shadow-neo-sm hover:shadow-neo transition-all">Save Student</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- MODAL 2: Quick Add Points -->
+    <div id="addPointsModal" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-earth-border/80 backdrop-blur-xs hidden">
+        <div class="bg-white dark:bg-earth-darkCard border-[2.5px] border-earth-border dark:border-earth-darkBorder rounded-2xl max-w-sm w-full p-5 sm:p-6 shadow-neo-xl relative max-h-[90vh] overflow-y-auto animate-in fade-in zoom-in duration-150">
+            <button onclick="closeModal('addPointsModal')" class="absolute top-4 right-4 p-1.5 bg-earth-sandLight dark:bg-neutral-800 border-2 border-earth-border dark:border-earth-darkBorder text-earth-border dark:text-earth-darkBorder rounded-lg shadow-neo-sm hover:bg-earth-terracotta hover:text-white transition-all">
+                <i data-lucide="x" class="w-4 h-4 stroke-[3]"></i>
+            </button>
+            
+            <div class="flex items-center space-x-3 mb-4">
+                <div class="w-11 h-11 rounded-xl bg-earth-ochre text-earth-border border-2 border-earth-border flex items-center justify-center font-black shadow-neo-sm shrink-0">
+                    <i data-lucide="plus-circle" class="w-5 h-5 stroke-[2.5]"></i>
+                </div>
+                <div class="min-w-0">
+                    <h2 id="addPointsStudentName" class="text-sm sm:text-base font-black font-heading uppercase text-earth-border dark:text-earth-darkBorder truncate">Student Name</h2>
+                    <p id="addPointsCurrentPts" class="text-xs font-bold text-neutral-600 dark:text-neutral-300">Current Points: 0 pts</p>
+                </div>
+            </div>
+
+            <div class="space-y-3.5">
+                <div>
+                    <label class="block text-[11px] font-black uppercase text-neutral-700 dark:text-neutral-300 mb-2">Select Quick Points to Add</label>
+                    <div class="grid grid-cols-3 gap-2">
+                        <button onclick="applyQuickPoints(10)" class="py-2 px-2 bg-earth-sandLight dark:bg-neutral-800 hover:bg-earth-ochre hover:text-earth-border text-earth-border dark:text-earth-darkBorder font-black text-xs rounded-xl border-2 border-earth-border dark:border-earth-darkBorder shadow-neo-sm active:scale-95 transition-all">
+                            +10
+                        </button>
+                        <button onclick="applyQuickPoints(20)" class="py-2 px-2 bg-earth-stoneLight text-earth-stone font-black text-xs rounded-xl border-2 border-earth-border shadow-neo-sm active:scale-95 transition-all">
+                            +20
+                        </button>
+                        <button onclick="applyQuickPoints(30)" class="py-2 px-2 bg-earth-sand text-earth-border font-black text-xs rounded-xl border-2 border-earth-border shadow-neo-sm active:scale-95 transition-all">
+                            +30
+                        </button>
+                        <button onclick="applyQuickPoints(50)" class="col-span-2 py-2 px-2 bg-earth-sage text-white font-black text-xs rounded-xl border-2 border-earth-border shadow-neo-sm active:scale-95 transition-all uppercase">
+                            +50 Points
+                        </button>
+                        <button onclick="applyQuickPoints(-10)" class="py-2 px-2 bg-earth-terracottaLight text-earth-terracotta font-black text-xs rounded-xl border-2 border-earth-border shadow-neo-sm active:scale-95 transition-all">
+                            -10
+                        </button>
+                    </div>
+                </div>
+
+                <div class="border-t-2 border-earth-border dark:border-earth-darkBorder pt-3">
+                    <label class="block text-[11px] font-black uppercase text-neutral-700 dark:text-neutral-300 mb-1.5">Or Enter Custom Points</label>
+                    <div class="flex gap-2">
+                        <input type="number" id="customPointsInput" placeholder="e.g. 15 or -5" class="w-full bg-earth-sandLight/60 dark:bg-neutral-900 border-2 border-earth-border dark:border-earth-darkBorder rounded-xl px-3 py-1.5 text-xs font-bold text-earth-border dark:text-earth-darkBorder outline-none">
+                        <button onclick="applyCustomPoints()" class="px-3.5 py-1.5 bg-earth-ochre text-earth-border border-2 border-earth-border text-xs font-black uppercase rounded-xl shadow-neo-sm transition">Add</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL 3: Batch Daily Quick Update -->
+    <div id="batchUpdateModal" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-earth-border/80 backdrop-blur-xs hidden">
+        <div class="bg-white dark:bg-earth-darkCard border-[2.5px] border-earth-border dark:border-earth-darkBorder rounded-2xl max-w-xl w-full p-5 sm:p-6 shadow-neo-xl relative max-h-[85vh] flex flex-col">
+            <button onclick="closeModal('batchUpdateModal')" class="absolute top-4 right-4 p-1.5 bg-earth-sandLight dark:bg-neutral-800 border-2 border-earth-border dark:border-earth-darkBorder text-earth-border dark:text-earth-darkBorder rounded-lg shadow-neo-sm hover:bg-earth-terracotta hover:text-white transition-all">
+                <i data-lucide="x" class="w-4 h-4 stroke-[3]"></i>
+            </button>
+            
+            <div class="mb-3">
+                <h2 class="text-base sm:text-lg font-black font-heading uppercase text-earth-border dark:text-earth-darkBorder flex items-center gap-2">
+                    <i data-lucide="edit-3" class="w-5 h-5 text-earth-ochre stroke-[3]"></i> Daily Marks Batch Update
+                </h2>
+                <p class="text-xs font-bold text-neutral-600 dark:text-neutral-400">Quickly add or deduct points for multiple students at once.</p>
+            </div>
+
+            <div class="flex-1 overflow-y-auto space-y-2 pr-1" id="batchListContainer">
+                <!-- Dynamically filled rows -->
+            </div>
+
+            <div class="pt-3 mt-2 border-t-2 border-earth-border dark:border-earth-darkBorder flex items-center justify-between">
+                <span id="batchCount" class="text-xs font-black uppercase text-neutral-600 dark:text-neutral-400">0 Students</span>
+                <div class="flex gap-2">
+                    <button onclick="closeModal('batchUpdateModal')" class="px-3.5 py-1.5 bg-earth-sandLight dark:bg-neutral-800 text-earth-border dark:text-earth-darkBorder border-2 border-earth-border dark:border-earth-darkBorder text-xs font-black uppercase rounded-xl shadow-neo-sm">Cancel</button>
+                    <button onclick="saveBatchUpdates()" class="px-4 py-1.5 bg-earth-ochre text-earth-border border-2 border-earth-border text-xs font-black uppercase rounded-xl shadow-neo-sm hover:shadow-neo transition-all">Save Marks</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL 4: CSV Import -->
+    <div id="importCsvModal" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-earth-border/80 backdrop-blur-xs hidden">
+        <div class="bg-white dark:bg-earth-darkCard border-[2.5px] border-earth-border dark:border-earth-darkBorder rounded-2xl max-w-sm w-full p-5 sm:p-6 shadow-neo-xl relative max-h-[90vh] overflow-y-auto">
+            <button onclick="closeModal('importCsvModal')" class="absolute top-4 right-4 p-1.5 bg-earth-sandLight dark:bg-neutral-800 border-2 border-earth-border dark:border-earth-darkBorder text-earth-border dark:text-earth-darkBorder rounded-lg shadow-neo-sm hover:bg-earth-terracotta hover:text-white transition-all">
+                <i data-lucide="x" class="w-4 h-4 stroke-[3]"></i>
+            </button>
+            <h2 class="text-base font-black font-heading uppercase text-earth-border dark:text-earth-darkBorder mb-1">Import CSV Data</h2>
+            <p class="text-xs font-bold text-neutral-600 dark:text-neutral-400 mb-3">Format: <code class="bg-earth-ochreLight text-earth-border px-1.5 py-0.5 rounded border border-earth-border font-mono text-[11px]">Name, Points, Class</code></p>
+
+            <div class="space-y-3">
+                <div>
+                    <label class="block text-[11px] font-black uppercase text-neutral-700 dark:text-neutral-300 mb-1">CSV File</label>
+                    <input type="file" id="csvFileInput" accept=".csv" class="w-full text-xs font-bold text-earth-border dark:text-earth-darkBorder file:mr-2.5 file:py-1.5 file:px-2.5 file:rounded-xl file:border-2 file:border-earth-border file:text-xs file:font-black file:uppercase file:bg-earth-ochre file:text-earth-border cursor-pointer">
+                </div>
+
+                <div class="text-center text-[10px] font-black uppercase text-neutral-500">— OR —</div>
+
+                <div>
+                    <label class="block text-[11px] font-black uppercase text-neutral-700 dark:text-neutral-300 mb-1">Paste Raw CSV</label>
+                    <textarea id="rawCsvInput" rows="3" placeholder="Name,Points,Class&#10;Ananya Sharma,520,Class 10" class="w-full bg-earth-sandLight/60 dark:bg-neutral-900 border-2 border-earth-border dark:border-earth-darkBorder rounded-xl p-2.5 text-xs font-mono font-bold text-earth-border dark:text-earth-darkBorder outline-none"></textarea>
+                </div>
+
+                <div class="pt-2 flex justify-end space-x-2 border-t-2 border-earth-border dark:border-earth-darkBorder">
+                    <button onclick="closeModal('importCsvModal')" class="px-3.5 py-1.5 bg-earth-sandLight dark:bg-neutral-800 text-earth-border dark:text-earth-darkBorder border-2 border-earth-border dark:border-earth-darkBorder text-xs font-black uppercase rounded-xl shadow-neo-sm">Cancel</button>
+                    <button onclick="handleCsvImport()" class="px-4 py-1.5 bg-earth-ochre text-earth-border border-2 border-earth-border text-xs font-black uppercase rounded-xl shadow-neo-sm hover:shadow-neo transition-all">Import</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL 5: Unified Settings & Google Sheets Sync -->
+    <div id="settingsModal" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-earth-border/80 backdrop-blur-xs hidden">
+        <div class="bg-white dark:bg-earth-darkCard border-[2.5px] border-earth-border dark:border-earth-darkBorder rounded-2xl max-w-lg w-full p-5 sm:p-6 shadow-neo-xl relative max-h-[90vh] overflow-y-auto">
+            <button onclick="closeModal('settingsModal')" class="absolute top-4 right-4 p-1.5 bg-earth-sandLight dark:bg-neutral-800 border-2 border-earth-border dark:border-earth-darkBorder text-earth-border dark:text-earth-darkBorder rounded-lg shadow-neo-sm hover:bg-earth-terracotta hover:text-white transition-all">
+                <i data-lucide="x" class="w-4 h-4 stroke-[3]"></i>
+            </button>
+            
+            <div class="flex items-center space-x-3 mb-4">
+                <div class="p-2.5 bg-earth-ochre text-earth-border border-2 border-earth-border rounded-xl shadow-neo-sm shrink-0">
+                    <i data-lucide="database" class="w-5 h-5 stroke-[2.5]"></i>
+                </div>
+                <div>
+                    <h2 class="text-base sm:text-lg font-black font-heading uppercase text-earth-border dark:text-earth-darkBorder">Backend Sync & Settings</h2>
+                    <p class="text-xs font-bold text-neutral-600 dark:text-neutral-400">Google Sheets Integration for Tasks & Leaderboard</p>
+                </div>
+            </div>
+
+            <div class="space-y-3.5 text-xs font-bold text-earth-border dark:text-earth-darkBorder">
+                
+                <!-- Leaderboard Sheet Config -->
+                <div class="bg-earth-sandLight/60 dark:bg-neutral-900 p-3.5 rounded-xl border-2 border-earth-border dark:border-earth-darkBorder space-y-2">
+                    <label class="block font-black text-earth-border dark:text-earth-darkBorder uppercase tracking-wider text-[11px] flex items-center gap-1.5">
+                        <i data-lucide="award" class="w-3.5 h-3.5 text-earth-ochre stroke-[3]"></i> Leaderboard Apps Script URL
+                    </label>
+                    <input type="url" id="leaderboardScriptUrl" placeholder="https://script.google.com/macros/s/.../exec" class="w-full bg-white dark:bg-neutral-800 border-2 border-earth-border dark:border-earth-darkBorder rounded-xl p-2 text-xs text-earth-border dark:text-earth-darkBorder font-mono outline-none">
+                    
+                    <div class="flex flex-wrap items-center justify-between gap-2 text-[11px] pt-1">
+                        <label class="flex items-center gap-2 cursor-pointer font-bold">
+                            <input type="checkbox" id="leaderboardAutoSyncToggle" onchange="toggleLeaderboardAutoSync(this.checked)" class="rounded border-2 border-earth-border text-earth-border focus:ring-0">
+                            Auto-sync marks
+                        </label>
+                        <div class="flex gap-1.5">
+                            <button onclick="fetchLeaderboardFromSheet()" class="px-2.5 py-1 bg-earth-stone text-white border-2 border-earth-border rounded-lg font-black text-[10px] uppercase shadow-neo-sm flex items-center gap-1">
+                                <i data-lucide="download" class="w-3 h-3 stroke-[3]"></i> Fetch
+                            </button>
+                            <button onclick="pushLeaderboardToSheet()" class="px-2.5 py-1 bg-earth-sage text-white border-2 border-earth-border rounded-lg font-black text-[10px] uppercase shadow-neo-sm flex items-center gap-1">
+                                <i data-lucide="upload" class="w-3 h-3 stroke-[3]"></i> Push
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Tasks Sheet Config -->
+                <div class="bg-earth-sandLight/60 dark:bg-neutral-900 p-3.5 rounded-xl border-2 border-earth-border dark:border-earth-darkBorder space-y-2">
+                    <label class="block font-black text-earth-border dark:text-earth-darkBorder uppercase tracking-wider text-[11px] flex items-center gap-1.5">
+                        <i data-lucide="check-square" class="w-3.5 h-3.5 text-earth-stone stroke-[3]"></i> Tasks Apps Script URL
+                    </label>
+                    <input type="url" id="taskScriptUrl" placeholder="https://script.google.com/macros/s/.../exec" class="w-full bg-white dark:bg-neutral-800 border-2 border-earth-border dark:border-earth-darkBorder rounded-xl p-2 text-xs text-earth-border dark:text-earth-darkBorder font-mono outline-none">
+                    
+                    <div class="flex flex-wrap items-center justify-between gap-2 text-[11px] pt-1">
+                        <span class="text-neutral-600 dark:text-neutral-400 font-bold">Syncs Task Status</span>
+                        <div class="flex gap-1.5">
+                            <button onclick="fetchTasksFromSheet()" class="px-2.5 py-1 bg-earth-stone text-white border-2 border-earth-border rounded-lg font-black text-[10px] uppercase shadow-neo-sm flex items-center gap-1">
+                                <i data-lucide="download" class="w-3 h-3 stroke-[3]"></i> Fetch
+                            </button>
+                            <button onclick="pushTasksToSheet()" class="px-2.5 py-1 bg-earth-sage text-white border-2 border-earth-border rounded-lg font-black text-[10px] uppercase shadow-neo-sm flex items-center gap-1">
+                                <i data-lucide="upload" class="w-3 h-3 stroke-[3]"></i> Push
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <button onclick="saveAllSyncSettings()" class="w-full bg-earth-ochre text-earth-border border-2 border-earth-border font-black uppercase py-2.5 rounded-xl text-xs shadow-neo-sm hover:shadow-neo transition-all">Save Backend URLs</button>
+
+                <!-- Security PIN Update -->
+                <div class="border-t-2 border-earth-border dark:border-earth-darkBorder pt-3">
+                    <label class="block font-black uppercase text-neutral-600 dark:text-neutral-400 text-[10px] mb-1">Change Security PIN</label>
+                    <div class="flex gap-2">
+                        <input type="password" id="newPinInput" maxlength="4" placeholder="New 4-digit PIN" class="flex-1 bg-earth-sandLight/60 dark:bg-neutral-900 border-2 border-earth-border dark:border-earth-darkBorder rounded-xl px-3 py-1.5 text-xs font-bold text-earth-border dark:text-earth-darkBorder outline-none">
+                        <button onclick="changeSecurityPin()" class="px-3.5 py-1.5 bg-earth-sandLight dark:bg-neutral-800 text-earth-border dark:text-earth-darkBorder border-2 border-earth-border dark:border-earth-darkBorder text-xs font-black uppercase rounded-xl shadow-neo-sm transition">Update PIN</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ========================================== -->
+    <!-- TOAST NOTIFICATION                         -->
+    <!-- ========================================== -->
+    <div id="toast" class="fixed top-20 sm:top-24 right-3 sm:right-6 z-[60] transform -translate-y-16 opacity-0 transition-all duration-200 pointer-events-none max-w-[calc(100vw-24px)]">
+        <div class="bg-white dark:bg-neutral-900 text-earth-border dark:text-earth-darkBorder px-4 py-2.5 sm:py-3 rounded-xl shadow-neo-lg flex items-center space-x-2.5 text-xs font-black uppercase border-2 border-earth-border dark:border-earth-darkBorder">
+            <div id="toastIcon" class="p-1 rounded-md bg-earth-ochre text-earth-border border border-earth-border shrink-0">
+                <i data-lucide="info" class="w-4 h-4 stroke-[3]"></i>
+            </div>
+            <p id="toastMessage" class="truncate">Notification message</p>
+        </div>
+    </div>
+
+    <!-- ========================================== -->
+    <!-- JAVASCRIPT LOGIC                           -->
+    <!-- ========================================== -->
+    <script>
+        // ==========================================
+        // CONFIG & STATE
+        // ==========================================
+        const DEFAULT_LEADERBOARD_URL = 'https://script.google.com/macros/s/AKfycbyddSiHtmkz8DbbgVWGxFt24t6-dlFqJgGB4WzQlkrHDRpQmGpKB9VFNBcnpDmgaN28tg/exec';
+        const DEFAULT_TASKS_URL = 'https://script.google.com/macros/s/AKfycbzQXnzYYXmbaUz_GpEVXp2Q9SEsx3DQsZl63vI_Tky5fysx5pYuMUg_0Q0OSDs0N5lL/exec';
+        
+        let currentTab = 'tasks';
+        let requiredPin = localStorage.getItem('atldash_pin') || '9862';
+        let currentPin = '';
+        let deferredPrompt = null;
+
+        // Leaderboard State
+        const initialStudents = [
+            { id: '1', name: 'Ananya Sharma', group: 'Class 10', points: 520 },
+            { id: '2', name: 'Rohan Gupta', group: 'Class 10', points: 485 },
+            { id: '3', name: 'Priya Verma', group: 'Class 9', points: 460 },
+            { id: '4', name: 'Aditya Singh', group: 'Class 10', points: 410 },
+            { id: '5', name: 'Sneha Patel', group: 'Class 9', points: 395 }
+        ];
+        let students = JSON.parse(localStorage.getItem('student_leaderboard_data')) || initialStudents;
+        let leaderboardViewMode = 'cards';
+        let leaderboardAutoSync = localStorage.getItem('auto_sync_enabled') !== 'false';
+        let activeAddPointsStudentId = null;
+
+        // Tasks State
+        let tasks = [];
+        let taskFilter = 'all';
+        let isTaskSyncing = false;
+
+        // ==========================================
+        // INITIALIZATION
+        // ==========================================
+        window.onload = function() {
+            checkAuthSession();
+            setupPWA();
+            initTheme();
+
+            if (!localStorage.getItem('apps_script_url')) {
+                localStorage.setItem('apps_script_url', DEFAULT_LEADERBOARD_URL);
+            }
+            if (!localStorage.getItem('taskpulse_script_url')) {
+                localStorage.setItem('taskpulse_script_url', DEFAULT_TASKS_URL);
+            }
+
+            document.getElementById('leaderboardAutoSyncToggle').checked = leaderboardAutoSync;
+            document.getElementById('leaderboardScriptUrl').value = localStorage.getItem('apps_script_url') || DEFAULT_LEADERBOARD_URL;
+            document.getElementById('taskScriptUrl').value = localStorage.getItem('taskpulse_script_url') || DEFAULT_TASKS_URL;
+
+            loadLocalTasks();
+
+            const today = new Date().toISOString().split('T')[0];
+            document.getElementById('taskDueDate').value = today;
+
+            renderTasks();
+            updateLeaderboardMetrics();
+            renderGroupDropdown();
+            renderStudentList();
+            lucide.createIcons();
+
+            fetchLeaderboardFromSheet(true);
+            fetchTasksFromSheet(true);
+        };
+
+        // ==========================================
+        // TAB SWITCHING
+        // ==========================================
+        function switchTab(tab) {
+            currentTab = tab;
+            const tabTasks = document.getElementById('tabContentTasks');
+            const tabLeaderboard = document.getElementById('tabContentLeaderboard');
+            const btnTasks = document.getElementById('tabBtnTasks');
+            const btnLeaderboard = document.getElementById('tabBtnLeaderboard');
+
+            if (tab === 'tasks') {
+                tabTasks.classList.remove('hidden');
+                tabLeaderboard.classList.add('hidden');
+
+                btnTasks.className = "flex-1 md:flex-none flex items-center justify-center gap-1.5 px-4 sm:px-6 py-1.5 rounded-lg text-xs sm:text-sm font-black uppercase transition-all bg-earth-ochre text-earth-border border-2 border-earth-border shadow-neo-sm";
+                btnLeaderboard.className = "flex-1 md:flex-none flex items-center justify-center gap-1.5 px-4 sm:px-6 py-1.5 rounded-lg text-xs sm:text-sm font-black uppercase transition-all text-neutral-600 dark:text-neutral-300 hover:text-earth-border dark:hover:text-white";
+                renderTasks();
+            } else {
+                tabTasks.classList.add('hidden');
+                tabLeaderboard.classList.remove('hidden');
+
+                btnLeaderboard.className = "flex-1 md:flex-none flex items-center justify-center gap-1.5 px-4 sm:px-6 py-1.5 rounded-lg text-xs sm:text-sm font-black uppercase transition-all bg-earth-ochre text-earth-border border-2 border-earth-border shadow-neo-sm";
+                btnTasks.className = "flex-1 md:flex-none flex items-center justify-center gap-1.5 px-4 sm:px-6 py-1.5 rounded-lg text-xs sm:text-sm font-black uppercase transition-all text-neutral-600 dark:text-neutral-300 hover:text-earth-border dark:hover:text-white";
+                updateLeaderboardMetrics();
+                renderGroupDropdown();
+                renderStudentList();
+            }
+            lucide.createIcons();
+        }
+
+        function triggerCurrentTabSync() {
+            const icon = document.getElementById('syncIcon');
+            icon.classList.add('animate-spin');
+
+            if (currentTab === 'tasks') {
+                fetchTasksFromSheet().finally(() => {
+                    setTimeout(() => icon.classList.remove('animate-spin'), 600);
+                });
+            } else {
+                fetchLeaderboardFromSheet().finally(() => {
+                    setTimeout(() => icon.classList.remove('animate-spin'), 600);
+                });
+            }
+        }
+
+        // ==========================================
+        // PIN SECURITY SYSTEM
+        // ==========================================
+        function checkAuthSession() {
+            const isAuth = sessionStorage.getItem('atldash_authenticated');
+            if (isAuth === 'true') {
+                document.getElementById('pinOverlay').classList.add('hidden');
+            } else {
+                document.getElementById('pinOverlay').classList.remove('hidden');
+                focusPinInput();
+            }
+        }
+
+        function focusPinInput() {
+            const pinInput = document.getElementById('pinInput');
+            if (pinInput) pinInput.focus();
+        }
+
+        function handlePinInput(val) {
+            currentPin = val.substring(0, 4);
+            updatePinDots();
+            if (currentPin.length === 4) {
+                verifyPin();
+            }
+        }
+
+        function keypadPress(num) {
+            if (currentPin.length < 4) {
+                currentPin += num;
+                document.getElementById('pinInput').value = currentPin;
+                updatePinDots();
+                if (currentPin.length === 4) {
+                    verifyPin();
+                }
+            }
+        }
+
+        function keypadBackspace() {
+            if (currentPin.length > 0) {
+                currentPin = currentPin.slice(0, -1);
+                document.getElementById('pinInput').value = currentPin;
+                updatePinDots();
+            }
+        }
+
+        function keypadClear() {
+            currentPin = '';
+            document.getElementById('pinInput').value = '';
+            updatePinDots();
+            hidePinError();
+        }
+
+        function updatePinDots() {
+            for (let i = 0; i < 4; i++) {
+                const dot = document.getElementById(`dot-${i}`);
+                if (i < currentPin.length) {
+                    dot.className = "w-9 h-9 sm:w-10 sm:h-10 rounded-lg border-2 border-earth-border dark:border-earth-darkBorder bg-earth-ochre text-earth-border flex items-center justify-center font-black text-lg scale-105 transition-all shadow-neo-sm";
+                    dot.textContent = '●';
+                } else {
+                    dot.className = "w-9 h-9 sm:w-10 sm:h-10 rounded-lg border-2 border-earth-border dark:border-earth-darkBorder bg-earth-sandLight dark:bg-neutral-800 flex items-center justify-center font-black text-lg transition-all";
+                    dot.textContent = '';
+                }
+            }
+        }
+
+        function verifyPin() {
+            if (currentPin === requiredPin) {
+                sessionStorage.setItem('atldash_authenticated', 'true');
+                const overlay = document.getElementById('pinOverlay');
+                overlay.classList.add('opacity-0', 'transition-opacity', 'duration-200');
+                setTimeout(() => {
+                    overlay.classList.add('hidden');
+                    overlay.classList.remove('opacity-0');
+                }, 200);
+                showToast('Welcome to atldash!', 'success');
+            } else {
+                showPinError();
+            }
+        }
+
+        function showPinError() {
+            const errorEl = document.getElementById('pinError');
+            const cardEl = document.getElementById('pinCard');
+            errorEl.classList.remove('opacity-0');
+            cardEl.classList.add('animate-shake');
+            
+            setTimeout(() => {
+                cardEl.classList.remove('animate-shake');
+            }, 350);
+
+            setTimeout(() => {
+                keypadClear();
+            }, 750);
+        }
+
+        function hidePinError() {
+            const errorEl = document.getElementById('pinError');
+            if (errorEl) errorEl.classList.add('opacity-0');
+        }
+
+        function lockApp() {
+            sessionStorage.removeItem('atldash_authenticated');
+            keypadClear();
+            document.getElementById('pinOverlay').classList.remove('hidden');
+            focusPinInput();
+            showToast('Dashboard Locked', 'info');
+        }
+
+        function changeSecurityPin() {
+            const newPin = document.getElementById('newPinInput').value.trim();
+            if (newPin.length === 4 && /^\d+$/.test(newPin)) {
+                requiredPin = newPin;
+                localStorage.setItem('atldash_pin', newPin);
+                document.getElementById('newPinInput').value = '';
+                showToast('Security PIN Updated!', 'success');
+            } else {
+                showToast('PIN must be 4 digits.', 'error');
+            }
+        }
+
+        // ==========================================
+        // THEME & PWA
+        // ==========================================
+        function initTheme() {
+            if (localStorage.getItem('theme') === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+                document.documentElement.classList.add('dark');
+                updateThemeIcon(true);
+            } else {
+                document.documentElement.classList.remove('dark');
+                updateThemeIcon(false);
+            }
+        }
+
+        function toggleDarkMode() {
+            const isDark = document.documentElement.classList.toggle('dark');
+            localStorage.setItem('theme', isDark ? 'dark' : 'light');
+            updateThemeIcon(isDark);
+        }
+
+        function updateThemeIcon(isDark) {
+            const themeIcon = document.getElementById('themeIcon');
+            if (themeIcon) {
+                themeIcon.setAttribute('data-lucide', isDark ? 'sun' : 'moon');
+                lucide.createIcons();
+            }
+        }
+
+        function setupPWA() {
+            const manifest = {
+                name: "atldash - Tasks & Leaderboard",
+                short_name: "atldash",
+                description: "Tasks & Student Points Tracker Dashboard",
+                start_url: "./",
+                display: "standalone",
+                background_color: "#F9F7F2",
+                theme_color: "#D99B38",
+                icons: [
+                    {
+                        src: "https://placehold.co/192x192/D99B38/282522?text=ATL",
+                        sizes: "192x192",
+                        type: "image/png"
+                    },
+                    {
+                        src: "https://placehold.co/512x512/D99B38/282522?text=ATL",
+                        sizes: "512x512",
+                        type: "image/png"
+                    }
+                ]
+            };
+            const manifestBlob = new Blob([JSON.stringify(manifest)], { type: 'application/json' });
+            const manifestUrl = URL.createObjectURL(manifestBlob);
+            const linkEl = document.getElementById('manifestLink');
+            if (linkEl) linkEl.href = manifestUrl;
+
+            if ('serviceWorker' in navigator) {
+                const swCode = `
+                    self.addEventListener('install', (e) => self.skipWaiting());
+                    self.addEventListener('activate', (e) => self.clients.claim());
+                    self.addEventListener('fetch', (e) => {
+                        e.respondWith(fetch(e.request).catch(() => caches.match(e.request)));
+                    });
+                `;
+                const swBlob = new Blob([swCode], { type: 'application/javascript' });
+                navigator.serviceWorker.register(URL.createObjectURL(swBlob)).catch(() => {});
+            }
+
+            window.addEventListener('beforeinstallprompt', (e) => {
+                e.preventDefault();
+                deferredPrompt = e;
+                const installBtn = document.getElementById('pwaInstallBtn');
+                if (installBtn) {
+                    installBtn.classList.remove('hidden');
+                    installBtn.classList.add('flex');
+                }
+            });
+        }
+
+        async function installPWA() {
+            if (!deferredPrompt) {
+                showToast('Open browser menu (⋮) and tap "Add to Home Screen".', 'info');
+                return;
+            }
+            deferredPrompt.prompt();
+            const { outcome } = await deferredPrompt.userChoice;
+            if (outcome === 'accepted') {
+                showToast('App installed!', 'success');
+            }
+            deferredPrompt = null;
+            const installBtn = document.getElementById('pwaInstallBtn');
+            if (installBtn) installBtn.classList.add('hidden');
+        }
+
+        // ==========================================
+        // TASKS MANAGEMENT
+        // ==========================================
+        function loadLocalTasks() {
+            const saved = localStorage.getItem('taskpulse_tasks');
+            if (saved) {
+                try {
+                    tasks = JSON.parse(saved);
+                } catch(e) {
+                    tasks = [];
+                }
+            } else {
+                tasks = [
+                    { id: '1', title: 'Publish atldash to GitHub Pages', completed: false, priority: 'High', dueDate: new Date().toISOString().split('T')[0], createdAt: new Date().toISOString() },
+                    { id: '2', title: 'Update student marks for ATL Workshop', completed: false, priority: 'Medium', dueDate: new Date().toISOString().split('T')[0], createdAt: new Date().toISOString() }
+                ];
+                saveLocalTasks(false);
+            }
+        }
+
+        function saveLocalTasks(triggerSync = true) {
+            localStorage.setItem('taskpulse_tasks', JSON.stringify(tasks));
+            updateTaskStats();
+            if (triggerSync && (localStorage.getItem('taskpulse_script_url') || DEFAULT_TASKS_URL)) {
+                pushTasksToSheet();
+            }
+        }
+
+        function handleAddTask(e) {
+            e.preventDefault();
+            const input = document.getElementById('taskInput');
+            const priority = document.getElementById('taskPriority').value;
+            const dueDate = document.getElementById('taskDueDate').value;
+
+            if (!input.value.trim()) return;
+
+            const newTask = {
+                id: Date.now().toString(),
+                title: input.value.trim(),
+                completed: false,
+                priority: priority,
+                dueDate: dueDate,
+                createdAt: new Date().toISOString()
+            };
+
+            tasks.unshift(newTask);
+            saveLocalTasks(true);
+            renderTasks();
+
+            input.value = '';
+            showToast('Task added!', 'success');
+        }
+
+        function openEditTaskModal(id) {
+            const task = tasks.find(t => String(t.id) === String(id));
+            if (!task) return;
+
+            document.getElementById('editTaskId').value = task.id;
+            document.getElementById('editTaskTitle').value = task.title || '';
+            document.getElementById('editTaskPriority').value = task.priority || 'Medium';
+            document.getElementById('editTaskDueDate').value = task.dueDate ? task.dueDate.split('T')[0] : '';
+
+            openModal('editTaskModal');
+        }
+
+        function handleSaveTaskEdit(e) {
+            e.preventDefault();
+            const id = document.getElementById('editTaskId').value;
+            const title = document.getElementById('editTaskTitle').value.trim();
+            const priority = document.getElementById('editTaskPriority').value;
+            const dueDate = document.getElementById('editTaskDueDate').value;
+
+            if (!title) return;
+
+            const task = tasks.find(t => String(t.id) === String(id));
+            if (task) {
+                task.title = title;
+                task.priority = priority;
+                task.dueDate = dueDate;
+
+                saveLocalTasks(true);
+                renderTasks();
+                closeModal('editTaskModal');
+                showToast('Task updated successfully!', 'success');
+            }
+        }
+
+        function toggleTask(id) {
+            const targetId = String(id);
+            tasks = tasks.map(t => {
+                if (String(t.id) === targetId) {
+                    return { ...t, completed: !t.completed };
+                }
+                return t;
+            });
+            saveLocalTasks(true);
+            renderTasks();
+        }
+
+        function deleteTask(id) {
+            const targetId = String(id);
+            tasks = tasks.filter(t => String(t.id) !== targetId);
+            saveLocalTasks(true);
+            renderTasks();
+            showToast('Task removed', 'info');
+        }
+
+        function setTaskFilter(filter) {
+            taskFilter = filter;
+            document.querySelectorAll('.task-filter-chip').forEach(btn => {
+                btn.className = "task-filter-chip px-3.5 py-1.5 rounded-xl text-xs font-black uppercase whitespace-nowrap transition-all border-2 border-earth-border dark:border-earth-darkBorder bg-earth-sandLight dark:bg-neutral-800 text-earth-border dark:text-earth-darkBorder shrink-0";
+            });
+
+            const activeBtn = document.getElementById(`filter-${filter}`);
+            if (activeBtn) {
+                activeBtn.className = "task-filter-chip px-3.5 py-1.5 rounded-xl text-xs font-black uppercase whitespace-nowrap transition-all border-2 border-earth-border shadow-neo-sm bg-earth-ochre text-earth-border shrink-0";
+            }
+
+            renderTasks();
+        }
+
+        function formatDisplayDate(dateStr) {
+            if (!dateStr) return '';
+            try {
+                const parts = dateStr.split('T')[0].split('-');
+                if (parts.length !== 3) return dateStr;
+                const year = parseInt(parts[0], 10);
+                const month = parseInt(parts[1], 10) - 1;
+                const day = parseInt(parts[2], 10);
+                const taskDate = new Date(year, month, day);
+                if (isNaN(taskDate.getTime())) return dateStr;
+
+                const today = new Date();
+                today.setHours(0, 0, 0, 0);
+                const targetDate = new Date(year, month, day);
+                targetDate.setHours(0, 0, 0, 0);
+
+                const diffDays = Math.round((targetDate.getTime() - today.getTime()) / (1000 * 3600 * 24));
+                if (diffDays === 0) return 'Today';
+                if (diffDays === 1) return 'Tomorrow';
+                if (diffDays === -1) return 'Yesterday';
+
+                return taskDate.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+            } catch (e) {
+                return dateStr;
+            }
+        }
+
+        function isTaskOverdue(dateStr, isCompleted) {
+            if (!dateStr || isCompleted) return false;
+            try {
+                const parts = dateStr.split('T')[0].split('-');
+                if (parts.length !== 3) return false;
+                const taskDate = new Date(parseInt(parts[0], 10), parseInt(parts[1], 10) - 1, parseInt(parts[2], 10));
+                taskDate.setHours(23, 59, 59, 999);
+                return taskDate < new Date();
+            } catch(e) {
+                return false;
+            }
+        }
+
+        function renderTasks() {
+            const listEl = document.getElementById('taskList');
+            const emptyEl = document.getElementById('taskEmptyState');
+            const searchQuery = document.getElementById('taskSearchInput').value.toLowerCase().trim();
+
+            let filtered = tasks.filter(t => {
+                const matchesSearch = (t.title || '').toLowerCase().includes(searchQuery);
+                if (taskFilter === 'active') return !t.completed && matchesSearch;
+                if (taskFilter === 'completed') return t.completed && matchesSearch;
+                if (taskFilter === 'high') return t.priority === 'High' && matchesSearch;
+                return matchesSearch;
+            });
+
+            listEl.innerHTML = '';
+
+            if (filtered.length === 0) {
+                emptyEl.classList.remove('hidden');
+                emptyEl.classList.add('flex');
+            } else {
+                emptyEl.classList.add('hidden');
+                emptyEl.classList.remove('flex');
+
+                filtered.forEach(task => {
+                    const card = document.createElement('div');
+                    card.className = `group bg-white dark:bg-earth-darkCard border-2 border-earth-border dark:border-earth-darkBorder rounded-2xl p-3.5 sm:p-4 shadow-neo-sm hover:shadow-neo hover:translate-x-[-1px] hover:translate-y-[-1px] transition-all flex items-center justify-between gap-2.5 cursor-pointer select-none ${task.completed ? 'opacity-65' : ''}`;
+
+                    const priorityBadgeColor = 
+                        task.priority === 'High' ? 'bg-earth-terracottaLight text-earth-terracotta border border-earth-border' :
+                        task.priority === 'Medium' ? 'bg-earth-ochreLight text-earth-border border border-earth-border' :
+                        'bg-earth-sageLight text-earth-sage border border-earth-border';
+
+                    const safeId = String(task.id).replace(/'/g, "\\'");
+                    const formattedDate = formatDisplayDate(task.dueDate);
+                    const overdue = isTaskOverdue(task.dueDate, task.completed);
+                    const dateBadgeClass = overdue 
+                        ? 'text-earth-terracotta bg-earth-terracottaLight px-2 py-0.5 rounded-md font-black border border-earth-border' 
+                        : 'text-neutral-600 dark:text-neutral-300 font-bold';
+
+                    card.innerHTML = `
+                        <div onclick="toggleTask('${safeId}')" class="flex items-start sm:items-center gap-3 flex-1 min-w-0 py-0.5">
+                            <button type="button" onclick="event.stopPropagation(); toggleTask('${safeId}')" class="w-6 h-6 rounded-lg border-2 border-earth-border dark:border-earth-darkBorder flex items-center justify-center shrink-0 transition-all mt-0.5 sm:mt-0 ${task.completed ? 'bg-earth-sage text-white' : 'bg-earth-sandLight dark:bg-neutral-800'}">
+                                ${task.completed ? '<i data-lucide="check" class="w-4 h-4 stroke-[3]"></i>' : ''}
+                            </button>
+                            
+                            <div class="flex flex-col min-w-0 flex-1 gap-1">
+                                <span class="text-xs sm:text-sm font-bold text-earth-border dark:text-earth-darkBorder break-words ${task.completed ? 'line-through text-neutral-400 dark:text-neutral-500' : ''}">
+                                    ${escapeHtml(task.title)}
+                                </span>
+                                <div class="flex items-center gap-2 flex-wrap text-[10px] sm:text-[11px]">
+                                    <span class="px-2 py-0.5 rounded-md font-black uppercase ${priorityBadgeColor}">${task.priority}</span>
+                                    ${task.dueDate ? `
+                                        <span class="${dateBadgeClass} flex items-center gap-1">
+                                            <i data-lucide="${overdue ? 'alert-circle' : 'calendar'}" class="w-3 h-3 stroke-[2.5]"></i>
+                                            <span>${escapeHtml(formattedDate)}</span>
+                                        </span>
+                                    ` : ''}
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="flex items-center space-x-1 shrink-0">
+                            <button type="button" onclick="event.stopPropagation(); openEditTaskModal('${safeId}')" title="Edit task" class="p-1.5 sm:p-2 rounded-xl text-neutral-500 hover:text-earth-border hover:bg-earth-sandLight border border-transparent hover:border-earth-border transition-all">
+                                <i data-lucide="pencil" class="w-3.5 h-3.5 sm:w-4 sm:h-4 stroke-[2.5]"></i>
+                            </button>
+                            <button type="button" onclick="event.stopPropagation(); deleteTask('${safeId}')" title="Delete task" class="p-1.5 sm:p-2 rounded-xl text-neutral-400 hover:text-white hover:bg-earth-terracotta border border-transparent hover:border-earth-border transition-all">
+                                <i data-lucide="trash-2" class="w-3.5 h-3.5 sm:w-4 sm:h-4 stroke-[2.5]"></i>
+                            </button>
+                        </div>
+                    `;
+                    listEl.appendChild(card);
+                });
+            }
+
+            updateTaskStats();
+            lucide.createIcons();
+        }
+
+        function updateTaskStats() {
+            const total = tasks.length;
+            const completed = tasks.filter(t => t.completed).length;
+            const rate = total > 0 ? Math.round((completed / total) * 100) : 0;
+
+            document.getElementById('statTaskTotal').textContent = total;
+            document.getElementById('statTaskCompleted').textContent = completed;
+            document.getElementById('statTaskRate').textContent = `${rate}%`;
+            document.getElementById('statTaskRateText').textContent = `${rate}%`;
+            document.getElementById('taskProgressBar').style.width = `${rate}%`;
+        }
+
+        async function fetchTasksFromSheet(silent = false) {
+            const url = localStorage.getItem('taskpulse_script_url') || DEFAULT_TASKS_URL;
+            if (!url) return;
+
+            try {
+                const response = await fetch(url);
+                const res = await response.json();
+                if (res.status === 'success' && Array.isArray(res.tasks)) {
+                    tasks = res.tasks.map((t, idx) => ({
+                        ...t,
+                        id: t.id ? String(t.id) : `task-${idx}-${Date.now()}`,
+                        completed: t.completed === true || String(t.completed).toLowerCase() === 'true' || t.completed === 1
+                    }));
+                    saveLocalTasks(false);
+                    renderTasks();
+                    if (!silent) showToast(`Synced ${tasks.length} tasks!`, 'success');
+                }
+            } catch (err) {
+                console.error('Fetch tasks error:', err);
+                if (!silent) showToast('Failed to sync tasks.', 'error');
+            }
+        }
+
+        async function pushTasksToSheet(silent = true) {
+            const url = localStorage.getItem('taskpulse_script_url') || DEFAULT_TASKS_URL;
+            if (!url || isTaskSyncing) return;
+            isTaskSyncing = true;
+
+            try {
+                await fetch(url, {
+                    method: 'POST',
+                    mode: 'no-cors',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        action: 'syncAll',
+                        tasks: tasks
+                    })
+                });
+                setTimeout(() => { isTaskSyncing = false; }, 1000);
+                if (!silent) showToast('Pushed tasks to Sheet', 'success');
+            } catch(err) {
+                console.error('Push tasks error:', err);
+                isTaskSyncing = false;
+                if (!silent) showToast('Task sync warning', 'error');
+            }
+        }
+
+        // ==========================================
+        // LEADERBOARD & STUDENT MARKS
+        // ==========================================
+        function updateLeaderboardMetrics() {
+            document.getElementById('statTotalStudents').textContent = students.length;
+            
+            if (students.length > 0) {
+                const top1 = [...students].sort((a,b) => b.points - a.points)[0];
+                document.getElementById('statTopStudent').textContent = top1 ? `${top1.name} (${top1.points} pts)` : 'None';
+
+                const totalPts = students.reduce((sum, s) => sum + Number(s.points || 0), 0);
+                const avg = Math.round(totalPts / students.length);
+                document.getElementById('statAvgScore').textContent = avg;
+                document.getElementById('statTotalPoints').textContent = totalPts;
+            } else {
+                document.getElementById('statTopStudent').textContent = 'None';
+                document.getElementById('statAvgScore').textContent = '0';
+                document.getElementById('statTotalPoints').textContent = '0';
+            }
+        }
+
+        function renderGroupDropdown() {
+            const select = document.getElementById('groupFilter');
+            const currentVal = select.value;
+            const groups = Array.from(new Set(students.map(s => s.group || 'General'))).filter(Boolean);
+
+            select.innerHTML = '<option value="ALL">All Classes</option>';
+            groups.forEach(g => {
+                const opt = document.createElement('option');
+                opt.value = g;
+                opt.textContent = g;
+                select.appendChild(opt);
+            });
+            select.value = currentVal || 'ALL';
+        }
+
+        function renderStudentList() {
+            const search = document.getElementById('leaderboardSearchInput').value.toLowerCase().trim();
+            const group = document.getElementById('groupFilter').value;
+            const sortBy = document.getElementById('sortBy').value;
+
+            let filtered = students.filter(s => {
+                const matchesSearch = (s.name || '').toLowerCase().includes(search);
+                const matchesGroup = group === 'ALL' || s.group === group;
+                return matchesSearch && matchesGroup;
+            });
+
+            filtered.sort((a, b) => {
+                if (sortBy === 'pointsDesc') return b.points - a.points;
+                if (sortBy === 'pointsAsc') return a.points - b.points;
+                if (sortBy === 'name') return a.name.localeCompare(b.name);
+                return b.points - a.points;
+            });
+
+            const cardContainer = document.getElementById('studentCardsContainer');
+            const tableBody = document.getElementById('tableBody');
+            const emptyState = document.getElementById('leaderboardEmptyState');
+
+            cardContainer.innerHTML = '';
+            tableBody.innerHTML = '';
+
+            if (filtered.length === 0) {
+                emptyState.classList.remove('hidden');
+                return;
+            } else {
+                emptyState.classList.add('hidden');
+            }
+
+            filtered.forEach((student, index) => {
+                if (leaderboardViewMode === 'cards') {
+                    cardContainer.appendChild(createStudentCard(student, index + 1));
+                } else {
+                    tableBody.appendChild(createStudentTableRow(student, index + 1));
+                }
+            });
+
+            lucide.createIcons();
+        }
+
+        function getInitials(name) {
+            if (!name) return 'ST';
+            return name.split(' ').map(n => n[0]).join('').substring(0,2).toUpperCase();
+        }
+
+        function getRankBadge(rank) {
+            if (rank === 1) return '<span class="px-2 py-0.5 rounded-md text-[10px] font-black uppercase bg-earth-ochre text-earth-border border border-earth-border">#1 Gold 👑</span>';
+            if (rank === 2) return '<span class="px-2 py-0.5 rounded-md text-[10px] font-black uppercase bg-earth-sand text-earth-border border border-earth-border">#2 Silver 🥈</span>';
+            if (rank === 3) return '<span class="px-2 py-0.5 rounded-md text-[10px] font-black uppercase bg-earth-terracottaLight text-earth-terracotta border border-earth-border">#3 Bronze 🥉</span>';
+            return `<span class="text-[10px] sm:text-[11px] font-black text-neutral-400">#${rank}</span>`;
+        }
+
+        function createStudentCard(student, rank) {
+            const card = document.createElement('div');
+            card.className = "bg-white dark:bg-earth-darkCard p-3.5 sm:p-4 rounded-2xl border-2 border-earth-border dark:border-earth-darkBorder shadow-neo-sm hover:shadow-neo hover:translate-x-[-1px] hover:translate-y-[-1px] flex flex-col justify-between gap-3 transition-all";
+
+            card.innerHTML = `
+                <div class="flex items-start space-x-3 min-w-0">
+                    <div class="w-10 h-10 sm:w-11 sm:h-11 rounded-xl bg-earth-ochre text-earth-border border-2 border-earth-border flex items-center justify-center font-black text-xs sm:text-sm flex-shrink-0 shadow-neo-sm">
+                        ${getInitials(student.name)}
+                    </div>
+
+                    <div class="min-w-0 flex-1">
+                        <div class="flex items-center space-x-1.5 flex-wrap gap-y-1">
+                            <h3 class="text-xs sm:text-base font-black text-earth-border dark:text-earth-darkBorder break-words">${escapeHtml(student.name)}</h3>
+                            <span class="text-[9px] sm:text-[10px] px-1.5 py-0.5 rounded-md bg-earth-sandLight dark:bg-neutral-800 text-earth-border dark:text-earth-darkBorder font-bold border border-earth-border dark:border-earth-darkBorder">${escapeHtml(student.group || 'General')}</span>
+                            ${getRankBadge(rank)}
+                        </div>
+                        <div class="text-[11px] sm:text-xs font-bold text-neutral-600 dark:text-neutral-400 mt-1">
+                            Points: <span class="font-black text-earth-border dark:text-earth-darkBorder text-xs sm:text-sm">${student.points}</span> pts
+                        </div>
+                    </div>
+                </div>
+
+                <div class="flex items-center justify-between gap-2 border-t-2 border-earth-border dark:border-earth-darkBorder pt-2.5">
+                    <button onclick="openAddPointsModal('${student.id}')" class="flex-1 px-2.5 sm:px-3 py-1.5 bg-earth-sage text-white border-2 border-earth-border rounded-xl text-xs font-black uppercase shadow-neo-sm active:scale-95 transition-all flex items-center justify-center gap-1">
+                        <i data-lucide="plus-circle" class="w-3.5 h-3.5 stroke-[2.5]"></i> Add Points
+                    </button>
+
+                    <div class="flex items-center space-x-1 shrink-0">
+                        <button onclick="editStudent('${student.id}')" class="p-1.5 text-earth-border dark:text-earth-darkBorder hover:bg-earth-sandLight border border-transparent hover:border-earth-border rounded-lg transition" title="Edit Student">
+                            <i data-lucide="edit" class="w-3.5 h-3.5 sm:w-4 sm:h-4 stroke-[2.5]"></i>
+                        </button>
+                        <button onclick="deleteStudent('${student.id}')" class="p-1.5 text-earth-border dark:text-earth-darkBorder hover:bg-earth-terracotta hover:text-white border border-transparent hover:border-earth-border rounded-lg transition" title="Delete Student">
+                            <i data-lucide="trash-2" class="w-3.5 h-3.5 sm:w-4 sm:h-4 stroke-[2.5]"></i>
+                        </button>
+                    </div>
+                </div>
+            `;
+            return card;
+        }
+
+        function createStudentTableRow(student, rank) {
+            const tr = document.createElement('tr');
+            tr.className = "hover:bg-earth-ochre/15 transition-colors";
+
+            tr.innerHTML = `
+                <td class="px-3.5 py-3 font-black">${getRankBadge(rank)}</td>
+                <td class="px-3.5 py-3 font-bold text-earth-border dark:text-earth-darkBorder">${escapeHtml(student.name)}</td>
+                <td class="px-3.5 py-3 text-xs text-neutral-600 dark:text-neutral-300 font-bold">${escapeHtml(student.group || 'General')}</td>
+                <td class="px-3.5 py-3 text-center font-black text-earth-border dark:text-earth-darkBorder text-sm sm:text-base">${student.points}</td>
+                <td class="px-3.5 py-3 text-center">
+                    <button onclick="openAddPointsModal('${student.id}')" class="px-3 py-1 bg-earth-sage text-white border-2 border-earth-border rounded-xl text-xs font-black uppercase shadow-neo-sm inline-flex items-center gap-1 active:scale-95">
+                        <i data-lucide="plus-circle" class="w-3.5 h-3.5 stroke-[2.5]"></i> Add Points
+                    </button>
+                </td>
+                <td class="px-3.5 py-3 text-center">
+                    <div class="flex items-center justify-center space-x-1">
+                        <button onclick="editStudent('${student.id}')" class="p-1 hover:bg-earth-sandLight rounded border border-transparent hover:border-earth-border"><i data-lucide="edit" class="w-4 h-4 stroke-[2.5]"></i></button>
+                        <button onclick="deleteStudent('${student.id}')" class="p-1 hover:bg-earth-terracotta hover:text-white rounded border border-transparent hover:border-earth-border"><i data-lucide="trash-2" class="w-4 h-4 stroke-[2.5]"></i></button>
+                    </div>
+                </td>
+            `;
+            return tr;
+        }
+
+        function saveLeaderboardStoredData(triggerAutoSync = true) {
+            localStorage.setItem('student_leaderboard_data', JSON.stringify(students));
+            updateLeaderboardMetrics();
+            renderGroupDropdown();
+
+            if (triggerAutoSync && leaderboardAutoSync && (localStorage.getItem('apps_script_url') || DEFAULT_LEADERBOARD_URL)) {
+                pushLeaderboardToSheet(true);
+            }
+        }
+
+        function toggleLeaderboardAutoSync(val) {
+            leaderboardAutoSync = val;
+            localStorage.setItem('auto_sync_enabled', val ? 'true' : 'false');
+            showToast(val ? 'Auto-sync enabled!' : 'Auto-sync disabled.', 'info');
+        }
+
+        function openAddPointsModal(id) {
+            const student = students.find(s => s.id === id);
+            if (!student) return;
+
+            activeAddPointsStudentId = id;
+            document.getElementById('addPointsStudentName').textContent = student.name;
+            document.getElementById('addPointsCurrentPts').textContent = `Current Points: ${student.points} pts`;
+            document.getElementById('customPointsInput').value = '';
+
+            openModal('addPointsModal');
+        }
+
+        function applyQuickPoints(delta) {
+            if (!activeAddPointsStudentId) return;
+            adjustPoints(activeAddPointsStudentId, delta);
+            closeModal('addPointsModal');
+        }
+
+        function applyCustomPoints() {
+            const input = document.getElementById('customPointsInput');
+            const val = Number(input.value);
+            if (!val || isNaN(val)) return;
+            if (!activeAddPointsStudentId) return;
+
+            adjustPoints(activeAddPointsStudentId, val);
+            closeModal('addPointsModal');
+        }
+
+        function adjustPoints(id, delta) {
+            const student = students.find(s => s.id === id);
+            if (!student) return;
+
+            student.points = Math.max(0, (Number(student.points) || 0) + delta);
+            saveLeaderboardStoredData();
+            renderStudentList();
+            showToast(`Added ${delta > 0 ? '+' : ''}${delta} pts to ${student.name}`, 'success');
+        }
+
+        function handleSaveStudent(e) {
+            e.preventDefault();
+            const id = document.getElementById('studentEditId').value;
+            const name = document.getElementById('inputStudentName').value.trim();
+            const group = document.getElementById('inputStudentGroup').value.trim() || 'General';
+            const points = Number(document.getElementById('inputStudentScore').value || 0);
+
+            if (id) {
+                const student = students.find(s => s.id === id);
+                if (student) {
+                    student.name = name;
+                    student.group = group;
+                    student.points = points;
+                }
+                showToast(`Updated ${name}`, 'success');
+            } else {
+                const newStudent = {
+                    id: Date.now().toString(),
+                    name,
+                    group,
+                    points
+                };
+                students.push(newStudent);
+                showToast(`Added ${name}!`, 'success');
+            }
+
+            closeModal('addStudentModal');
+            saveLeaderboardStoredData();
+            renderStudentList();
+        }
+
+        function editStudent(id) {
+            const student = students.find(s => s.id === id);
+            if (!student) return;
+
+            document.getElementById('modalStudentTitle').textContent = 'Edit Student';
+            document.getElementById('studentEditId').value = student.id;
+            document.getElementById('inputStudentName').value = student.name;
+            document.getElementById('inputStudentGroup').value = student.group || '';
+            document.getElementById('inputStudentScore').value = student.points || 0;
+
+            openModal('addStudentModal');
+        }
+
+        function deleteStudent(id) {
+            const student = students.find(s => s.id === id);
+            if (!student) return;
+
+            students = students.filter(s => s.id !== id);
+            saveLeaderboardStoredData();
+            renderStudentList();
+            showToast(`Removed ${student.name}`, 'info');
+        }
+
+        function quickBatchUpdateModal() {
+            const container = document.getElementById('batchListContainer');
+            container.innerHTML = '';
+            document.getElementById('batchCount').textContent = `${students.length} Students`;
+
+            students.forEach((s) => {
+                const row = document.createElement('div');
+                row.className = "flex items-center justify-between bg-earth-sandLight/60 dark:bg-neutral-900 p-2.5 sm:p-3 rounded-xl border-2 border-earth-border dark:border-earth-darkBorder gap-2";
+                row.innerHTML = `
+                    <div class="min-w-0 flex-1">
+                        <div class="font-black text-earth-border dark:text-earth-darkBorder text-xs sm:text-sm truncate">${escapeHtml(s.name)}</div>
+                        <div class="text-[10px] sm:text-[11px] font-bold text-neutral-500 dark:text-neutral-400">${escapeHtml(s.group || 'General')} | Curr: ${s.points} pts</div>
+                    </div>
+                    <div class="flex items-center space-x-2 shrink-0">
+                        <div class="w-20 sm:w-24">
+                            <label class="block text-[8px] sm:text-[9px] uppercase font-black text-neutral-500 dark:text-neutral-400">+ Points</label>
+                            <input type="number" data-id="${s.id}" data-field="addPoints" value="0" class="batch-input w-full bg-white dark:bg-neutral-800 border-2 border-earth-border dark:border-earth-darkBorder rounded-lg p-1 text-xs font-black text-earth-border dark:text-earth-darkBorder text-center outline-none">
+                        </div>
+                    </div>
+                `;
+                container.appendChild(row);
+            });
+
+            openModal('batchUpdateModal');
+        }
+
+        function saveBatchUpdates() {
+            const inputs = document.querySelectorAll('.batch-input');
+            inputs.forEach(input => {
+                const id = input.getAttribute('data-id');
+                const field = input.getAttribute('data-field');
+                const student = students.find(s => s.id === id);
+                if (!student) return;
+
+                if (field === 'addPoints' && Number(input.value) !== 0) {
+                    const added = Number(input.value);
+                    student.points = Math.max(0, (Number(student.points) || 0) + added);
+                }
+            });
+
+            closeModal('batchUpdateModal');
+            saveLeaderboardStoredData();
+            renderStudentList();
+            showToast('Batch marks updated!', 'success');
+        }
+
+        function exportCSV() {
+            let csv = 'Name,Class,Points\n';
+            students.forEach(s => {
+                csv += `"${s.name}","${s.group || 'General'}","${s.points}"\n`;
+            });
+
+            const blob = new Blob([csv], { type: 'text/csv' });
+            const url = window.URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.setAttribute('href', url);
+            a.setAttribute('download', `ATL_Student_Marks.csv`);
+            a.click();
+            showToast('CSV exported!', 'success');
+        }
+
+        function handleCsvImport() {
+            const fileInput = document.getElementById('csvFileInput');
+            const rawText = document.getElementById('rawCsvInput').value.trim();
+
+            if (fileInput.files.length > 0) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    parseCsvData(e.target.result);
+                };
+                reader.readAsText(fileInput.files[0]);
+            } else if (rawText !== '') {
+                parseCsvData(rawText);
+            } else {
+                showToast('Please select file or paste CSV text.', 'error');
+            }
+        }
+
+        function parseCsvData(csvText) {
+            try {
+                const lines = csvText.split('\n').filter(line => line.trim() !== '');
+                if (lines.length <= 1) {
+                    showToast('Invalid CSV format.', 'error');
+                    return;
+                }
+
+                const newStudents = [];
+                for (let i = 1; i < lines.length; i++) {
+                    const cols = lines[i].split(',').map(c => c.replace(/^"|"$/g, '').trim());
+                    if (cols.length >= 2) {
+                        newStudents.push({
+                            id: (Date.now() + i).toString(),
+                            name: cols[0],
+                            points: Number(cols[1]) || 0,
+                            group: cols[2] || 'General'
+                        });
+                    }
+                }
+
+                if (newStudents.length > 0) {
+                    students = newStudents;
+                    saveLeaderboardStoredData();
+                    renderStudentList();
+                    closeModal('importCsvModal');
+                    showToast(`Imported ${newStudents.length} students!`, 'success');
+                }
+            } catch (err) {
+                showToast('Error reading CSV format.', 'error');
+            }
+        }
+
+        function setLeaderboardViewMode(mode) {
+            leaderboardViewMode = mode;
+            const cardBtn = document.getElementById('viewCardBtn');
+            const tableBtn = document.getElementById('viewTableBtn');
+            const cardContainer = document.getElementById('studentCardsContainer');
+            const tableContainer = document.getElementById('tableContainer');
+
+            if (mode === 'cards') {
+                cardBtn.className = "px-2.5 sm:px-3 py-1 rounded-lg text-xs font-black uppercase bg-earth-ochre text-earth-border border-2 border-earth-border shadow-neo-sm transition";
+                tableBtn.className = "px-2.5 sm:px-3 py-1 rounded-lg text-xs font-black uppercase text-neutral-600 dark:text-neutral-400 hover:text-earth-border dark:hover:text-white transition";
+                cardContainer.classList.remove('hidden');
+                tableContainer.classList.add('hidden');
+            } else {
+                tableBtn.className = "px-2.5 sm:px-3 py-1 rounded-lg text-xs font-black uppercase bg-earth-ochre text-earth-border border-2 border-earth-border shadow-neo-sm transition";
+                cardBtn.className = "px-2.5 sm:px-3 py-1 rounded-lg text-xs font-black uppercase text-neutral-600 dark:text-neutral-400 hover:text-earth-border dark:hover:text-white transition";
+                tableContainer.classList.remove('hidden');
+                cardContainer.classList.add('hidden');
+            }
+            renderStudentList();
+        }
+
+        async function fetchLeaderboardFromSheet(silent = false) {
+            const url = localStorage.getItem('apps_script_url') || DEFAULT_LEADERBOARD_URL;
+            if (!url) return;
+
+            try {
+                const response = await fetch(url);
+                if (!response.ok) throw new Error('Network error');
+                const data = await response.json();
+                if (Array.isArray(data) && data.length > 0) {
+                    students = data.map((s, idx) => ({
+                        id: s.id || String(Date.now() + idx),
+                        name: s.name || 'Unknown',
+                        group: s.group || s.class || 'General',
+                        points: Number(s.points) || 0
+                    }));
+
+                    saveLeaderboardStoredData(false);
+                    renderStudentList();
+                    if (!silent) showToast(`Loaded ${students.length} students!`, 'success');
+                }
+            } catch (err) {
+                console.error('Leaderboard fetch error:', err);
+                if (!silent) showToast('Failed to fetch Leaderboard.', 'error');
+            }
+        }
+
+        async function pushLeaderboardToSheet(silent = false) {
+            const url = localStorage.getItem('apps_script_url') || DEFAULT_LEADERBOARD_URL;
+            if (!url) return;
+
+            try {
+                await fetch(url, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+                    body: JSON.stringify(students)
+                });
+                if (!silent) showToast('Leaderboard pushed to Sheet!', 'success');
+            } catch (e) {
+                try {
+                    await fetch(url, {
+                        method: 'POST',
+                        mode: 'no-cors',
+                        headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+                        body: JSON.stringify(students)
+                    });
+                    if (!silent) showToast('Leaderboard pushed to Sheet!', 'success');
+                } catch (err2) {
+                    console.error('Push error:', err2);
+                    if (!silent) showToast('Failed to push Leaderboard.', 'error');
+                }
+            }
+        }
+
+        // ==========================================
+        // SETTINGS & MODALS
+        // ==========================================
+        function saveAllSyncSettings() {
+            const leaderboardUrl = document.getElementById('leaderboardScriptUrl').value.trim();
+            const taskUrl = document.getElementById('taskScriptUrl').value.trim();
+
+            if (leaderboardUrl) localStorage.setItem('apps_script_url', leaderboardUrl);
+            if (taskUrl) localStorage.setItem('taskpulse_script_url', taskUrl);
+
+            showToast('Settings saved!', 'success');
+            fetchLeaderboardFromSheet(true);
+            fetchTasksFromSheet(true);
+            closeModal('settingsModal');
+        }
+
+        function openModal(id) {
+            if (id === 'addStudentModal' && !document.getElementById('studentEditId').value) {
+                document.getElementById('modalStudentTitle').textContent = 'Add Student';
+                document.getElementById('studentForm').reset();
+                document.getElementById('studentEditId').value = '';
+            }
+            document.getElementById(id).classList.remove('hidden');
+            lucide.createIcons();
+        }
+
+        function closeModal(id) {
+            document.getElementById(id).classList.add('hidden');
+        }
+
+        function showToast(msg, type = 'info') {
+            const toast = document.getElementById('toast');
+            const messageEl = document.getElementById('toastMessage');
+            const iconEl = document.getElementById('toastIcon');
+
+            messageEl.textContent = msg;
+
+            if (type === 'success') {
+                iconEl.className = "p-1 rounded-md bg-earth-sage text-white border border-earth-border shrink-0";
+                iconEl.innerHTML = '<i data-lucide="check-circle" class="w-4 h-4 stroke-[3]"></i>';
+            } else if (type === 'error') {
+                iconEl.className = "p-1 rounded-md bg-earth-terracotta text-white border border-earth-border shrink-0";
+                iconEl.innerHTML = '<i data-lucide="alert-triangle" class="w-4 h-4 stroke-[3]"></i>';
+            } else {
+                iconEl.className = "p-1 rounded-md bg-earth-ochre text-earth-border border border-earth-border shrink-0";
+                iconEl.innerHTML = '<i data-lucide="info" class="w-4 h-4 stroke-[3]"></i>';
+            }
+
+            lucide.createIcons();
+
+            toast.classList.remove('-translate-y-16', 'opacity-0');
+            toast.classList.add('translate-y-0', 'opacity-100');
+
+            setTimeout(() => {
+                toast.classList.remove('translate-y-0', 'opacity-100');
+                toast.classList.add('-translate-y-16', 'opacity-0');
+            }, 2800);
+        }
+
+        function escapeHtml(str) {
+            if (!str) return '';
+            return String(str).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;").replace(/'/g, "&#039;");
+        }
+    </script>
+</body>
+</html>
