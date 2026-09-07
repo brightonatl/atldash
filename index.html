@@ -2,25 +2,31 @@
 <html lang="en" class="h-full">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>atldash - Tasks & Leaderboard Hub</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <title>atldash - Material Tasks & Leaderboard Hub</title>
 
-    <!-- PWA Meta Tags & Manifest -->
-    <meta name="theme-color" content="#D99B38">
+    <!-- PWA & Mobile Install Meta Tags -->
+    <meta name="theme-color" content="#0B57D0">
     <meta name="mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="default">
     <meta name="apple-mobile-web-app-title" content="atldash">
-    <link rel="apple-touch-icon" href="https://placehold.co/192x192/D99B38/282522?text=ATL">
-    <link rel="manifest" id="manifestLink">
+    <meta name="application-name" content="atldash">
+    <meta name="msapplication-TileColor" content="#0B57D0">
+    <meta name="description" content="Google Material Design 3 Tasks & Student Marks Tracker">
+    
+    <!-- Icons & Manifest -->
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512' width='64' height='64'%3E%3Crect width='512' height='512' rx='128' fill='%230B57D0'/%3E%3Ccircle cx='256' cy='256' r='140' fill='%23D3E4FF'/%3E%3Cpath d='M200 260 L240 300 L320 210' stroke='%230B57D0' stroke-width='32' stroke-linecap='round' stroke-linejoin='round' fill='none'/%3E%3C/svg%3E">
+    <link rel="apple-touch-icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512' width='180' height='180'%3E%3Crect width='512' height='512' rx='128' fill='%230B57D0'/%3E%3Ccircle cx='256' cy='256' r='140' fill='%23D3E4FF'/%3E%3Cpath d='M200 260 L240 300 L320 210' stroke='%230B57D0' stroke-width='32' stroke-linecap='round' stroke-linejoin='round' fill='none'/%3E%3C/svg%3E">
+    <link rel="manifest" href="manifest.json" id="manifestLink">
 
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
     
-    <!-- Google Fonts: Space Grotesk & Outfit -->
+    <!-- Google Fonts: Plus Jakarta Sans & Inter (Clean Material 3 Typography) -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@500;600;700;800;900&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     
     <!-- Lucide Icons -->
     <script src="https://unpkg.com/lucide@latest"></script>
@@ -31,47 +37,66 @@
             theme: {
                 extend: {
                     fontFamily: {
-                        sans: ['Space Grotesk', 'sans-serif'],
-                        heading: ['Outfit', 'sans-serif'],
+                        sans: ['"Plus Jakarta Sans"', 'Inter', 'system-ui', '-apple-system', 'sans-serif'],
+                        heading: ['"Plus Jakarta Sans"', 'sans-serif'],
                     },
                     colors: {
-                        earth: {
-                            ochre: '#D99B38',       /* Warm Ochre / Amber Earth */
-                            ochreLight: '#F3E5AB',
-                            sage: '#6C8360',        /* Calm Olive / Sage Green */
-                            sageLight: '#E2EBDD',
-                            terracotta: '#C86D51',  /* Warm Clay / Terracotta */
-                            terracottaLight: '#F8E2DC',
-                            stone: '#5E7A75',       /* River Stone / Slate */
-                            stoneLight: '#E0EAE8',
-                            sand: '#E3DAC9',        /* Warm Taupe / Sand */
-                            sandLight: '#F5F0E6',
-                            bg: '#F9F7F2',          /* Soft Cream Canvas */
-                            card: '#FFFFFF',
-                            border: '#282522',      /* Deep Charcoal Earth Border */
-                            darkBg: '#18181A',
-                            darkCard: '#242428',
-                            darkBorder: '#F2EDE4'
+                        m3: {
+                            primary: '#0B57D0',           /* Google Blue */
+                            primaryHover: '#0842A0',
+                            onPrimary: '#FFFFFF',
+                            primaryContainer: '#D3E4FF',
+                            onPrimaryContainer: '#041E49',
+                            
+                            secondary: '#00639B',
+                            secondaryContainer: '#C2E7FF',
+                            onSecondaryContainer: '#001D35',
+                            
+                            surface: '#F8F9FA',          /* Material Light Surface */
+                            surfaceContainerLowest: '#FFFFFF',
+                            surfaceContainerLow: '#F3F4F8',
+                            surfaceContainer: '#FFFFFF',
+                            surfaceContainerHigh: '#E9EEF6',
+                            surfaceContainerHighest: '#E1E8F0',
+                            
+                            outline: '#74777F',
+                            outlineVariant: '#E0E3E7',
+                            
+                            onSurface: '#1F1F1F',
+                            onSurfaceVariant: '#444746',
+                            
+                            // Dark Mode Tokens
+                            darkSurface: '#111318',
+                            darkSurfaceContainerLowest: '#0C0E12',
+                            darkSurfaceContainerLow: '#191C20',
+                            darkSurfaceContainer: '#1E2024',
+                            darkSurfaceContainerHigh: '#282A2F',
+                            darkSurfaceContainerHighest: '#33353A',
+                            darkPrimary: '#A8C7FA',
+                            darkOnPrimary: '#062E6F',
+                            darkPrimaryContainer: '#0842A0',
+                            darkOnPrimaryContainer: '#D3E4FF',
+                            darkOutline: '#8E918F',
+                            darkOutlineVariant: '#353841',
+                            darkOnSurface: '#E3E3E3',
+                            darkOnSurfaceVariant: '#C4C7C5',
                         }
                     },
                     boxShadow: {
-                        'neo-sm': '2px 2px 0px 0px #282522',
-                        'neo': '3.5px 3.5px 0px 0px #282522',
-                        'neo-lg': '5px 5px 0px 0px #282522',
-                        'neo-xl': '7px 7px 0px 0px #282522',
-                        'neo-dark-sm': '2px 2px 0px 0px #F2EDE4',
-                        'neo-dark': '3.5px 3.5px 0px 0px #F2EDE4',
-                        'neo-dark-lg': '5px 5px 0px 0px #F2EDE4',
+                        'm3-1': '0 1px 2px 0 rgba(0, 0, 0, 0.05)',
+                        'm3-2': '0 4px 12px 0 rgba(0, 0, 0, 0.07), 0 2px 4px -1px rgba(0, 0, 0, 0.04)',
+                        'm3-3': '0 10px 24px -3px rgba(0, 0, 0, 0.09), 0 4px 8px -2px rgba(0, 0, 0, 0.04)',
+                        'm3-4': '0 18px 32px -4px rgba(0, 0, 0, 0.12), 0 8px 12px -3px rgba(0, 0, 0, 0.06)',
                     },
                     keyframes: {
                         shake: {
                             '0%, 100%': { transform: 'translateX(0)' },
-                            '20%, 60%': { transform: 'translateX(-7px)' },
-                            '40%, 80%': { transform: 'translateX(7px)' },
+                            '20%, 60%': { transform: 'translateX(-6px)' },
+                            '40%, 80%': { transform: 'translateX(6px)' },
                         }
                     },
                     animation: {
-                        shake: 'shake 0.35s ease-in-out',
+                        shake: 'shake 0.35s cubic-bezier(0.4, 0, 0.2, 1)',
                     }
                 }
             }
@@ -79,33 +104,24 @@
     </script>
     <style>
         body {
-            font-family: 'Space Grotesk', sans-serif;
+            font-family: 'Plus Jakarta Sans', 'Inter', sans-serif;
             -webkit-tap-highlight-color: transparent;
             overflow-x: hidden;
         }
-        .font-heading {
-            font-family: 'Outfit', sans-serif;
-        }
-        /* Custom Calm Earthy scrollbar */
+        /* Material 3 smooth minimal scrollbar */
         ::-webkit-scrollbar {
-            width: 7px;
-            height: 7px;
+            width: 6px;
+            height: 6px;
         }
         ::-webkit-scrollbar-track {
-            background: #F9F7F2;
-            border-left: 2px solid #282522;
-        }
-        .dark ::-webkit-scrollbar-track {
-            background: #18181A;
-            border-left: 2px solid #F2EDE4;
+            background: transparent;
         }
         ::-webkit-scrollbar-thumb {
-            background: #D99B38;
-            border: 2px solid #282522;
+            background: #C4C7C5;
+            border-radius: 9999px;
         }
         .dark ::-webkit-scrollbar-thumb {
-            background: #D99B38;
-            border: 2px solid #F2EDE4;
+            background: #444746;
         }
         .no-scrollbar::-webkit-scrollbar {
             display: none;
@@ -116,119 +132,119 @@
         }
     </style>
 </head>
-<body class="bg-earth-bg dark:bg-earth-darkBg text-earth-border dark:text-earth-darkBorder min-h-screen antialiased flex flex-col transition-colors duration-150">
+<body class="bg-m3-surface dark:bg-m3-darkSurface text-m3-onSurface dark:text-m3-darkOnSurface min-h-screen antialiased flex flex-col transition-colors duration-200 selection:bg-m3-primaryContainer selection:text-m3-onPrimaryContainer">
 
     <!-- ========================================== -->
-    <!-- SECURITY PIN LOGIN OVERLAY                 -->
+    <!-- MATERIAL 3 SECURITY PIN OVERLAY            -->
     <!-- ========================================== -->
-    <div id="pinOverlay" class="fixed inset-0 z-[100] bg-earth-border/80 backdrop-blur-xs flex items-center justify-center p-4">
-        <div id="pinCard" class="bg-white dark:bg-earth-darkCard rounded-2xl p-6 sm:p-7 max-w-xs w-full border-[2.5px] border-earth-border dark:border-earth-darkBorder shadow-neo-lg dark:shadow-neo-dark text-center relative max-h-[95vh] overflow-y-auto">
+    <div id="pinOverlay" class="fixed inset-0 z-[100] bg-black/40 backdrop-blur-md flex items-center justify-center p-4">
+        <div id="pinCard" class="bg-m3-surfaceContainer dark:bg-m3-darkSurfaceContainer rounded-3xl p-6 sm:p-8 max-w-xs w-full shadow-m3-4 border border-slate-200/80 dark:border-m3-darkOutlineVariant text-center relative max-h-[95vh] overflow-y-auto">
             
-            <div class="w-12 h-12 sm:w-14 sm:h-14 bg-earth-ochre text-earth-border border-2 border-earth-border rounded-xl flex items-center justify-center mx-auto mb-3 shadow-neo-sm">
-                <i data-lucide="lock" class="w-6 h-6 sm:w-7 sm:h-7 stroke-[2.5]"></i>
+            <div class="w-14 h-14 bg-m3-primaryContainer dark:bg-m3-darkPrimaryContainer text-m3-onPrimaryContainer dark:text-m3-darkOnPrimaryContainer rounded-2xl flex items-center justify-center mx-auto mb-3 shadow-m3-1">
+                <i data-lucide="lock" class="w-7 h-7 stroke-[2]"></i>
             </div>
 
-            <h2 class="text-xl sm:text-2xl font-black font-heading tracking-tight text-earth-border dark:text-earth-darkBorder uppercase mb-1">atldash</h2>
-            <p class="text-xs font-bold text-neutral-600 dark:text-neutral-300 mb-4">Enter 4-Digit Security PIN</p>
+            <h2 class="text-xl sm:text-2xl font-bold tracking-tight text-m3-onSurface dark:text-m3-darkOnSurface mb-1">atldash</h2>
+            <p class="text-xs font-medium text-m3-onSurfaceVariant dark:text-m3-darkOnSurfaceVariant mb-5">Enter 4-Digit Security PIN</p>
 
             <!-- Hidden Input for Mobile Keypads -->
             <input type="password" id="pinInput" maxlength="4" pattern="[0-9]*" inputmode="numeric" class="opacity-0 absolute inset-0 w-full h-full cursor-pointer z-10" autofocus oninput="handlePinInput(this.value)">
 
-            <!-- PIN Display Boxes -->
-            <div class="flex justify-center items-center space-x-2.5 sm:space-x-3 mb-4">
-                <div id="dot-0" class="w-9 h-9 sm:w-10 sm:h-10 rounded-lg border-2 border-earth-border dark:border-earth-darkBorder bg-earth-sandLight dark:bg-neutral-800 flex items-center justify-center font-black text-lg transition-all"></div>
-                <div id="dot-1" class="w-9 h-9 sm:w-10 sm:h-10 rounded-lg border-2 border-earth-border dark:border-earth-darkBorder bg-earth-sandLight dark:bg-neutral-800 flex items-center justify-center font-black text-lg transition-all"></div>
-                <div id="dot-2" class="w-9 h-9 sm:w-10 sm:h-10 rounded-lg border-2 border-earth-border dark:border-earth-darkBorder bg-earth-sandLight dark:bg-neutral-800 flex items-center justify-center font-black text-lg transition-all"></div>
-                <div id="dot-3" class="w-9 h-9 sm:w-10 sm:h-10 rounded-lg border-2 border-earth-border dark:border-earth-darkBorder bg-earth-sandLight dark:bg-neutral-800 flex items-center justify-center font-black text-lg transition-all"></div>
+            <!-- PIN Display Dots -->
+            <div class="flex justify-center items-center space-x-3 mb-4">
+                <div id="dot-0" class="w-10 h-10 rounded-2xl border border-slate-300 dark:border-zinc-700 bg-slate-50 dark:bg-zinc-800/80 flex items-center justify-center font-bold text-lg transition-all duration-200"></div>
+                <div id="dot-1" class="w-10 h-10 rounded-2xl border border-slate-300 dark:border-zinc-700 bg-slate-50 dark:bg-zinc-800/80 flex items-center justify-center font-bold text-lg transition-all duration-200"></div>
+                <div id="dot-2" class="w-10 h-10 rounded-2xl border border-slate-300 dark:border-zinc-700 bg-slate-50 dark:bg-zinc-800/80 flex items-center justify-center font-bold text-lg transition-all duration-200"></div>
+                <div id="dot-3" class="w-10 h-10 rounded-2xl border border-slate-300 dark:border-zinc-700 bg-slate-50 dark:bg-zinc-800/80 flex items-center justify-center font-bold text-lg transition-all duration-200"></div>
             </div>
 
-            <p id="pinError" class="text-xs font-bold text-earth-terracotta bg-earth-terracottaLight dark:bg-red-950/60 border border-earth-terracotta py-1 px-2 rounded-md mb-3 opacity-0 transition-opacity">Wrong PIN. Try again.</p>
+            <p id="pinError" class="text-xs font-medium text-rose-600 dark:text-rose-400 bg-rose-50 dark:bg-rose-950/50 border border-rose-200 dark:border-rose-900/60 py-1.5 px-3 rounded-full mb-3 opacity-0 transition-opacity">Wrong PIN. Try again.</p>
 
-            <!-- Touch Keypad -->
-            <div class="grid grid-cols-3 gap-2 relative z-20">
-                <button onclick="keypadPress('1')" class="py-2.5 sm:py-3 bg-earth-sandLight dark:bg-neutral-800 hover:bg-earth-ochre dark:hover:bg-earth-ochre hover:text-earth-border text-earth-border dark:text-earth-darkBorder font-extrabold text-base sm:text-lg rounded-xl border-2 border-earth-border dark:border-earth-darkBorder shadow-neo-sm active:translate-x-[1px] active:translate-y-[1px] active:shadow-none transition-all">1</button>
-                <button onclick="keypadPress('2')" class="py-2.5 sm:py-3 bg-earth-sandLight dark:bg-neutral-800 hover:bg-earth-ochre dark:hover:bg-earth-ochre hover:text-earth-border text-earth-border dark:text-earth-darkBorder font-extrabold text-base sm:text-lg rounded-xl border-2 border-earth-border dark:border-earth-darkBorder shadow-neo-sm active:translate-x-[1px] active:translate-y-[1px] active:shadow-none transition-all">2</button>
-                <button onclick="keypadPress('3')" class="py-2.5 sm:py-3 bg-earth-sandLight dark:bg-neutral-800 hover:bg-earth-ochre dark:hover:bg-earth-ochre hover:text-earth-border text-earth-border dark:text-earth-darkBorder font-extrabold text-base sm:text-lg rounded-xl border-2 border-earth-border dark:border-earth-darkBorder shadow-neo-sm active:translate-x-[1px] active:translate-y-[1px] active:shadow-none transition-all">3</button>
-                <button onclick="keypadPress('4')" class="py-2.5 sm:py-3 bg-earth-sandLight dark:bg-neutral-800 hover:bg-earth-ochre dark:hover:bg-earth-ochre hover:text-earth-border text-earth-border dark:text-earth-darkBorder font-extrabold text-base sm:text-lg rounded-xl border-2 border-earth-border dark:border-earth-darkBorder shadow-neo-sm active:translate-x-[1px] active:translate-y-[1px] active:shadow-none transition-all">4</button>
-                <button onclick="keypadPress('5')" class="py-2.5 sm:py-3 bg-earth-sandLight dark:bg-neutral-800 hover:bg-earth-ochre dark:hover:bg-earth-ochre hover:text-earth-border text-earth-border dark:text-earth-darkBorder font-extrabold text-base sm:text-lg rounded-xl border-2 border-earth-border dark:border-earth-darkBorder shadow-neo-sm active:translate-x-[1px] active:translate-y-[1px] active:shadow-none transition-all">5</button>
-                <button onclick="keypadPress('6')" class="py-2.5 sm:py-3 bg-earth-sandLight dark:bg-neutral-800 hover:bg-earth-ochre dark:hover:bg-earth-ochre hover:text-earth-border text-earth-border dark:text-earth-darkBorder font-extrabold text-base sm:text-lg rounded-xl border-2 border-earth-border dark:border-earth-darkBorder shadow-neo-sm active:translate-x-[1px] active:translate-y-[1px] active:shadow-none transition-all">6</button>
-                <button onclick="keypadPress('7')" class="py-2.5 sm:py-3 bg-earth-sandLight dark:bg-neutral-800 hover:bg-earth-ochre dark:hover:bg-earth-ochre hover:text-earth-border text-earth-border dark:text-earth-darkBorder font-extrabold text-base sm:text-lg rounded-xl border-2 border-earth-border dark:border-earth-darkBorder shadow-neo-sm active:translate-x-[1px] active:translate-y-[1px] active:shadow-none transition-all">7</button>
-                <button onclick="keypadPress('8')" class="py-2.5 sm:py-3 bg-earth-sandLight dark:bg-neutral-800 hover:bg-earth-ochre dark:hover:bg-earth-ochre hover:text-earth-border text-earth-border dark:text-earth-darkBorder font-extrabold text-base sm:text-lg rounded-xl border-2 border-earth-border dark:border-earth-darkBorder shadow-neo-sm active:translate-x-[1px] active:translate-y-[1px] active:shadow-none transition-all">8</button>
-                <button onclick="keypadPress('9')" class="py-2.5 sm:py-3 bg-earth-sandLight dark:bg-neutral-800 hover:bg-earth-ochre dark:hover:bg-earth-ochre hover:text-earth-border text-earth-border dark:text-earth-darkBorder font-extrabold text-base sm:text-lg rounded-xl border-2 border-earth-border dark:border-earth-darkBorder shadow-neo-sm active:translate-x-[1px] active:translate-y-[1px] active:shadow-none transition-all">9</button>
-                <button onclick="keypadClear()" class="py-2.5 sm:py-3 bg-earth-sand hover:bg-earth-terracotta hover:text-white text-earth-border dark:text-earth-darkBorder font-bold text-xs rounded-xl border-2 border-earth-border dark:border-earth-darkBorder shadow-neo-sm active:translate-x-[1px] active:translate-y-[1px] active:shadow-none transition-all uppercase">Clr</button>
-                <button onclick="keypadPress('0')" class="py-2.5 sm:py-3 bg-earth-sandLight dark:bg-neutral-800 hover:bg-earth-ochre dark:hover:bg-earth-ochre hover:text-earth-border text-earth-border dark:text-earth-darkBorder font-extrabold text-base sm:text-lg rounded-xl border-2 border-earth-border dark:border-earth-darkBorder shadow-neo-sm active:translate-x-[1px] active:translate-y-[1px] active:shadow-none transition-all">0</button>
-                <button onclick="keypadBackspace()" class="py-2.5 sm:py-3 bg-earth-sand hover:bg-earth-ochre text-earth-border dark:text-earth-darkBorder font-bold text-sm rounded-xl border-2 border-earth-border dark:border-earth-darkBorder shadow-neo-sm active:translate-x-[1px] active:translate-y-[1px] active:shadow-none transition-all flex items-center justify-center">
-                    <i data-lucide="delete" class="w-4 h-4 sm:w-5 sm:h-5"></i>
+            <!-- Material Keypad -->
+            <div class="grid grid-cols-3 gap-2.5 relative z-20">
+                <button onclick="keypadPress('1')" class="h-12 sm:h-13 bg-slate-100/80 dark:bg-zinc-800 hover:bg-m3-primaryContainer dark:hover:bg-m3-darkPrimaryContainer hover:text-m3-onPrimaryContainer dark:hover:text-m3-darkOnPrimaryContainer text-m3-onSurface dark:text-m3-darkOnSurface font-semibold text-lg rounded-2xl transition-all active:scale-95">1</button>
+                <button onclick="keypadPress('2')" class="h-12 sm:h-13 bg-slate-100/80 dark:bg-zinc-800 hover:bg-m3-primaryContainer dark:hover:bg-m3-darkPrimaryContainer hover:text-m3-onPrimaryContainer dark:hover:text-m3-darkOnPrimaryContainer text-m3-onSurface dark:text-m3-darkOnSurface font-semibold text-lg rounded-2xl transition-all active:scale-95">2</button>
+                <button onclick="keypadPress('3')" class="h-12 sm:h-13 bg-slate-100/80 dark:bg-zinc-800 hover:bg-m3-primaryContainer dark:hover:bg-m3-darkPrimaryContainer hover:text-m3-onPrimaryContainer dark:hover:text-m3-darkOnPrimaryContainer text-m3-onSurface dark:text-m3-darkOnSurface font-semibold text-lg rounded-2xl transition-all active:scale-95">3</button>
+                <button onclick="keypadPress('4')" class="h-12 sm:h-13 bg-slate-100/80 dark:bg-zinc-800 hover:bg-m3-primaryContainer dark:hover:bg-m3-darkPrimaryContainer hover:text-m3-onPrimaryContainer dark:hover:text-m3-darkOnPrimaryContainer text-m3-onSurface dark:text-m3-darkOnSurface font-semibold text-lg rounded-2xl transition-all active:scale-95">4</button>
+                <button onclick="keypadPress('5')" class="h-12 sm:h-13 bg-slate-100/80 dark:bg-zinc-800 hover:bg-m3-primaryContainer dark:hover:bg-m3-darkPrimaryContainer hover:text-m3-onPrimaryContainer dark:hover:text-m3-darkOnPrimaryContainer text-m3-onSurface dark:text-m3-darkOnSurface font-semibold text-lg rounded-2xl transition-all active:scale-95">5</button>
+                <button onclick="keypadPress('6')" class="h-12 sm:h-13 bg-slate-100/80 dark:bg-zinc-800 hover:bg-m3-primaryContainer dark:hover:bg-m3-darkPrimaryContainer hover:text-m3-onPrimaryContainer dark:hover:text-m3-darkOnPrimaryContainer text-m3-onSurface dark:text-m3-darkOnSurface font-semibold text-lg rounded-2xl transition-all active:scale-95">6</button>
+                <button onclick="keypadPress('7')" class="h-12 sm:h-13 bg-slate-100/80 dark:bg-zinc-800 hover:bg-m3-primaryContainer dark:hover:bg-m3-darkPrimaryContainer hover:text-m3-onPrimaryContainer dark:hover:text-m3-darkOnPrimaryContainer text-m3-onSurface dark:text-m3-darkOnSurface font-semibold text-lg rounded-2xl transition-all active:scale-95">7</button>
+                <button onclick="keypadPress('8')" class="h-12 sm:h-13 bg-slate-100/80 dark:bg-zinc-800 hover:bg-m3-primaryContainer dark:hover:bg-m3-darkPrimaryContainer hover:text-m3-onPrimaryContainer dark:hover:text-m3-darkOnPrimaryContainer text-m3-onSurface dark:text-m3-darkOnSurface font-semibold text-lg rounded-2xl transition-all active:scale-95">8</button>
+                <button onclick="keypadPress('9')" class="h-12 sm:h-13 bg-slate-100/80 dark:bg-zinc-800 hover:bg-m3-primaryContainer dark:hover:bg-m3-darkPrimaryContainer hover:text-m3-onPrimaryContainer dark:hover:text-m3-darkOnPrimaryContainer text-m3-onSurface dark:text-m3-darkOnSurface font-semibold text-lg rounded-2xl transition-all active:scale-95">9</button>
+                <button onclick="keypadClear()" class="h-12 sm:h-13 bg-slate-200/70 dark:bg-zinc-700/80 hover:bg-slate-300 dark:hover:bg-zinc-600 text-m3-onSurface dark:text-m3-darkOnSurface font-semibold text-xs rounded-2xl transition-all uppercase active:scale-95">Clear</button>
+                <button onclick="keypadPress('0')" class="h-12 sm:h-13 bg-slate-100/80 dark:bg-zinc-800 hover:bg-m3-primaryContainer dark:hover:bg-m3-darkPrimaryContainer hover:text-m3-onPrimaryContainer dark:hover:text-m3-darkOnPrimaryContainer text-m3-onSurface dark:text-m3-darkOnSurface font-semibold text-lg rounded-2xl transition-all active:scale-95">0</button>
+                <button onclick="keypadBackspace()" class="h-12 sm:h-13 bg-slate-200/70 dark:bg-zinc-700/80 hover:bg-slate-300 dark:hover:bg-zinc-600 text-m3-onSurface dark:text-m3-darkOnSurface font-semibold text-sm rounded-2xl transition-all flex items-center justify-center active:scale-95">
+                    <i data-lucide="delete" class="w-5 h-5"></i>
                 </button>
             </div>
         </div>
     </div>
 
     <!-- ========================================== -->
-    <!-- TOP NAVIGATION BAR                         -->
+    <!-- MATERIAL 3 TOP APP BAR                     -->
     <!-- ========================================== -->
-    <header class="sticky top-0 z-30 bg-white dark:bg-earth-darkCard border-b-[2.5px] border-earth-border dark:border-earth-darkBorder transition-all">
+    <header class="sticky top-0 z-30 bg-white/90 dark:bg-m3-darkSurfaceContainer/90 backdrop-blur-md border-b border-slate-200/80 dark:border-m3-darkOutlineVariant transition-all">
         <div class="w-full px-3 sm:px-6 lg:px-8 xl:px-12 2xl:px-16 py-2.5 sm:py-3 flex flex-col md:flex-row md:items-center justify-between gap-2.5">
             
             <!-- Row 1 (Mobile): Brand & Action Buttons -->
             <div class="flex items-center justify-between w-full md:w-auto gap-2">
                 <!-- Brand / Logo -->
-                <div class="flex items-center space-x-2.5 shrink-0">
-                    <div class="w-9 h-9 sm:w-11 sm:h-11 bg-earth-ochre text-earth-border border-2 border-earth-border rounded-xl flex items-center justify-center font-black shadow-neo-sm shrink-0">
-                        <i data-lucide="leaf" class="w-5 h-5 sm:w-6 sm:h-6 stroke-[2.5]"></i>
+                <div class="flex items-center space-x-3 shrink-0">
+                    <div class="w-10 h-10 sm:w-11 sm:h-11 bg-m3-primary text-white rounded-2xl flex items-center justify-center shadow-m3-1 shrink-0">
+                        <i data-lucide="sparkles" class="w-5 h-5 sm:w-6 sm:h-6 stroke-[2.2]"></i>
                     </div>
                     <div>
-                        <h1 class="font-heading font-black text-lg sm:text-2xl tracking-tighter text-earth-border dark:text-earth-darkBorder uppercase leading-none">
+                        <h1 class="font-bold text-lg sm:text-2xl tracking-tight text-m3-onSurface dark:text-m3-darkOnSurface leading-none">
                             atldash
                         </h1>
-                        <p class="text-[9px] sm:text-xs font-bold text-neutral-600 dark:text-neutral-300 hidden sm:block tracking-wide uppercase">Tasks & Marks Tracker</p>
+                        <p class="text-[11px] font-medium text-m3-onSurfaceVariant dark:text-m3-darkOnSurfaceVariant hidden sm:block">Tasks & Leaderboard Hub</p>
                     </div>
                 </div>
 
                 <!-- Action Controls -->
                 <div class="flex items-center space-x-1 sm:space-x-2 shrink-0">
                     <!-- Sync Status Pill -->
-                    <div id="syncStatusBadge" onclick="openModal('settingsModal')" class="hidden lg:flex items-center space-x-1.5 px-3 py-1.5 rounded-xl text-xs font-extrabold uppercase bg-earth-sandLight dark:bg-neutral-800 border-2 border-earth-border dark:border-earth-darkBorder shadow-neo-sm cursor-pointer hover:bg-earth-ochre hover:text-earth-border transition-colors" title="Google Sheets Sync Settings">
-                        <span id="syncDot" class="w-2.5 h-2.5 rounded-full bg-earth-sage border border-earth-border"></span>
+                    <div id="syncStatusBadge" onclick="openModal('settingsModal')" class="hidden lg:flex items-center space-x-2 px-3 py-1.5 rounded-full text-xs font-semibold bg-slate-100 dark:bg-zinc-800 text-m3-onSurface dark:text-m3-darkOnSurface border border-slate-200 dark:border-zinc-700 cursor-pointer hover:bg-slate-200/80 dark:hover:bg-zinc-700 transition-colors" title="Google Sheets Sync Settings">
+                        <span id="syncDot" class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
                         <span id="syncStatusText">Synced</span>
                     </div>
 
                     <!-- PWA Install -->
-                    <button id="pwaInstallBtn" onclick="installPWA()" class="hidden px-2.5 sm:px-3 py-1.5 sm:py-2 bg-earth-sage text-white border-2 border-earth-border rounded-xl text-xs font-black uppercase shadow-neo-sm active:translate-x-[1px] active:translate-y-[1px] active:shadow-none transition-all items-center gap-1">
-                        <i data-lucide="download" class="w-3.5 h-3.5 sm:w-4 sm:h-4 stroke-[2.5]"></i>
-                        <span class="hidden sm:inline">Install</span>
+                    <button id="pwaInstallBtn" onclick="installPWA()" class="hidden px-3.5 py-1.5 sm:py-2 bg-m3-primaryContainer dark:bg-m3-darkPrimaryContainer text-m3-onPrimaryContainer dark:text-m3-darkOnPrimaryContainer rounded-full text-xs font-semibold hover:shadow-m3-1 transition-all items-center gap-1.5">
+                        <i data-lucide="download" class="w-4 h-4 stroke-[2]"></i>
+                        <span class="hidden sm:inline">Install App</span>
                     </button>
 
                     <!-- Refresh Data -->
-                    <button onclick="triggerCurrentTabSync()" class="p-1.5 sm:p-2 bg-earth-sandLight dark:bg-neutral-800 hover:bg-earth-stone hover:text-white text-earth-border dark:text-earth-darkBorder border-2 border-earth-border dark:border-earth-darkBorder rounded-xl shadow-neo-sm active:translate-x-[1px] active:translate-y-[1px] active:shadow-none transition-all" title="Refresh Live Data">
-                        <i id="syncIcon" data-lucide="refresh-cw" class="w-4 h-4 stroke-[2.5]"></i>
+                    <button onclick="triggerCurrentTabSync()" class="w-9 h-9 sm:w-10 sm:h-10 rounded-full hover:bg-slate-100 dark:hover:bg-zinc-800 text-m3-onSurfaceVariant dark:text-m3-darkOnSurfaceVariant flex items-center justify-center transition-colors" title="Refresh Live Data">
+                        <i id="syncIcon" data-lucide="refresh-cw" class="w-4 h-4 stroke-[2]"></i>
                     </button>
 
                     <!-- Dark Mode -->
-                    <button onclick="toggleDarkMode()" class="p-1.5 sm:p-2 bg-earth-sandLight dark:bg-neutral-800 hover:bg-earth-terracotta hover:text-white text-earth-border dark:text-earth-darkBorder border-2 border-earth-border dark:border-earth-darkBorder rounded-xl shadow-neo-sm active:translate-x-[1px] active:translate-y-[1px] active:shadow-none transition-all" title="Toggle Theme">
-                        <i id="themeIcon" data-lucide="moon" class="w-4 h-4 stroke-[2.5]"></i>
+                    <button onclick="toggleDarkMode()" class="w-9 h-9 sm:w-10 sm:h-10 rounded-full hover:bg-slate-100 dark:hover:bg-zinc-800 text-m3-onSurfaceVariant dark:text-m3-darkOnSurfaceVariant flex items-center justify-center transition-colors" title="Toggle Theme">
+                        <i id="themeIcon" data-lucide="moon" class="w-4 h-4 stroke-[2]"></i>
                     </button>
 
                     <!-- Settings Modal -->
-                    <button onclick="openModal('settingsModal')" class="p-1.5 sm:p-2 bg-earth-sandLight dark:bg-neutral-800 hover:bg-earth-sand hover:text-earth-border text-earth-border dark:text-earth-darkBorder border-2 border-earth-border dark:border-earth-darkBorder rounded-xl shadow-neo-sm active:translate-x-[1px] active:translate-y-[1px] active:shadow-none transition-all" title="Settings & Sync URLs">
-                        <i data-lucide="settings" class="w-4 h-4 stroke-[2.5]"></i>
+                    <button onclick="openModal('settingsModal')" class="w-9 h-9 sm:w-10 sm:h-10 rounded-full hover:bg-slate-100 dark:hover:bg-zinc-800 text-m3-onSurfaceVariant dark:text-m3-darkOnSurfaceVariant flex items-center justify-center transition-colors" title="Settings & Sync URLs">
+                        <i data-lucide="settings" class="w-4 h-4 stroke-[2]"></i>
                     </button>
 
                     <!-- Lock App -->
-                    <button onclick="lockApp()" class="p-1.5 sm:p-2 bg-earth-sandLight dark:bg-neutral-800 hover:bg-earth-terracotta hover:text-white text-earth-border dark:text-earth-darkBorder border-2 border-earth-border dark:border-earth-darkBorder rounded-xl shadow-neo-sm active:translate-x-[1px] active:translate-y-[1px] active:shadow-none transition-all" title="Lock Dashboard">
-                        <i data-lucide="lock" class="w-4 h-4 stroke-[2.5]"></i>
+                    <button onclick="lockApp()" class="w-9 h-9 sm:w-10 sm:h-10 rounded-full hover:bg-rose-50 dark:hover:bg-rose-950/40 text-rose-600 dark:text-rose-400 flex items-center justify-center transition-colors" title="Lock Dashboard">
+                        <i data-lucide="lock" class="w-4 h-4 stroke-[2]"></i>
                     </button>
                 </div>
             </div>
 
-            <!-- Tab Switcher Navigation -->
-            <div class="flex items-center justify-center bg-earth-sandLight dark:bg-neutral-900 p-1 rounded-xl border-2 border-earth-border dark:border-earth-darkBorder shadow-neo-sm w-full md:w-auto">
-                <button id="tabBtnTasks" onclick="switchTab('tasks')" class="flex-1 md:flex-none flex items-center justify-center gap-1.5 px-4 sm:px-6 py-1.5 rounded-lg text-xs sm:text-sm font-black uppercase transition-all bg-earth-ochre text-earth-border border-2 border-earth-border shadow-neo-sm">
-                    <i data-lucide="check-square" class="w-4 h-4 stroke-[2.5]"></i>
+            <!-- Material 3 Segmented Button Navigation -->
+            <div class="flex items-center justify-center bg-slate-100 dark:bg-zinc-800/90 p-1 rounded-full border border-slate-200 dark:border-zinc-700 w-full md:w-auto">
+                <button id="tabBtnTasks" onclick="switchTab('tasks')" class="flex-1 md:flex-none flex items-center justify-center gap-2 px-5 sm:px-6 py-1.5 rounded-full text-xs sm:text-sm font-semibold transition-all bg-m3-primary text-white shadow-m3-1">
+                    <i data-lucide="check-circle-2" class="w-4 h-4 stroke-[2]"></i>
                     <span>Tasks</span>
                 </button>
-                <button id="tabBtnLeaderboard" onclick="switchTab('leaderboard')" class="flex-1 md:flex-none flex items-center justify-center gap-1.5 px-4 sm:px-6 py-1.5 rounded-lg text-xs sm:text-sm font-black uppercase transition-all text-neutral-600 dark:text-neutral-300 hover:text-earth-border dark:hover:text-white">
-                    <i data-lucide="award" class="w-4 h-4 stroke-[2.5]"></i>
+                <button id="tabBtnLeaderboard" onclick="switchTab('leaderboard')" class="flex-1 md:flex-none flex items-center justify-center gap-2 px-5 sm:px-6 py-1.5 rounded-full text-xs sm:text-sm font-semibold transition-all text-m3-onSurfaceVariant dark:text-m3-darkOnSurfaceVariant hover:text-m3-onSurface dark:hover:text-white">
+                    <i data-lucide="award" class="w-4 h-4 stroke-[2]"></i>
                     <span>Leaderboard</span>
                 </button>
             </div>
@@ -237,197 +253,196 @@
     </header>
 
     <!-- ========================================== -->
-    <!-- TAB 1: TASK MANAGEMENT (TaskPulse)         -->
+    <!-- TAB 1: TASK MANAGEMENT                     -->
     <!-- ========================================== -->
     <div id="tabContentTasks" class="flex-1 flex flex-col">
         <main class="flex-1 w-full px-3 sm:px-6 lg:px-8 xl:px-12 2xl:px-16 py-4 sm:py-6 flex flex-col gap-4 sm:gap-5 pb-36 sm:pb-32">
             
-            <!-- Quick Add Task Form -->
-            <section class="bg-white dark:bg-earth-darkCard border-[2.5px] border-earth-border dark:border-earth-darkBorder rounded-2xl p-4 sm:p-5 shadow-neo">
-                <form id="taskForm" onsubmit="handleAddTask(event)" class="flex flex-col gap-3">
-                    <div class="flex items-center gap-2.5 bg-earth-sandLight/60 dark:bg-neutral-900 px-3.5 py-2.5 sm:py-3 rounded-xl border-2 border-earth-border dark:border-earth-darkBorder focus-within:bg-earth-ochre/10 transition-colors">
-                        <i data-lucide="plus-circle" class="w-5 h-5 text-neutral-500 dark:text-neutral-400 stroke-[2.5] shrink-0"></i>
-                        <input type="text" id="taskInput" placeholder="What needs to be done?" required class="w-full bg-transparent border-none outline-none text-earth-border dark:text-earth-darkBorder placeholder-neutral-500 font-bold text-xs sm:text-base">
+            <!-- Material 3 Quick Add Task Card -->
+            <section class="bg-white dark:bg-m3-darkSurfaceContainer border border-slate-200/80 dark:border-m3-darkOutlineVariant rounded-3xl p-4 sm:p-6 shadow-m3-1">
+                <form id="taskForm" onsubmit="handleAddTask(event)" class="flex flex-col gap-3.5">
+                    <div class="flex items-center gap-3 bg-slate-50 dark:bg-zinc-800/70 px-4 py-3 rounded-2xl border border-slate-200 dark:border-zinc-700 focus-within:border-m3-primary focus-within:ring-2 focus-within:ring-m3-primary/20 transition-all">
+                        <i data-lucide="plus" class="w-5 h-5 text-m3-primary dark:text-m3-darkPrimary stroke-[2.5] shrink-0"></i>
+                        <input type="text" id="taskInput" placeholder="Add a new task or action item..." required class="w-full bg-transparent border-none outline-none text-m3-onSurface dark:text-m3-darkOnSurface placeholder-slate-400 dark:placeholder-zinc-500 font-medium text-sm sm:text-base">
                     </div>
 
-                    <div class="grid grid-cols-1 sm:grid-cols-3 gap-2.5 pt-1">
+                    <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
                         <!-- Priority Selector -->
                         <div class="relative">
-                            <select id="taskPriority" class="w-full appearance-none bg-earth-sandLight/60 dark:bg-neutral-900 text-xs sm:text-sm font-bold text-earth-border dark:text-earth-darkBorder pl-3.5 pr-8 py-2.5 rounded-xl border-2 border-earth-border dark:border-earth-darkBorder focus:outline-none cursor-pointer">
+                            <select id="taskPriority" class="w-full appearance-none bg-slate-50 dark:bg-zinc-800/70 text-xs sm:text-sm font-semibold text-m3-onSurface dark:text-m3-darkOnSurface pl-4 pr-10 py-2.5 rounded-2xl border border-slate-200 dark:border-zinc-700 focus:border-m3-primary focus:outline-none cursor-pointer transition">
                                 <option value="High">🔴 High Priority</option>
-                                <option value="Medium" selected>🟡 Med Priority</option>
+                                <option value="Medium" selected>🟡 Medium Priority</option>
                                 <option value="Low">🟢 Low Priority</option>
                             </select>
-                            <i data-lucide="chevron-down" class="w-4 h-4 absolute right-3 top-3 pointer-events-none text-earth-border dark:text-earth-darkBorder stroke-[2.5]"></i>
+                            <i data-lucide="chevron-down" class="w-4 h-4 absolute right-3.5 top-3 pointer-events-none text-m3-onSurfaceVariant dark:text-m3-darkOnSurfaceVariant stroke-[2]"></i>
                         </div>
 
                         <!-- Due Date Selector -->
-                        <div class="relative flex items-center bg-earth-sandLight/60 dark:bg-neutral-900 px-3.5 py-2.5 rounded-xl border-2 border-earth-border dark:border-earth-darkBorder text-xs sm:text-sm font-bold text-earth-border dark:text-earth-darkBorder">
-                            <input type="date" id="taskDueDate" class="w-full bg-transparent border-none outline-none text-xs sm:text-sm text-earth-border dark:text-earth-darkBorder cursor-pointer font-bold">
+                        <div class="relative flex items-center bg-slate-50 dark:bg-zinc-800/70 px-4 py-2.5 rounded-2xl border border-slate-200 dark:border-zinc-700 text-xs sm:text-sm font-semibold text-m3-onSurface dark:text-m3-darkOnSurface focus-within:border-m3-primary transition">
+                            <input type="date" id="taskDueDate" class="w-full bg-transparent border-none outline-none text-xs sm:text-sm text-m3-onSurface dark:text-m3-darkOnSurface cursor-pointer font-medium">
                         </div>
 
                         <!-- Add Button -->
-                        <button type="submit" class="w-full py-2.5 rounded-xl bg-earth-ochre text-earth-border font-black uppercase text-xs sm:text-sm border-2 border-earth-border shadow-neo-sm hover:shadow-neo active:translate-x-[1px] active:translate-y-[1px] active:shadow-none transition-all flex items-center justify-center gap-2 shrink-0">
-                            <i data-lucide="plus" class="w-4 h-4 stroke-[3]"></i>
-                            <span>Add Task</span>
+                        <button type="submit" class="w-full py-2.5 rounded-full bg-m3-primary hover:bg-m3-primaryHover dark:bg-m3-darkPrimary dark:hover:bg-blue-300 text-white dark:text-m3-darkOnPrimary font-semibold text-xs sm:text-sm shadow-m3-1 hover:shadow-m3-2 active:scale-98 transition-all flex items-center justify-center gap-2 shrink-0">
+                            <i data-lucide="plus" class="w-4 h-4 stroke-[2.5]"></i>
+                            <span>Create Task</span>
                         </button>
                     </div>
                 </form>
             </section>
 
-            <!-- Filters, Chips & Search Toolbar -->
-            <section class="bg-white dark:bg-earth-darkCard rounded-2xl p-3.5 sm:p-4 border-[2.5px] border-earth-border dark:border-earth-darkBorder shadow-neo flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+            <!-- Material 3 Filters, Chips & Search Toolbar -->
+            <section class="bg-white dark:bg-m3-darkSurfaceContainer rounded-3xl p-3.5 sm:p-4 border border-slate-200/80 dark:border-m3-darkOutlineVariant shadow-m3-1 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
                 <!-- Filter Chips -->
                 <div class="flex items-center gap-2 overflow-x-auto pb-1 no-scrollbar w-full sm:w-auto">
-                    <button onclick="setTaskFilter('all')" id="filter-all" class="task-filter-chip px-3.5 py-1.5 rounded-xl text-xs font-black uppercase whitespace-nowrap transition-all border-2 border-earth-border shadow-neo-sm bg-earth-ochre text-earth-border shrink-0">
+                    <button onclick="setTaskFilter('all')" id="filter-all" class="task-filter-chip px-4 py-1.5 rounded-full text-xs font-semibold whitespace-nowrap transition-all bg-m3-primaryContainer dark:bg-m3-darkPrimaryContainer text-m3-onPrimaryContainer dark:text-m3-darkOnPrimaryContainer border border-m3-primary/30 shrink-0">
                         All Tasks
                     </button>
-                    <button onclick="setTaskFilter('active')" id="filter-active" class="task-filter-chip px-3.5 py-1.5 rounded-xl text-xs font-black uppercase whitespace-nowrap transition-all border-2 border-earth-border dark:border-earth-darkBorder bg-earth-sandLight dark:bg-neutral-800 text-earth-border dark:text-earth-darkBorder shrink-0">
+                    <button onclick="setTaskFilter('active')" id="filter-active" class="task-filter-chip px-4 py-1.5 rounded-full text-xs font-semibold whitespace-nowrap transition-all bg-slate-100 dark:bg-zinc-800 text-m3-onSurfaceVariant dark:text-m3-darkOnSurfaceVariant border border-slate-200 dark:border-zinc-700 hover:bg-slate-200/70 shrink-0">
                         Active
                     </button>
-                    <button onclick="setTaskFilter('completed')" id="filter-completed" class="task-filter-chip px-3.5 py-1.5 rounded-xl text-xs font-black uppercase whitespace-nowrap transition-all border-2 border-earth-border dark:border-earth-darkBorder bg-earth-sandLight dark:bg-neutral-800 text-earth-border dark:text-earth-darkBorder shrink-0">
+                    <button onclick="setTaskFilter('completed')" id="filter-completed" class="task-filter-chip px-4 py-1.5 rounded-full text-xs font-semibold whitespace-nowrap transition-all bg-slate-100 dark:bg-zinc-800 text-m3-onSurfaceVariant dark:text-m3-darkOnSurfaceVariant border border-slate-200 dark:border-zinc-700 hover:bg-slate-200/70 shrink-0">
                         Completed
                     </button>
-                    <button onclick="setTaskFilter('high')" id="filter-high" class="task-filter-chip px-3.5 py-1.5 rounded-xl text-xs font-black uppercase whitespace-nowrap transition-all border-2 border-earth-border dark:border-earth-darkBorder bg-earth-sandLight dark:bg-neutral-800 text-earth-border dark:text-earth-darkBorder shrink-0">
-                        🔴 High
+                    <button onclick="setTaskFilter('high')" id="filter-high" class="task-filter-chip px-4 py-1.5 rounded-full text-xs font-semibold whitespace-nowrap transition-all bg-slate-100 dark:bg-zinc-800 text-m3-onSurfaceVariant dark:text-m3-darkOnSurfaceVariant border border-slate-200 dark:border-zinc-700 hover:bg-slate-200/70 shrink-0">
+                        🔴 High Priority
                     </button>
                 </div>
 
                 <!-- Search Input -->
-                <div class="relative w-full sm:w-64 shrink-0">
-                    <i data-lucide="search" class="w-4 h-4 text-earth-border dark:text-earth-darkBorder absolute left-3 top-2.5 stroke-[2.5]"></i>
-                    <input type="text" id="taskSearchInput" oninput="renderTasks()" placeholder="Search tasks..." class="w-full pl-9 pr-3 py-1.5 sm:py-2 text-xs sm:text-sm font-bold bg-earth-sandLight/60 dark:bg-neutral-900 border-2 border-earth-border dark:border-earth-darkBorder rounded-xl outline-none focus:bg-white dark:focus:bg-neutral-800 text-earth-border dark:text-earth-darkBorder transition-all">
+                <div class="relative w-full sm:w-72 shrink-0">
+                    <i data-lucide="search" class="w-4 h-4 text-slate-400 dark:text-zinc-500 absolute left-3.5 top-3 stroke-[2]"></i>
+                    <input type="text" id="taskSearchInput" oninput="renderTasks()" placeholder="Search tasks..." class="w-full pl-10 pr-4 py-2 text-xs sm:text-sm font-medium bg-slate-50 dark:bg-zinc-800/80 border border-slate-200 dark:border-zinc-700 rounded-full outline-none focus:border-m3-primary focus:ring-2 focus:ring-m3-primary/20 text-m3-onSurface dark:text-m3-darkOnSurface transition-all">
                 </div>
             </section>
 
-            <!-- Task List Container (Responsive grid) -->
+            <!-- Task Grid List -->
             <section class="flex-1 min-h-[200px]">
-                <div id="taskList" class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 gap-3">
+                <div id="taskList" class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 gap-3.5">
                     <!-- Dynamic task cards -->
                 </div>
 
                 <!-- Empty State -->
-                <div id="taskEmptyState" class="hidden flex-col items-center justify-center py-10 text-center bg-white dark:bg-earth-darkCard rounded-2xl border-[2.5px] border-earth-border dark:border-earth-darkBorder shadow-neo p-6">
-                    <div class="w-14 h-14 bg-earth-ochre text-earth-border border-2 border-earth-border rounded-2xl flex items-center justify-center mx-auto mb-3 shadow-neo-sm">
-                        <i data-lucide="check-circle-2" class="w-7 h-7 stroke-[2.5]"></i>
+                <div id="taskEmptyState" class="hidden flex-col items-center justify-center py-12 text-center bg-white dark:bg-m3-darkSurfaceContainer rounded-3xl border border-slate-200/80 dark:border-m3-darkOutlineVariant shadow-m3-1 p-6">
+                    <div class="w-16 h-16 bg-m3-primaryContainer dark:bg-m3-darkPrimaryContainer text-m3-onPrimaryContainer dark:text-m3-darkOnPrimaryContainer rounded-3xl flex items-center justify-center mx-auto mb-3 shadow-m3-1">
+                        <i data-lucide="check-circle" class="w-8 h-8 stroke-[2]"></i>
                     </div>
-                    <h3 class="text-base font-black font-heading uppercase text-earth-border dark:text-earth-darkBorder mb-1">No Tasks Found</h3>
-                    <p class="text-xs font-bold text-neutral-600 dark:text-neutral-400 max-w-xs">Create a new task above or adjust your search filter.</p>
+                    <h3 class="text-base font-bold text-m3-onSurface dark:text-m3-darkOnSurface mb-1">All tasks completed!</h3>
+                    <p class="text-xs font-medium text-m3-onSurfaceVariant dark:text-m3-darkOnSurfaceVariant max-w-xs">Create a new task above or adjust your search filters.</p>
                 </div>
             </section>
         </main>
 
-        <!-- Persistent Bottom Productivity Bar -->
-        <footer class="fixed bottom-0 left-0 right-0 bg-white dark:bg-earth-darkCard border-t-[2.5px] border-earth-border dark:border-earth-darkBorder px-3 sm:px-6 lg:px-8 xl:px-12 2xl:px-16 py-2.5 sm:py-3 z-20 shadow-neo-lg">
-            <div class="w-full flex items-center justify-between text-xs sm:text-sm gap-2">
+        <!-- Material 3 Floating Bottom Productivity Dock -->
+        <footer class="fixed bottom-3 left-3 right-3 sm:left-6 sm:right-6 md:left-12 md:right-12 z-20">
+            <div class="bg-white/95 dark:bg-m3-darkSurfaceContainer/95 backdrop-blur-md border border-slate-200/80 dark:border-m3-darkOutlineVariant rounded-2xl sm:rounded-full px-4 sm:px-6 py-2.5 shadow-m3-3 flex items-center justify-between gap-3">
                 
                 <!-- Total Tasks -->
-                <div class="flex items-center gap-2">
-                    <div class="p-1.5 sm:p-2 rounded-xl bg-earth-stoneLight text-earth-stone border-2 border-earth-border shadow-neo-sm shrink-0">
-                        <i data-lucide="list-todo" class="w-4 h-4 sm:w-5 sm:h-5 stroke-[2.5]"></i>
+                <div class="flex items-center gap-2.5">
+                    <div class="w-8 h-8 rounded-full bg-blue-100 dark:bg-blue-950/60 text-blue-700 dark:text-blue-300 flex items-center justify-center shrink-0">
+                        <i data-lucide="list-todo" class="w-4 h-4 stroke-[2]"></i>
                     </div>
                     <div>
-                        <div class="text-[9px] sm:text-[10px] font-black uppercase text-neutral-500 dark:text-neutral-400 leading-none">Total</div>
-                        <div id="statTaskTotal" class="font-black text-earth-border dark:text-earth-darkBorder text-xs sm:text-base">0</div>
+                        <div class="text-[10px] font-semibold text-m3-onSurfaceVariant dark:text-m3-darkOnSurfaceVariant leading-none">Total</div>
+                        <div id="statTaskTotal" class="font-bold text-m3-onSurface dark:text-m3-darkOnSurface text-xs sm:text-sm">0</div>
                     </div>
                 </div>
 
                 <!-- Progress Bar -->
-                <div class="flex-1 max-w-md mx-3 sm:mx-6 hidden sm:block">
-                    <div class="flex justify-between text-xs font-black uppercase text-neutral-600 dark:text-neutral-300 mb-1">
-                        <span>Task Completion</span>
-                        <span id="statTaskRateText">0%</span>
+                <div class="flex-1 max-w-md mx-2 sm:mx-6 hidden sm:block">
+                    <div class="flex justify-between text-[11px] font-semibold text-m3-onSurfaceVariant dark:text-m3-darkOnSurfaceVariant mb-1">
+                        <span>Completion Rate</span>
+                        <span id="statTaskRateText" class="text-m3-primary dark:text-m3-darkPrimary font-bold">0%</span>
                     </div>
-                    <div class="w-full bg-earth-sandLight dark:bg-neutral-800 h-3 rounded-full border-2 border-earth-border dark:border-earth-darkBorder overflow-hidden p-0.5">
-                        <div id="taskProgressBar" class="bg-earth-sage h-full rounded-full transition-all duration-300 w-0 border border-earth-border"></div>
+                    <div class="w-full bg-slate-100 dark:bg-zinc-800 h-2.5 rounded-full overflow-hidden">
+                        <div id="taskProgressBar" class="bg-m3-primary dark:bg-m3-darkPrimary h-full rounded-full transition-all duration-300 w-0"></div>
                     </div>
                 </div>
 
                 <!-- Done Stat -->
-                <div class="flex items-center gap-2">
-                    <div class="p-1.5 sm:p-2 rounded-xl bg-earth-sageLight text-earth-sage border-2 border-earth-border shadow-neo-sm shrink-0">
-                        <i data-lucide="check-check" class="w-4 h-4 sm:w-5 sm:h-5 stroke-[2.5]"></i>
+                <div class="flex items-center gap-2.5">
+                    <div class="w-8 h-8 rounded-full bg-emerald-100 dark:bg-emerald-950/60 text-emerald-700 dark:text-emerald-300 flex items-center justify-center shrink-0">
+                        <i data-lucide="check-check" class="w-4 h-4 stroke-[2]"></i>
                     </div>
                     <div>
-                        <div class="text-[9px] sm:text-[10px] font-black uppercase text-neutral-500 dark:text-neutral-400 leading-none">Done</div>
-                        <div id="statTaskCompleted" class="font-black text-earth-border dark:text-earth-darkBorder text-xs sm:text-base">0</div>
+                        <div class="text-[10px] font-semibold text-m3-onSurfaceVariant dark:text-m3-darkOnSurfaceVariant leading-none">Done</div>
+                        <div id="statTaskCompleted" class="font-bold text-m3-onSurface dark:text-m3-darkOnSurface text-xs sm:text-sm">0</div>
                     </div>
                 </div>
 
                 <!-- Rate Badge -->
-                <div class="flex items-center gap-1 bg-earth-ochreLight text-earth-border px-2.5 sm:px-3 py-1 sm:py-1.5 rounded-xl font-black border-2 border-earth-border shadow-neo-sm text-xs shrink-0">
-                    <i data-lucide="trending-up" class="w-3.5 h-3.5 sm:w-4 sm:h-4 stroke-[2.5]"></i>
+                <div class="flex items-center gap-1.5 bg-m3-primaryContainer dark:bg-m3-darkPrimaryContainer text-m3-onPrimaryContainer dark:text-m3-darkOnPrimaryContainer px-3 py-1.5 rounded-full font-bold text-xs shrink-0">
+                    <i data-lucide="trending-up" class="w-3.5 h-3.5 stroke-[2]"></i>
                     <span id="statTaskRate">0%</span>
                 </div>
             </div>
         </footer>
     </div>
 
-
     <!-- ========================================== -->
     <!-- TAB 2: LEADERBOARD & MARKS TRACKER         -->
     <!-- ========================================== -->
     <div id="tabContentLeaderboard" class="hidden flex-1 flex flex-col">
-        <main class="flex-1 w-full px-3 sm:px-6 lg:px-8 xl:px-12 2xl:px-16 py-4 sm:py-6 space-y-4 sm:space-y-5 pb-12">
+        <main class="flex-1 w-full px-3 sm:px-6 lg:px-8 xl:px-12 2xl:px-16 py-4 sm:py-6 space-y-4 sm:space-y-5 pb-16">
 
-            <!-- Overview Metric Cards -->
-            <section class="grid grid-cols-2 md:grid-cols-4 gap-2.5 sm:gap-4">
-                <div class="bg-white dark:bg-earth-darkCard p-3.5 sm:p-5 rounded-2xl border-[2.5px] border-earth-border dark:border-earth-darkBorder shadow-neo flex items-center space-x-3">
-                    <div class="p-2 sm:p-3 bg-earth-stoneLight text-earth-stone border-2 border-earth-border rounded-xl shadow-neo-sm shrink-0">
-                        <i data-lucide="users" class="w-4 h-4 sm:w-5 sm:h-5 stroke-[2.5]"></i>
+            <!-- Overview Metric Cards (Material Tonal Containers) -->
+            <section class="grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-4">
+                <div class="bg-blue-50/70 dark:bg-blue-950/30 p-4 sm:p-5 rounded-3xl border border-blue-100 dark:border-blue-900/40 shadow-m3-1 flex items-center space-x-3.5">
+                    <div class="w-11 h-11 bg-blue-600 text-white rounded-2xl flex items-center justify-center shadow-m3-1 shrink-0">
+                        <i data-lucide="users" class="w-5 h-5 stroke-[2]"></i>
                     </div>
                     <div class="min-w-0">
-                        <p class="text-[9px] sm:text-xs font-black uppercase text-neutral-500 dark:text-neutral-400 truncate">Total Students</p>
-                        <p id="statTotalStudents" class="text-lg sm:text-2xl font-heading font-black text-earth-border dark:text-earth-darkBorder">0</p>
+                        <p class="text-[11px] font-semibold text-blue-800 dark:text-blue-300 truncate">Total Students</p>
+                        <p id="statTotalStudents" class="text-xl sm:text-2xl font-bold text-blue-950 dark:text-blue-100">0</p>
                     </div>
                 </div>
 
-                <div class="bg-white dark:bg-earth-darkCard p-3.5 sm:p-5 rounded-2xl border-[2.5px] border-earth-border dark:border-earth-darkBorder shadow-neo flex items-center space-x-3">
-                    <div class="p-2 sm:p-3 bg-earth-ochreLight text-earth-ochre border-2 border-earth-border rounded-xl shadow-neo-sm shrink-0">
-                        <i data-lucide="star" class="w-4 h-4 sm:w-5 sm:h-5 stroke-[2.5]"></i>
+                <div class="bg-amber-50/70 dark:bg-amber-950/30 p-4 sm:p-5 rounded-3xl border border-amber-100 dark:border-amber-900/40 shadow-m3-1 flex items-center space-x-3.5">
+                    <div class="w-11 h-11 bg-amber-500 text-white rounded-2xl flex items-center justify-center shadow-m3-1 shrink-0">
+                        <i data-lucide="star" class="w-5 h-5 stroke-[2]"></i>
                     </div>
                     <div class="min-w-0">
-                        <p class="text-[9px] sm:text-xs font-black uppercase text-neutral-500 dark:text-neutral-400 truncate">Top Scorer</p>
-                        <p id="statTopStudent" class="text-xs sm:text-sm font-heading font-black text-earth-border dark:text-earth-darkBorder truncate">None</p>
+                        <p class="text-[11px] font-semibold text-amber-800 dark:text-amber-300 truncate">Top Scorer</p>
+                        <p id="statTopStudent" class="text-xs sm:text-sm font-bold text-amber-950 dark:text-amber-100 truncate">None</p>
                     </div>
                 </div>
 
-                <div class="bg-white dark:bg-earth-darkCard p-3.5 sm:p-5 rounded-2xl border-[2.5px] border-earth-border dark:border-earth-darkBorder shadow-neo flex items-center space-x-3">
-                    <div class="p-2 sm:p-3 bg-earth-terracottaLight text-earth-terracotta border-2 border-earth-border rounded-xl shadow-neo-sm shrink-0">
-                        <i data-lucide="bar-chart-2" class="w-4 h-4 sm:w-5 sm:h-5 stroke-[2.5]"></i>
+                <div class="bg-rose-50/70 dark:bg-rose-950/30 p-4 sm:p-5 rounded-3xl border border-rose-100 dark:border-rose-900/40 shadow-m3-1 flex items-center space-x-3.5">
+                    <div class="w-11 h-11 bg-rose-500 text-white rounded-2xl flex items-center justify-center shadow-m3-1 shrink-0">
+                        <i data-lucide="bar-chart-2" class="w-5 h-5 stroke-[2]"></i>
                     </div>
                     <div class="min-w-0">
-                        <p class="text-[9px] sm:text-xs font-black uppercase text-neutral-500 dark:text-neutral-400 truncate">Class Avg</p>
-                        <p id="statAvgScore" class="text-lg sm:text-2xl font-heading font-black text-earth-border dark:text-earth-darkBorder">0</p>
+                        <p class="text-[11px] font-semibold text-rose-800 dark:text-rose-300 truncate">Class Average</p>
+                        <p id="statAvgScore" class="text-xl sm:text-2xl font-bold text-rose-950 dark:text-rose-100">0</p>
                     </div>
                 </div>
 
-                <div class="bg-white dark:bg-earth-darkCard p-3.5 sm:p-5 rounded-2xl border-[2.5px] border-earth-border dark:border-earth-darkBorder shadow-neo flex items-center space-x-3">
-                    <div class="p-2 sm:p-3 bg-earth-sageLight text-earth-sage border-2 border-earth-border rounded-xl shadow-neo-sm shrink-0">
-                        <i data-lucide="calculator" class="w-4 h-4 sm:w-5 sm:h-5 stroke-[2.5]"></i>
+                <div class="bg-emerald-50/70 dark:bg-emerald-950/30 p-4 sm:p-5 rounded-3xl border border-emerald-100 dark:border-emerald-900/40 shadow-m3-1 flex items-center space-x-3.5">
+                    <div class="w-11 h-11 bg-emerald-600 text-white rounded-2xl flex items-center justify-center shadow-m3-1 shrink-0">
+                        <i data-lucide="calculator" class="w-5 h-5 stroke-[2]"></i>
                     </div>
                     <div class="min-w-0">
-                        <p class="text-[9px] sm:text-xs font-black uppercase text-neutral-500 dark:text-neutral-400 truncate">Total Points</p>
-                        <p id="statTotalPoints" class="text-lg sm:text-2xl font-heading font-black text-earth-border dark:text-earth-darkBorder">0</p>
+                        <p class="text-[11px] font-semibold text-emerald-800 dark:text-emerald-300 truncate">Total Points</p>
+                        <p id="statTotalPoints" class="text-xl sm:text-2xl font-bold text-emerald-950 dark:text-emerald-100">0</p>
                     </div>
                 </div>
             </section>
 
             <!-- Search, Filters & Action Toolbar -->
-            <div class="bg-white dark:bg-earth-darkCard rounded-2xl p-3.5 sm:p-4 border-[2.5px] border-earth-border dark:border-earth-darkBorder shadow-neo flex flex-col gap-3">
+            <div class="bg-white dark:bg-m3-darkSurfaceContainer rounded-3xl p-4 border border-slate-200/80 dark:border-m3-darkOutlineVariant shadow-m3-1 flex flex-col gap-3.5">
                 <!-- Search & Filters Row -->
-                <div class="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-2.5">
+                <div class="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3">
                     <div class="relative flex-1">
-                        <i data-lucide="search" class="w-4 h-4 absolute left-3.5 top-3 text-earth-border dark:text-earth-darkBorder stroke-[2.5]"></i>
-                        <input type="text" id="leaderboardSearchInput" oninput="renderStudentList()" placeholder="Search student name..." class="w-full bg-earth-sandLight/60 dark:bg-neutral-900 border-2 border-earth-border dark:border-earth-darkBorder rounded-xl pl-10 pr-4 py-2 text-xs sm:text-sm font-bold text-earth-border dark:text-earth-darkBorder placeholder-neutral-500 outline-none transition">
+                        <i data-lucide="search" class="w-4 h-4 absolute left-3.5 top-3 text-slate-400 dark:text-zinc-500 stroke-[2]"></i>
+                        <input type="text" id="leaderboardSearchInput" oninput="renderStudentList()" placeholder="Search student by name..." class="w-full bg-slate-50 dark:bg-zinc-800/80 border border-slate-200 dark:border-zinc-700 rounded-full pl-10 pr-4 py-2 text-xs sm:text-sm font-medium text-m3-onSurface dark:text-m3-darkOnSurface placeholder-slate-400 dark:placeholder-zinc-500 outline-none focus:border-m3-primary focus:ring-2 focus:ring-m3-primary/20 transition">
                     </div>
 
                     <div class="flex items-center gap-2 w-full sm:w-auto">
-                        <select id="groupFilter" onchange="renderStudentList()" class="flex-1 sm:flex-none bg-earth-sandLight/60 dark:bg-neutral-900 border-2 border-earth-border dark:border-earth-darkBorder text-earth-border dark:text-earth-darkBorder text-xs font-bold rounded-xl px-3 py-2 outline-none">
+                        <select id="groupFilter" onchange="renderStudentList()" class="flex-1 sm:flex-none bg-slate-50 dark:bg-zinc-800/80 border border-slate-200 dark:border-zinc-700 text-m3-onSurface dark:text-m3-darkOnSurface text-xs font-semibold rounded-full px-4 py-2 outline-none focus:border-m3-primary transition cursor-pointer">
                             <option value="ALL">All Classes</option>
                         </select>
 
-                        <select id="sortBy" onchange="renderStudentList()" class="flex-1 sm:flex-none bg-earth-sandLight/60 dark:bg-neutral-900 border-2 border-earth-border dark:border-earth-darkBorder text-earth-border dark:text-earth-darkBorder text-xs font-bold rounded-xl px-3 py-2 outline-none">
+                        <select id="sortBy" onchange="renderStudentList()" class="flex-1 sm:flex-none bg-slate-50 dark:bg-zinc-800/80 border border-slate-200 dark:border-zinc-700 text-m3-onSurface dark:text-m3-darkOnSurface text-xs font-semibold rounded-full px-4 py-2 outline-none focus:border-m3-primary transition cursor-pointer">
                             <option value="pointsDesc">Points (High-Low)</option>
                             <option value="pointsAsc">Points (Low-High)</option>
                             <option value="name">Name (A-Z)</option>
@@ -436,55 +451,55 @@
                 </div>
 
                 <!-- View Toggle & Action Buttons Row -->
-                <div class="flex flex-wrap items-center justify-between gap-2 border-t-2 border-neutral-100 dark:border-neutral-800 pt-2.5">
-                    <div class="bg-earth-sandLight dark:bg-neutral-900 p-1 rounded-xl border-2 border-earth-border dark:border-earth-darkBorder flex items-center shadow-neo-sm">
-                        <button id="viewCardBtn" onclick="setLeaderboardViewMode('cards')" class="px-2.5 sm:px-3 py-1 rounded-lg text-xs font-black uppercase bg-earth-ochre text-earth-border border-2 border-earth-border shadow-neo-sm transition">
-                            <i data-lucide="layout-grid" class="w-3.5 h-3.5 inline mr-1 stroke-[2.5]"></i> Cards
+                <div class="flex flex-wrap items-center justify-between gap-2 border-t border-slate-100 dark:border-zinc-800 pt-3">
+                    <div class="bg-slate-100 dark:bg-zinc-800 p-1 rounded-full flex items-center">
+                        <button id="viewCardBtn" onclick="setLeaderboardViewMode('cards')" class="px-3.5 py-1.5 rounded-full text-xs font-semibold bg-white dark:bg-zinc-700 text-m3-primary dark:text-m3-darkPrimary shadow-m3-1 transition">
+                            <i data-lucide="layout-grid" class="w-3.5 h-3.5 inline mr-1 stroke-[2]"></i> Cards
                         </button>
-                        <button id="viewTableBtn" onclick="setLeaderboardViewMode('table')" class="px-2.5 sm:px-3 py-1 rounded-lg text-xs font-black uppercase text-neutral-600 dark:text-neutral-400 hover:text-earth-border dark:hover:text-white transition">
-                            <i data-lucide="list" class="w-3.5 h-3.5 inline mr-1 stroke-[2.5]"></i> Table
+                        <button id="viewTableBtn" onclick="setLeaderboardViewMode('table')" class="px-3.5 py-1.5 rounded-full text-xs font-semibold text-m3-onSurfaceVariant dark:text-m3-darkOnSurfaceVariant hover:text-m3-onSurface dark:hover:text-white transition">
+                            <i data-lucide="list" class="w-3.5 h-3.5 inline mr-1 stroke-[2]"></i> Table
                         </button>
                     </div>
 
-                    <div class="flex flex-wrap items-center gap-1.5 sm:gap-2">
-                        <button onclick="openModal('addStudentModal')" class="px-3 py-1.5 sm:py-2 bg-earth-ochre text-earth-border border-2 border-earth-border rounded-xl text-xs font-black uppercase shadow-neo-sm hover:shadow-neo active:translate-x-[1px] active:translate-y-[1px] active:shadow-none transition-all flex items-center gap-1">
-                            <i data-lucide="user-plus" class="w-3.5 h-3.5 stroke-[2.5]"></i>
+                    <div class="flex flex-wrap items-center gap-2">
+                        <button onclick="openModal('addStudentModal')" class="px-4 py-2 bg-m3-primary hover:bg-m3-primaryHover dark:bg-m3-darkPrimary dark:hover:bg-blue-300 text-white dark:text-m3-darkOnPrimary rounded-full text-xs font-semibold shadow-m3-1 hover:shadow-m3-2 transition flex items-center gap-1.5">
+                            <i data-lucide="user-plus" class="w-4 h-4 stroke-[2]"></i>
                             <span>Add Student</span>
                         </button>
-                        <button onclick="quickBatchUpdateModal()" class="px-3 py-1.5 sm:py-2 bg-earth-stone text-white border-2 border-earth-border rounded-xl text-xs font-black uppercase shadow-neo-sm hover:shadow-neo active:translate-x-[1px] active:translate-y-[1px] active:shadow-none transition-all flex items-center gap-1">
-                            <i data-lucide="edit-3" class="w-3.5 h-3.5 stroke-[2.5]"></i>
+                        <button onclick="quickBatchUpdateModal()" class="px-4 py-2 bg-m3-secondaryContainer text-m3-onSecondaryContainer rounded-full text-xs font-semibold hover:bg-blue-200/80 transition flex items-center gap-1.5">
+                            <i data-lucide="edit-3" class="w-4 h-4 stroke-[2]"></i>
                             <span>Daily Marks</span>
                         </button>
-                        <button onclick="exportCSV()" class="p-1.5 sm:p-2 bg-earth-sandLight dark:bg-neutral-800 hover:bg-earth-sage hover:text-white text-earth-border dark:text-earth-darkBorder border-2 border-earth-border dark:border-earth-darkBorder rounded-xl shadow-neo-sm active:translate-x-[1px] active:translate-y-[1px] active:shadow-none transition-all" title="Export CSV">
-                            <i data-lucide="download" class="w-4 h-4 stroke-[2.5]"></i>
+                        <button onclick="exportCSV()" class="w-9 h-9 rounded-full bg-slate-100 dark:bg-zinc-800 hover:bg-slate-200/70 text-m3-onSurface dark:text-m3-darkOnSurface flex items-center justify-center transition" title="Export CSV">
+                            <i data-lucide="download" class="w-4 h-4 stroke-[2]"></i>
                         </button>
-                        <button onclick="openModal('importCsvModal')" class="p-1.5 sm:p-2 bg-earth-sandLight dark:bg-neutral-800 hover:bg-earth-terracotta hover:text-white text-earth-border dark:text-earth-darkBorder border-2 border-earth-border dark:border-earth-darkBorder rounded-xl shadow-neo-sm active:translate-x-[1px] active:translate-y-[1px] active:shadow-none transition-all" title="Import CSV">
-                            <i data-lucide="upload" class="w-4 h-4 stroke-[2.5]"></i>
+                        <button onclick="openModal('importCsvModal')" class="w-9 h-9 rounded-full bg-slate-100 dark:bg-zinc-800 hover:bg-slate-200/70 text-m3-onSurface dark:text-m3-darkOnSurface flex items-center justify-center transition" title="Import CSV">
+                            <i data-lucide="upload" class="w-4 h-4 stroke-[2]"></i>
                         </button>
                     </div>
                 </div>
             </div>
 
             <!-- Cards View Container -->
-            <div id="studentCardsContainer" class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 gap-3 sm:gap-3.5">
+            <div id="studentCardsContainer" class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 gap-3.5">
                 <!-- Dynamically populated cards -->
             </div>
 
             <!-- Table View Container -->
-            <div id="tableContainer" class="hidden bg-white dark:bg-earth-darkCard rounded-2xl overflow-hidden border-[2.5px] border-earth-border dark:border-earth-darkBorder shadow-neo">
+            <div id="tableContainer" class="hidden bg-white dark:bg-m3-darkSurfaceContainer rounded-3xl overflow-hidden border border-slate-200/80 dark:border-m3-darkOutlineVariant shadow-m3-1">
                 <div class="overflow-x-auto">
-                    <table class="w-full text-left text-xs sm:text-sm text-earth-border dark:text-earth-darkBorder min-w-[500px]">
-                        <thead class="bg-earth-sandLight dark:bg-neutral-900 text-xs uppercase font-black text-earth-border dark:text-earth-darkBorder border-b-2 border-earth-border dark:border-earth-darkBorder">
+                    <table class="w-full text-left text-xs sm:text-sm text-m3-onSurface dark:text-m3-darkOnSurface min-w-[500px]">
+                        <thead class="bg-slate-50 dark:bg-zinc-800/80 text-xs uppercase font-semibold text-m3-onSurfaceVariant dark:text-m3-darkOnSurfaceVariant border-b border-slate-200 dark:border-zinc-700">
                             <tr>
-                                <th class="px-3.5 py-3">Rank</th>
-                                <th class="px-3.5 py-3">Student Name</th>
-                                <th class="px-3.5 py-3">Class</th>
-                                <th class="px-3.5 py-3 text-center">Points</th>
-                                <th class="px-3.5 py-3 text-center">Quick Add Points</th>
-                                <th class="px-3.5 py-3 text-center">Actions</th>
+                                <th class="px-4 py-3.5">Rank</th>
+                                <th class="px-4 py-3.5">Student Name</th>
+                                <th class="px-4 py-3.5">Class</th>
+                                <th class="px-4 py-3.5 text-center">Points</th>
+                                <th class="px-4 py-3.5 text-center">Quick Add Points</th>
+                                <th class="px-4 py-3.5 text-center">Actions</th>
                             </tr>
                         </thead>
-                        <tbody id="tableBody" class="divide-y-2 divide-earth-border dark:divide-earth-darkBorder font-bold">
+                        <tbody id="tableBody" class="divide-y divide-slate-100 dark:divide-zinc-800 font-medium">
                             <!-- Dynamically populated rows -->
                         </tbody>
                     </table>
@@ -492,14 +507,14 @@
             </div>
 
             <!-- Empty State Container -->
-            <div id="leaderboardEmptyState" class="hidden bg-white dark:bg-earth-darkCard rounded-2xl p-8 sm:p-10 text-center border-[2.5px] border-earth-border dark:border-earth-darkBorder shadow-neo my-4">
-                <div class="w-14 h-14 bg-earth-ochre text-earth-border border-2 border-earth-border rounded-2xl flex items-center justify-center mx-auto mb-3 shadow-neo-sm">
-                    <i data-lucide="users" class="w-7 h-7 stroke-[2.5]"></i>
+            <div id="leaderboardEmptyState" class="hidden bg-white dark:bg-m3-darkSurfaceContainer rounded-3xl p-10 text-center border border-slate-200/80 dark:border-m3-darkOutlineVariant shadow-m3-1 my-4">
+                <div class="w-16 h-16 bg-blue-100 dark:bg-blue-950/60 text-m3-primary dark:text-m3-darkPrimary rounded-3xl flex items-center justify-center mx-auto mb-3">
+                    <i data-lucide="users" class="w-8 h-8 stroke-[2]"></i>
                 </div>
-                <h3 class="text-base sm:text-lg font-black font-heading uppercase text-earth-border dark:text-earth-darkBorder mb-1">No Students Found</h3>
-                <p class="text-xs font-bold text-neutral-600 dark:text-neutral-400 mb-4 max-w-xs mx-auto">Get started by adding students or syncing with your Google Sheet.</p>
-                <button onclick="openModal('addStudentModal')" class="px-4 py-2 bg-earth-ochre text-earth-border font-black uppercase text-xs rounded-xl border-2 border-earth-border shadow-neo-sm hover:shadow-neo inline-flex items-center gap-1.5 transition-all">
-                    <i data-lucide="user-plus" class="w-4 h-4 stroke-[2.5]"></i> Add Student
+                <h3 class="text-base font-bold text-m3-onSurface dark:text-m3-darkOnSurface mb-1">No Students Found</h3>
+                <p class="text-xs font-medium text-m3-onSurfaceVariant dark:text-m3-darkOnSurfaceVariant mb-5 max-w-xs mx-auto">Get started by adding students or syncing with your Google Sheet.</p>
+                <button onclick="openModal('addStudentModal')" class="px-5 py-2.5 bg-m3-primary text-white font-semibold text-xs rounded-full shadow-m3-1 hover:shadow-m3-2 inline-flex items-center gap-2 transition">
+                    <i data-lucide="user-plus" class="w-4 h-4 stroke-[2]"></i> Add Student
                 </button>
             </div>
 
@@ -507,132 +522,132 @@
     </div>
 
     <!-- ========================================== -->
-    <!-- MODALS SECTION                             -->
+    <!-- MATERIAL 3 MODALS                          -->
     <!-- ========================================== -->
 
-    <!-- MODAL: Edit Existing Task (NEW) -->
-    <div id="editTaskModal" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-earth-border/80 backdrop-blur-xs hidden">
-        <div class="bg-white dark:bg-earth-darkCard border-[2.5px] border-earth-border dark:border-earth-darkBorder rounded-2xl max-w-md w-full p-5 sm:p-6 shadow-neo-xl relative max-h-[90vh] overflow-y-auto animate-in fade-in zoom-in duration-150">
-            <button onclick="closeModal('editTaskModal')" class="absolute top-4 right-4 p-1.5 bg-earth-sandLight dark:bg-neutral-800 border-2 border-earth-border dark:border-earth-darkBorder text-earth-border dark:text-earth-darkBorder rounded-lg shadow-neo-sm hover:bg-earth-terracotta hover:text-white transition-all">
-                <i data-lucide="x" class="w-4 h-4 stroke-[3]"></i>
+    <!-- MODAL: Edit Existing Task -->
+    <div id="editTaskModal" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/40 backdrop-blur-sm hidden">
+        <div class="bg-white dark:bg-m3-darkSurfaceContainer border border-slate-200/80 dark:border-m3-darkOutlineVariant rounded-3xl max-w-md w-full p-6 shadow-m3-4 relative max-h-[90vh] overflow-y-auto">
+            <button onclick="closeModal('editTaskModal')" class="absolute top-5 right-5 w-8 h-8 rounded-full hover:bg-slate-100 dark:hover:bg-zinc-800 flex items-center justify-center text-slate-400 hover:text-slate-600 transition">
+                <i data-lucide="x" class="w-4 h-4 stroke-[2.5]"></i>
             </button>
-            <h2 class="text-lg sm:text-xl font-black font-heading uppercase text-earth-border dark:text-earth-darkBorder mb-4 flex items-center gap-2">
-                <i data-lucide="edit-3" class="w-5 h-5 text-earth-ochre stroke-[2.5]"></i> Edit Task
+            <h2 class="text-lg font-bold text-m3-onSurface dark:text-m3-darkOnSurface mb-4 flex items-center gap-2.5">
+                <i data-lucide="edit-3" class="w-5 h-5 text-m3-primary dark:text-m3-darkPrimary stroke-[2]"></i> Edit Task
             </h2>
             
-            <form id="editTaskForm" onsubmit="handleSaveTaskEdit(event)" class="space-y-3.5">
+            <form id="editTaskForm" onsubmit="handleSaveTaskEdit(event)" class="space-y-4">
                 <input type="hidden" id="editTaskId" value="">
                 
                 <div>
-                    <label class="block text-[11px] font-black uppercase text-neutral-700 dark:text-neutral-300 mb-1">Task Description *</label>
-                    <input type="text" id="editTaskTitle" required placeholder="What needs to be done?" class="w-full bg-earth-sandLight/60 dark:bg-neutral-900 border-2 border-earth-border dark:border-earth-darkBorder rounded-xl px-3.5 py-2.5 text-xs sm:text-sm font-bold text-earth-border dark:text-earth-darkBorder outline-none focus:bg-earth-ochre/10 transition">
+                    <label class="block text-xs font-semibold text-m3-onSurfaceVariant dark:text-m3-darkOnSurfaceVariant mb-1.5">Task Description *</label>
+                    <input type="text" id="editTaskTitle" required placeholder="What needs to be done?" class="w-full bg-slate-50 dark:bg-zinc-800/80 border border-slate-200 dark:border-zinc-700 rounded-2xl px-4 py-2.5 text-xs sm:text-sm font-medium text-m3-onSurface dark:text-m3-darkOnSurface outline-none focus:border-m3-primary focus:ring-2 focus:ring-m3-primary/20 transition">
                 </div>
 
-                <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
                     <div>
-                        <label class="block text-[11px] font-black uppercase text-neutral-700 dark:text-neutral-300 mb-1">Priority</label>
+                        <label class="block text-xs font-semibold text-m3-onSurfaceVariant dark:text-m3-darkOnSurfaceVariant mb-1.5">Priority</label>
                         <div class="relative">
-                            <select id="editTaskPriority" class="w-full appearance-none bg-earth-sandLight/60 dark:bg-neutral-900 text-xs sm:text-sm font-bold text-earth-border dark:text-earth-darkBorder pl-3.5 pr-8 py-2.5 rounded-xl border-2 border-earth-border dark:border-earth-darkBorder focus:outline-none cursor-pointer">
+                            <select id="editTaskPriority" class="w-full appearance-none bg-slate-50 dark:bg-zinc-800/80 text-xs sm:text-sm font-semibold text-m3-onSurface dark:text-m3-darkOnSurface pl-4 pr-10 py-2.5 rounded-2xl border border-slate-200 dark:border-zinc-700 focus:border-m3-primary focus:outline-none cursor-pointer">
                                 <option value="High">🔴 High Priority</option>
-                                <option value="Medium">🟡 Med Priority</option>
+                                <option value="Medium">🟡 Medium Priority</option>
                                 <option value="Low">🟢 Low Priority</option>
                             </select>
-                            <i data-lucide="chevron-down" class="w-4 h-4 absolute right-3 top-3 pointer-events-none text-earth-border dark:text-earth-darkBorder stroke-[2.5]"></i>
+                            <i data-lucide="chevron-down" class="w-4 h-4 absolute right-3.5 top-3 pointer-events-none text-m3-onSurfaceVariant dark:text-m3-darkOnSurfaceVariant stroke-[2]"></i>
                         </div>
                     </div>
                     <div>
-                        <label class="block text-[11px] font-black uppercase text-neutral-700 dark:text-neutral-300 mb-1">Due Date</label>
-                        <input type="date" id="editTaskDueDate" class="w-full bg-earth-sandLight/60 dark:bg-neutral-900 border-2 border-earth-border dark:border-earth-darkBorder rounded-xl px-3.5 py-2 text-xs sm:text-sm font-bold text-earth-border dark:text-earth-darkBorder outline-none">
+                        <label class="block text-xs font-semibold text-m3-onSurfaceVariant dark:text-m3-darkOnSurfaceVariant mb-1.5">Due Date</label>
+                        <input type="date" id="editTaskDueDate" class="w-full bg-slate-50 dark:bg-zinc-800/80 border border-slate-200 dark:border-zinc-700 rounded-2xl px-4 py-2 text-xs sm:text-sm font-medium text-m3-onSurface dark:text-m3-darkOnSurface outline-none focus:border-m3-primary">
                     </div>
                 </div>
 
-                <div class="pt-3 flex justify-end space-x-2 border-t-2 border-earth-border dark:border-earth-darkBorder">
-                    <button type="button" onclick="closeModal('editTaskModal')" class="px-4 py-2 bg-earth-sandLight dark:bg-neutral-800 text-earth-border dark:text-earth-darkBorder border-2 border-earth-border dark:border-earth-darkBorder text-xs font-black uppercase rounded-xl shadow-neo-sm transition">Cancel</button>
-                    <button type="submit" class="px-5 py-2 bg-earth-ochre text-earth-border border-2 border-earth-border text-xs font-black uppercase rounded-xl shadow-neo-sm hover:shadow-neo transition-all">Save Changes</button>
+                <div class="pt-4 flex justify-end space-x-2.5 border-t border-slate-100 dark:border-zinc-800">
+                    <button type="button" onclick="closeModal('editTaskModal')" class="px-5 py-2 rounded-full text-xs font-semibold text-m3-onSurfaceVariant dark:text-m3-darkOnSurfaceVariant hover:bg-slate-100 dark:hover:bg-zinc-800 transition">Cancel</button>
+                    <button type="submit" class="px-6 py-2 bg-m3-primary hover:bg-m3-primaryHover dark:bg-m3-darkPrimary dark:hover:bg-blue-300 text-white dark:text-m3-darkOnPrimary text-xs font-semibold rounded-full shadow-m3-1 hover:shadow-m3-2 transition">Save Changes</button>
                 </div>
             </form>
         </div>
     </div>
 
     <!-- MODAL 1: Add / Edit Student -->
-    <div id="addStudentModal" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-earth-border/80 backdrop-blur-xs hidden">
-        <div class="bg-white dark:bg-earth-darkCard border-[2.5px] border-earth-border dark:border-earth-darkBorder rounded-2xl max-w-sm w-full p-5 sm:p-6 shadow-neo-xl relative max-h-[90vh] overflow-y-auto animate-in fade-in zoom-in duration-150">
-            <button onclick="closeModal('addStudentModal')" class="absolute top-4 right-4 p-1.5 bg-earth-sandLight dark:bg-neutral-800 border-2 border-earth-border dark:border-earth-darkBorder text-earth-border dark:text-earth-darkBorder rounded-lg shadow-neo-sm hover:bg-earth-terracotta hover:text-white transition-all">
-                <i data-lucide="x" class="w-4 h-4 stroke-[3]"></i>
+    <div id="addStudentModal" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/40 backdrop-blur-sm hidden">
+        <div class="bg-white dark:bg-m3-darkSurfaceContainer border border-slate-200/80 dark:border-m3-darkOutlineVariant rounded-3xl max-w-sm w-full p-6 shadow-m3-4 relative max-h-[90vh] overflow-y-auto">
+            <button onclick="closeModal('addStudentModal')" class="absolute top-5 right-5 w-8 h-8 rounded-full hover:bg-slate-100 dark:hover:bg-zinc-800 flex items-center justify-center text-slate-400 hover:text-slate-600 transition">
+                <i data-lucide="x" class="w-4 h-4 stroke-[2.5]"></i>
             </button>
-            <h2 id="modalStudentTitle" class="text-lg sm:text-xl font-black font-heading uppercase text-earth-border dark:text-earth-darkBorder mb-4">Add Student</h2>
+            <h2 id="modalStudentTitle" class="text-lg font-bold text-m3-onSurface dark:text-m3-darkOnSurface mb-4">Add Student</h2>
             
-            <form id="studentForm" onsubmit="handleSaveStudent(event)" class="space-y-3.5">
+            <form id="studentForm" onsubmit="handleSaveStudent(event)" class="space-y-4">
                 <input type="hidden" id="studentEditId" value="">
                 
                 <div>
-                    <label class="block text-[11px] font-black uppercase text-neutral-700 dark:text-neutral-300 mb-1">Full Name *</label>
-                    <input type="text" id="inputStudentName" required placeholder="e.g. Rahul Sharma" class="w-full bg-earth-sandLight/60 dark:bg-neutral-900 border-2 border-earth-border dark:border-earth-darkBorder rounded-xl px-3.5 py-2.5 text-xs sm:text-sm font-bold text-earth-border dark:text-earth-darkBorder outline-none focus:bg-earth-ochre/10 transition">
+                    <label class="block text-xs font-semibold text-m3-onSurfaceVariant dark:text-m3-darkOnSurfaceVariant mb-1.5">Full Name *</label>
+                    <input type="text" id="inputStudentName" required placeholder="e.g. Rahul Sharma" class="w-full bg-slate-50 dark:bg-zinc-800/80 border border-slate-200 dark:border-zinc-700 rounded-2xl px-4 py-2.5 text-xs sm:text-sm font-medium text-m3-onSurface dark:text-m3-darkOnSurface outline-none focus:border-m3-primary focus:ring-2 focus:ring-m3-primary/20 transition">
                 </div>
 
-                <div class="grid grid-cols-2 gap-2.5">
+                <div class="grid grid-cols-2 gap-3">
                     <div>
-                        <label class="block text-[11px] font-black uppercase text-neutral-700 dark:text-neutral-300 mb-1">Class *</label>
-                        <input type="text" id="inputStudentGroup" placeholder="e.g. Class 10" class="w-full bg-earth-sandLight/60 dark:bg-neutral-900 border-2 border-earth-border dark:border-earth-darkBorder rounded-xl px-3.5 py-2.5 text-xs sm:text-sm font-bold text-earth-border dark:text-earth-darkBorder outline-none focus:bg-earth-ochre/10 transition">
+                        <label class="block text-xs font-semibold text-m3-onSurfaceVariant dark:text-m3-darkOnSurfaceVariant mb-1.5">Class *</label>
+                        <input type="text" id="inputStudentGroup" placeholder="e.g. Class 10" class="w-full bg-slate-50 dark:bg-zinc-800/80 border border-slate-200 dark:border-zinc-700 rounded-2xl px-4 py-2.5 text-xs sm:text-sm font-medium text-m3-onSurface dark:text-m3-darkOnSurface outline-none focus:border-m3-primary transition">
                     </div>
                     <div>
-                        <label class="block text-[11px] font-black uppercase text-neutral-700 dark:text-neutral-300 mb-1">Points *</label>
-                        <input type="number" id="inputStudentScore" required value="0" class="w-full bg-earth-sandLight/60 dark:bg-neutral-900 border-2 border-earth-border dark:border-earth-darkBorder rounded-xl px-3.5 py-2.5 text-xs sm:text-sm font-bold text-earth-border dark:text-earth-darkBorder outline-none focus:bg-earth-ochre/10 transition">
+                        <label class="block text-xs font-semibold text-m3-onSurfaceVariant dark:text-m3-darkOnSurfaceVariant mb-1.5">Points *</label>
+                        <input type="number" id="inputStudentScore" required value="0" class="w-full bg-slate-50 dark:bg-zinc-800/80 border border-slate-200 dark:border-zinc-700 rounded-2xl px-4 py-2.5 text-xs sm:text-sm font-medium text-m3-onSurface dark:text-m3-darkOnSurface outline-none focus:border-m3-primary transition">
                     </div>
                 </div>
 
-                <div class="pt-3 flex justify-end space-x-2 border-t-2 border-earth-border dark:border-earth-darkBorder">
-                    <button type="button" onclick="closeModal('addStudentModal')" class="px-4 py-2 bg-earth-sandLight dark:bg-neutral-800 text-earth-border dark:text-earth-darkBorder border-2 border-earth-border dark:border-earth-darkBorder text-xs font-black uppercase rounded-xl shadow-neo-sm transition">Cancel</button>
-                    <button type="submit" class="px-5 py-2 bg-earth-ochre text-earth-border border-2 border-earth-border text-xs font-black uppercase rounded-xl shadow-neo-sm hover:shadow-neo transition-all">Save Student</button>
+                <div class="pt-4 flex justify-end space-x-2.5 border-t border-slate-100 dark:border-zinc-800">
+                    <button type="button" onclick="closeModal('addStudentModal')" class="px-5 py-2 rounded-full text-xs font-semibold text-m3-onSurfaceVariant dark:text-m3-darkOnSurfaceVariant hover:bg-slate-100 dark:hover:bg-zinc-800 transition">Cancel</button>
+                    <button type="submit" class="px-6 py-2 bg-m3-primary hover:bg-m3-primaryHover dark:bg-m3-darkPrimary text-white dark:text-m3-darkOnPrimary text-xs font-semibold rounded-full shadow-m3-1 hover:shadow-m3-2 transition">Save Student</button>
                 </div>
             </form>
         </div>
     </div>
 
     <!-- MODAL 2: Quick Add Points -->
-    <div id="addPointsModal" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-earth-border/80 backdrop-blur-xs hidden">
-        <div class="bg-white dark:bg-earth-darkCard border-[2.5px] border-earth-border dark:border-earth-darkBorder rounded-2xl max-w-sm w-full p-5 sm:p-6 shadow-neo-xl relative max-h-[90vh] overflow-y-auto animate-in fade-in zoom-in duration-150">
-            <button onclick="closeModal('addPointsModal')" class="absolute top-4 right-4 p-1.5 bg-earth-sandLight dark:bg-neutral-800 border-2 border-earth-border dark:border-earth-darkBorder text-earth-border dark:text-earth-darkBorder rounded-lg shadow-neo-sm hover:bg-earth-terracotta hover:text-white transition-all">
-                <i data-lucide="x" class="w-4 h-4 stroke-[3]"></i>
+    <div id="addPointsModal" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/40 backdrop-blur-sm hidden">
+        <div class="bg-white dark:bg-m3-darkSurfaceContainer border border-slate-200/80 dark:border-m3-darkOutlineVariant rounded-3xl max-w-sm w-full p-6 shadow-m3-4 relative max-h-[90vh] overflow-y-auto">
+            <button onclick="closeModal('addPointsModal')" class="absolute top-5 right-5 w-8 h-8 rounded-full hover:bg-slate-100 dark:hover:bg-zinc-800 flex items-center justify-center text-slate-400 hover:text-slate-600 transition">
+                <i data-lucide="x" class="w-4 h-4 stroke-[2.5]"></i>
             </button>
             
-            <div class="flex items-center space-x-3 mb-4">
-                <div class="w-11 h-11 rounded-xl bg-earth-ochre text-earth-border border-2 border-earth-border flex items-center justify-center font-black shadow-neo-sm shrink-0">
-                    <i data-lucide="plus-circle" class="w-5 h-5 stroke-[2.5]"></i>
+            <div class="flex items-center space-x-3.5 mb-5">
+                <div class="w-12 h-12 rounded-2xl bg-emerald-100 text-emerald-700 dark:bg-emerald-950/60 dark:text-emerald-300 flex items-center justify-center shrink-0 shadow-m3-1">
+                    <i data-lucide="plus-circle" class="w-6 h-6 stroke-[2]"></i>
                 </div>
                 <div class="min-w-0">
-                    <h2 id="addPointsStudentName" class="text-sm sm:text-base font-black font-heading uppercase text-earth-border dark:text-earth-darkBorder truncate">Student Name</h2>
-                    <p id="addPointsCurrentPts" class="text-xs font-bold text-neutral-600 dark:text-neutral-300">Current Points: 0 pts</p>
+                    <h2 id="addPointsStudentName" class="text-base font-bold text-m3-onSurface dark:text-m3-darkOnSurface truncate">Student Name</h2>
+                    <p id="addPointsCurrentPts" class="text-xs font-medium text-m3-onSurfaceVariant dark:text-m3-darkOnSurfaceVariant">Current: 0 pts</p>
                 </div>
             </div>
 
-            <div class="space-y-3.5">
+            <div class="space-y-4">
                 <div>
-                    <label class="block text-[11px] font-black uppercase text-neutral-700 dark:text-neutral-300 mb-2">Select Quick Points to Add</label>
+                    <label class="block text-xs font-semibold text-m3-onSurfaceVariant dark:text-m3-darkOnSurfaceVariant mb-2.5">Select Quick Points</label>
                     <div class="grid grid-cols-3 gap-2">
-                        <button onclick="applyQuickPoints(10)" class="py-2 px-2 bg-earth-sandLight dark:bg-neutral-800 hover:bg-earth-ochre hover:text-earth-border text-earth-border dark:text-earth-darkBorder font-black text-xs rounded-xl border-2 border-earth-border dark:border-earth-darkBorder shadow-neo-sm active:scale-95 transition-all">
+                        <button onclick="applyQuickPoints(10)" class="py-2.5 px-2 bg-slate-100 dark:bg-zinc-800 hover:bg-m3-primaryContainer hover:text-m3-onPrimaryContainer font-bold text-xs rounded-2xl transition-all active:scale-95">
                             +10
                         </button>
-                        <button onclick="applyQuickPoints(20)" class="py-2 px-2 bg-earth-stoneLight text-earth-stone font-black text-xs rounded-xl border-2 border-earth-border shadow-neo-sm active:scale-95 transition-all">
+                        <button onclick="applyQuickPoints(20)" class="py-2.5 px-2 bg-blue-100 dark:bg-blue-950/60 text-blue-800 dark:text-blue-300 font-bold text-xs rounded-2xl transition-all active:scale-95">
                             +20
                         </button>
-                        <button onclick="applyQuickPoints(30)" class="py-2 px-2 bg-earth-sand text-earth-border font-black text-xs rounded-xl border-2 border-earth-border shadow-neo-sm active:scale-95 transition-all">
+                        <button onclick="applyQuickPoints(30)" class="py-2.5 px-2 bg-indigo-100 dark:bg-indigo-950/60 text-indigo-800 dark:text-indigo-300 font-bold text-xs rounded-2xl transition-all active:scale-95">
                             +30
                         </button>
-                        <button onclick="applyQuickPoints(50)" class="col-span-2 py-2 px-2 bg-earth-sage text-white font-black text-xs rounded-xl border-2 border-earth-border shadow-neo-sm active:scale-95 transition-all uppercase">
+                        <button onclick="applyQuickPoints(50)" class="col-span-2 py-2.5 px-2 bg-emerald-600 text-white font-bold text-xs rounded-2xl shadow-m3-1 transition-all active:scale-95">
                             +50 Points
                         </button>
-                        <button onclick="applyQuickPoints(-10)" class="py-2 px-2 bg-earth-terracottaLight text-earth-terracotta font-black text-xs rounded-xl border-2 border-earth-border shadow-neo-sm active:scale-95 transition-all">
+                        <button onclick="applyQuickPoints(-10)" class="py-2.5 px-2 bg-rose-100 dark:bg-rose-950/60 text-rose-800 dark:text-rose-300 font-bold text-xs rounded-2xl transition-all active:scale-95">
                             -10
                         </button>
                     </div>
                 </div>
 
-                <div class="border-t-2 border-earth-border dark:border-earth-darkBorder pt-3">
-                    <label class="block text-[11px] font-black uppercase text-neutral-700 dark:text-neutral-300 mb-1.5">Or Enter Custom Points</label>
+                <div class="border-t border-slate-100 dark:border-zinc-800 pt-3.5">
+                    <label class="block text-xs font-semibold text-m3-onSurfaceVariant dark:text-m3-darkOnSurfaceVariant mb-1.5">Or Enter Custom Points</label>
                     <div class="flex gap-2">
-                        <input type="number" id="customPointsInput" placeholder="e.g. 15 or -5" class="w-full bg-earth-sandLight/60 dark:bg-neutral-900 border-2 border-earth-border dark:border-earth-darkBorder rounded-xl px-3 py-1.5 text-xs font-bold text-earth-border dark:text-earth-darkBorder outline-none">
-                        <button onclick="applyCustomPoints()" class="px-3.5 py-1.5 bg-earth-ochre text-earth-border border-2 border-earth-border text-xs font-black uppercase rounded-xl shadow-neo-sm transition">Add</button>
+                        <input type="number" id="customPointsInput" placeholder="e.g. 15 or -5" class="w-full bg-slate-50 dark:bg-zinc-800/80 border border-slate-200 dark:border-zinc-700 rounded-full px-4 py-2 text-xs font-medium text-m3-onSurface dark:text-m3-darkOnSurface outline-none focus:border-m3-primary">
+                        <button onclick="applyCustomPoints()" class="px-5 py-2 bg-m3-primary text-white text-xs font-semibold rounded-full shadow-m3-1 transition">Apply</button>
                     </div>
                 </div>
             </div>
@@ -640,148 +655,172 @@
     </div>
 
     <!-- MODAL 3: Batch Daily Quick Update -->
-    <div id="batchUpdateModal" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-earth-border/80 backdrop-blur-xs hidden">
-        <div class="bg-white dark:bg-earth-darkCard border-[2.5px] border-earth-border dark:border-earth-darkBorder rounded-2xl max-w-xl w-full p-5 sm:p-6 shadow-neo-xl relative max-h-[85vh] flex flex-col">
-            <button onclick="closeModal('batchUpdateModal')" class="absolute top-4 right-4 p-1.5 bg-earth-sandLight dark:bg-neutral-800 border-2 border-earth-border dark:border-earth-darkBorder text-earth-border dark:text-earth-darkBorder rounded-lg shadow-neo-sm hover:bg-earth-terracotta hover:text-white transition-all">
-                <i data-lucide="x" class="w-4 h-4 stroke-[3]"></i>
+    <div id="batchUpdateModal" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/40 backdrop-blur-sm hidden">
+        <div class="bg-white dark:bg-m3-darkSurfaceContainer border border-slate-200/80 dark:border-m3-darkOutlineVariant rounded-3xl max-w-xl w-full p-6 shadow-m3-4 relative max-h-[85vh] flex flex-col">
+            <button onclick="closeModal('batchUpdateModal')" class="absolute top-5 right-5 w-8 h-8 rounded-full hover:bg-slate-100 dark:hover:bg-zinc-800 flex items-center justify-center text-slate-400 hover:text-slate-600 transition">
+                <i data-lucide="x" class="w-4 h-4 stroke-[2.5]"></i>
             </button>
             
-            <div class="mb-3">
-                <h2 class="text-base sm:text-lg font-black font-heading uppercase text-earth-border dark:text-earth-darkBorder flex items-center gap-2">
-                    <i data-lucide="edit-3" class="w-5 h-5 text-earth-ochre stroke-[3]"></i> Daily Marks Batch Update
+            <div class="mb-4">
+                <h2 class="text-lg font-bold text-m3-onSurface dark:text-m3-darkOnSurface flex items-center gap-2">
+                    <i data-lucide="edit-3" class="w-5 h-5 text-m3-primary dark:text-m3-darkPrimary stroke-[2]"></i> Daily Marks Batch Update
                 </h2>
-                <p class="text-xs font-bold text-neutral-600 dark:text-neutral-400">Quickly add or deduct points for multiple students at once.</p>
+                <p class="text-xs font-medium text-m3-onSurfaceVariant dark:text-m3-darkOnSurfaceVariant">Add or deduct points across students simultaneously.</p>
             </div>
 
-            <div class="flex-1 overflow-y-auto space-y-2 pr-1" id="batchListContainer">
+            <div class="flex-1 overflow-y-auto space-y-2.5 pr-1" id="batchListContainer">
                 <!-- Dynamically filled rows -->
             </div>
 
-            <div class="pt-3 mt-2 border-t-2 border-earth-border dark:border-earth-darkBorder flex items-center justify-between">
-                <span id="batchCount" class="text-xs font-black uppercase text-neutral-600 dark:text-neutral-400">0 Students</span>
+            <div class="pt-4 mt-3 border-t border-slate-100 dark:border-zinc-800 flex items-center justify-between">
+                <span id="batchCount" class="text-xs font-semibold text-m3-onSurfaceVariant dark:text-m3-darkOnSurfaceVariant">0 Students</span>
                 <div class="flex gap-2">
-                    <button onclick="closeModal('batchUpdateModal')" class="px-3.5 py-1.5 bg-earth-sandLight dark:bg-neutral-800 text-earth-border dark:text-earth-darkBorder border-2 border-earth-border dark:border-earth-darkBorder text-xs font-black uppercase rounded-xl shadow-neo-sm">Cancel</button>
-                    <button onclick="saveBatchUpdates()" class="px-4 py-1.5 bg-earth-ochre text-earth-border border-2 border-earth-border text-xs font-black uppercase rounded-xl shadow-neo-sm hover:shadow-neo transition-all">Save Marks</button>
+                    <button onclick="closeModal('batchUpdateModal')" class="px-4 py-2 rounded-full text-xs font-semibold text-m3-onSurfaceVariant dark:text-m3-darkOnSurfaceVariant hover:bg-slate-100 dark:hover:bg-zinc-800">Cancel</button>
+                    <button onclick="saveBatchUpdates()" class="px-5 py-2 bg-m3-primary hover:bg-m3-primaryHover text-white text-xs font-semibold rounded-full shadow-m3-1 transition">Save Marks</button>
                 </div>
             </div>
         </div>
     </div>
 
     <!-- MODAL 4: CSV Import -->
-    <div id="importCsvModal" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-earth-border/80 backdrop-blur-xs hidden">
-        <div class="bg-white dark:bg-earth-darkCard border-[2.5px] border-earth-border dark:border-earth-darkBorder rounded-2xl max-w-sm w-full p-5 sm:p-6 shadow-neo-xl relative max-h-[90vh] overflow-y-auto">
-            <button onclick="closeModal('importCsvModal')" class="absolute top-4 right-4 p-1.5 bg-earth-sandLight dark:bg-neutral-800 border-2 border-earth-border dark:border-earth-darkBorder text-earth-border dark:text-earth-darkBorder rounded-lg shadow-neo-sm hover:bg-earth-terracotta hover:text-white transition-all">
-                <i data-lucide="x" class="w-4 h-4 stroke-[3]"></i>
+    <div id="importCsvModal" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/40 backdrop-blur-sm hidden">
+        <div class="bg-white dark:bg-m3-darkSurfaceContainer border border-slate-200/80 dark:border-m3-darkOutlineVariant rounded-3xl max-w-sm w-full p-6 shadow-m3-4 relative max-h-[90vh] overflow-y-auto">
+            <button onclick="closeModal('importCsvModal')" class="absolute top-5 right-5 w-8 h-8 rounded-full hover:bg-slate-100 dark:hover:bg-zinc-800 flex items-center justify-center text-slate-400 hover:text-slate-600 transition">
+                <i data-lucide="x" class="w-4 h-4 stroke-[2.5]"></i>
             </button>
-            <h2 class="text-base font-black font-heading uppercase text-earth-border dark:text-earth-darkBorder mb-1">Import CSV Data</h2>
-            <p class="text-xs font-bold text-neutral-600 dark:text-neutral-400 mb-3">Format: <code class="bg-earth-ochreLight text-earth-border px-1.5 py-0.5 rounded border border-earth-border font-mono text-[11px]">Name, Points, Class</code></p>
+            <h2 class="text-lg font-bold text-m3-onSurface dark:text-m3-darkOnSurface mb-1">Import CSV Data</h2>
+            <p class="text-xs font-medium text-m3-onSurfaceVariant dark:text-m3-darkOnSurfaceVariant mb-4">Format: <code class="bg-slate-100 dark:bg-zinc-800 px-2 py-0.5 rounded font-mono text-[11px]">Name, Points, Class</code></p>
 
-            <div class="space-y-3">
+            <div class="space-y-4">
                 <div>
-                    <label class="block text-[11px] font-black uppercase text-neutral-700 dark:text-neutral-300 mb-1">CSV File</label>
-                    <input type="file" id="csvFileInput" accept=".csv" class="w-full text-xs font-bold text-earth-border dark:text-earth-darkBorder file:mr-2.5 file:py-1.5 file:px-2.5 file:rounded-xl file:border-2 file:border-earth-border file:text-xs file:font-black file:uppercase file:bg-earth-ochre file:text-earth-border cursor-pointer">
+                    <label class="block text-xs font-semibold text-m3-onSurfaceVariant dark:text-m3-darkOnSurfaceVariant mb-1.5">Upload CSV File</label>
+                    <input type="file" id="csvFileInput" accept=".csv" class="w-full text-xs font-medium text-m3-onSurface dark:text-m3-darkOnSurface file:mr-3 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-xs file:font-semibold file:bg-m3-primaryContainer file:text-m3-onPrimaryContainer cursor-pointer">
                 </div>
 
-                <div class="text-center text-[10px] font-black uppercase text-neutral-500">— OR —</div>
+                <div class="text-center text-[11px] font-semibold text-slate-400 dark:text-zinc-600 uppercase">— OR —</div>
 
                 <div>
-                    <label class="block text-[11px] font-black uppercase text-neutral-700 dark:text-neutral-300 mb-1">Paste Raw CSV</label>
-                    <textarea id="rawCsvInput" rows="3" placeholder="Name,Points,Class&#10;Ananya Sharma,520,Class 10" class="w-full bg-earth-sandLight/60 dark:bg-neutral-900 border-2 border-earth-border dark:border-earth-darkBorder rounded-xl p-2.5 text-xs font-mono font-bold text-earth-border dark:text-earth-darkBorder outline-none"></textarea>
+                    <label class="block text-xs font-semibold text-m3-onSurfaceVariant dark:text-m3-darkOnSurfaceVariant mb-1.5">Paste CSV Text</label>
+                    <textarea id="rawCsvInput" rows="3" placeholder="Name,Points,Class&#10;Ananya Sharma,520,Class 10" class="w-full bg-slate-50 dark:bg-zinc-800/80 border border-slate-200 dark:border-zinc-700 rounded-2xl p-3 text-xs font-mono font-medium text-m3-onSurface dark:text-m3-darkOnSurface outline-none focus:border-m3-primary"></textarea>
                 </div>
 
-                <div class="pt-2 flex justify-end space-x-2 border-t-2 border-earth-border dark:border-earth-darkBorder">
-                    <button onclick="closeModal('importCsvModal')" class="px-3.5 py-1.5 bg-earth-sandLight dark:bg-neutral-800 text-earth-border dark:text-earth-darkBorder border-2 border-earth-border dark:border-earth-darkBorder text-xs font-black uppercase rounded-xl shadow-neo-sm">Cancel</button>
-                    <button onclick="handleCsvImport()" class="px-4 py-1.5 bg-earth-ochre text-earth-border border-2 border-earth-border text-xs font-black uppercase rounded-xl shadow-neo-sm hover:shadow-neo transition-all">Import</button>
+                <div class="pt-3 flex justify-end space-x-2 border-t border-slate-100 dark:border-zinc-800">
+                    <button onclick="closeModal('importCsvModal')" class="px-4 py-2 rounded-full text-xs font-semibold text-m3-onSurfaceVariant dark:text-m3-darkOnSurfaceVariant hover:bg-slate-100 dark:hover:bg-zinc-800">Cancel</button>
+                    <button onclick="handleCsvImport()" class="px-5 py-2 bg-m3-primary hover:bg-m3-primaryHover text-white text-xs font-semibold rounded-full shadow-m3-1 transition">Import</button>
                 </div>
             </div>
         </div>
     </div>
 
     <!-- MODAL 5: Unified Settings & Google Sheets Sync -->
-    <div id="settingsModal" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-earth-border/80 backdrop-blur-xs hidden">
-        <div class="bg-white dark:bg-earth-darkCard border-[2.5px] border-earth-border dark:border-earth-darkBorder rounded-2xl max-w-lg w-full p-5 sm:p-6 shadow-neo-xl relative max-h-[90vh] overflow-y-auto">
-            <button onclick="closeModal('settingsModal')" class="absolute top-4 right-4 p-1.5 bg-earth-sandLight dark:bg-neutral-800 border-2 border-earth-border dark:border-earth-darkBorder text-earth-border dark:text-earth-darkBorder rounded-lg shadow-neo-sm hover:bg-earth-terracotta hover:text-white transition-all">
-                <i data-lucide="x" class="w-4 h-4 stroke-[3]"></i>
+    <div id="settingsModal" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/40 backdrop-blur-sm hidden">
+        <div class="bg-white dark:bg-m3-darkSurfaceContainer border border-slate-200/80 dark:border-m3-darkOutlineVariant rounded-3xl max-w-lg w-full p-6 shadow-m3-4 relative max-h-[90vh] overflow-y-auto">
+            <button onclick="closeModal('settingsModal')" class="absolute top-5 right-5 w-8 h-8 rounded-full hover:bg-slate-100 dark:hover:bg-zinc-800 flex items-center justify-center text-slate-400 hover:text-slate-600 transition">
+                <i data-lucide="x" class="w-4 h-4 stroke-[2.5]"></i>
             </button>
             
-            <div class="flex items-center space-x-3 mb-4">
-                <div class="p-2.5 bg-earth-ochre text-earth-border border-2 border-earth-border rounded-xl shadow-neo-sm shrink-0">
-                    <i data-lucide="database" class="w-5 h-5 stroke-[2.5]"></i>
+            <div class="flex items-center space-x-3.5 mb-5">
+                <div class="w-12 h-12 rounded-2xl bg-m3-primaryContainer dark:bg-m3-darkPrimaryContainer text-m3-onPrimaryContainer dark:text-m3-darkOnPrimaryContainer flex items-center justify-center shrink-0 shadow-m3-1">
+                    <i data-lucide="database" class="w-6 h-6 stroke-[2]"></i>
                 </div>
                 <div>
-                    <h2 class="text-base sm:text-lg font-black font-heading uppercase text-earth-border dark:text-earth-darkBorder">Backend Sync & Settings</h2>
-                    <p class="text-xs font-bold text-neutral-600 dark:text-neutral-400">Google Sheets Integration for Tasks & Leaderboard</p>
+                    <h2 class="text-base sm:text-lg font-bold text-m3-onSurface dark:text-m3-darkOnSurface">Backend Sync & Settings</h2>
+                    <p class="text-xs font-medium text-m3-onSurfaceVariant dark:text-m3-darkOnSurfaceVariant">Google Sheets Web Apps Integration</p>
                 </div>
             </div>
 
-            <div class="space-y-3.5 text-xs font-bold text-earth-border dark:text-earth-darkBorder">
+            <div class="space-y-4 text-xs font-medium text-m3-onSurface dark:text-m3-darkOnSurface">
                 
                 <!-- Leaderboard Sheet Config -->
-                <div class="bg-earth-sandLight/60 dark:bg-neutral-900 p-3.5 rounded-xl border-2 border-earth-border dark:border-earth-darkBorder space-y-2">
-                    <label class="block font-black text-earth-border dark:text-earth-darkBorder uppercase tracking-wider text-[11px] flex items-center gap-1.5">
-                        <i data-lucide="award" class="w-3.5 h-3.5 text-earth-ochre stroke-[3]"></i> Leaderboard Apps Script URL
+                <div class="bg-slate-50 dark:bg-zinc-800/80 p-4 rounded-2xl border border-slate-200 dark:border-zinc-700 space-y-2.5">
+                    <label class="block font-bold text-m3-onSurface dark:text-m3-darkOnSurface text-xs flex items-center gap-2">
+                        <i data-lucide="award" class="w-4 h-4 text-amber-500 stroke-[2.5]"></i> Leaderboard Script URL
                     </label>
-                    <input type="url" id="leaderboardScriptUrl" placeholder="https://script.google.com/macros/s/.../exec" class="w-full bg-white dark:bg-neutral-800 border-2 border-earth-border dark:border-earth-darkBorder rounded-xl p-2 text-xs text-earth-border dark:text-earth-darkBorder font-mono outline-none">
+                    <input type="url" id="leaderboardScriptUrl" placeholder="https://script.google.com/macros/s/.../exec" class="w-full bg-white dark:bg-zinc-900 border border-slate-200 dark:border-zinc-700 rounded-xl p-2.5 text-xs text-m3-onSurface dark:text-m3-darkOnSurface font-mono outline-none focus:border-m3-primary">
                     
                     <div class="flex flex-wrap items-center justify-between gap-2 text-[11px] pt-1">
-                        <label class="flex items-center gap-2 cursor-pointer font-bold">
-                            <input type="checkbox" id="leaderboardAutoSyncToggle" onchange="toggleLeaderboardAutoSync(this.checked)" class="rounded border-2 border-earth-border text-earth-border focus:ring-0">
-                            Auto-sync marks
+                        <label class="flex items-center gap-2 cursor-pointer font-medium">
+                            <input type="checkbox" id="leaderboardAutoSyncToggle" onchange="toggleLeaderboardAutoSync(this.checked)" class="rounded text-m3-primary focus:ring-0">
+                            Auto-sync marks on change
                         </label>
-                        <div class="flex gap-1.5">
-                            <button onclick="fetchLeaderboardFromSheet()" class="px-2.5 py-1 bg-earth-stone text-white border-2 border-earth-border rounded-lg font-black text-[10px] uppercase shadow-neo-sm flex items-center gap-1">
-                                <i data-lucide="download" class="w-3 h-3 stroke-[3]"></i> Fetch
+                        <div class="flex gap-2">
+                            <button onclick="fetchLeaderboardFromSheet()" class="px-3 py-1.5 bg-slate-200/80 dark:bg-zinc-700 text-m3-onSurface dark:text-m3-darkOnSurface rounded-full font-semibold text-[11px] flex items-center gap-1 hover:bg-slate-300">
+                                <i data-lucide="download" class="w-3 h-3 stroke-[2.5]"></i> Fetch
                             </button>
-                            <button onclick="pushLeaderboardToSheet()" class="px-2.5 py-1 bg-earth-sage text-white border-2 border-earth-border rounded-lg font-black text-[10px] uppercase shadow-neo-sm flex items-center gap-1">
-                                <i data-lucide="upload" class="w-3 h-3 stroke-[3]"></i> Push
+                            <button onclick="pushLeaderboardToSheet()" class="px-3 py-1.5 bg-m3-primary text-white rounded-full font-semibold text-[11px] flex items-center gap-1 shadow-m3-1">
+                                <i data-lucide="upload" class="w-3 h-3 stroke-[2.5]"></i> Push
                             </button>
                         </div>
                     </div>
                 </div>
 
                 <!-- Tasks Sheet Config -->
-                <div class="bg-earth-sandLight/60 dark:bg-neutral-900 p-3.5 rounded-xl border-2 border-earth-border dark:border-earth-darkBorder space-y-2">
-                    <label class="block font-black text-earth-border dark:text-earth-darkBorder uppercase tracking-wider text-[11px] flex items-center gap-1.5">
-                        <i data-lucide="check-square" class="w-3.5 h-3.5 text-earth-stone stroke-[3]"></i> Tasks Apps Script URL
+                <div class="bg-slate-50 dark:bg-zinc-800/80 p-4 rounded-2xl border border-slate-200 dark:border-zinc-700 space-y-2.5">
+                    <label class="block font-bold text-m3-onSurface dark:text-m3-darkOnSurface text-xs flex items-center gap-2">
+                        <i data-lucide="check-square" class="w-4 h-4 text-m3-primary stroke-[2.5]"></i> Tasks Script URL
                     </label>
-                    <input type="url" id="taskScriptUrl" placeholder="https://script.google.com/macros/s/.../exec" class="w-full bg-white dark:bg-neutral-800 border-2 border-earth-border dark:border-earth-darkBorder rounded-xl p-2 text-xs text-earth-border dark:text-earth-darkBorder font-mono outline-none">
+                    <input type="url" id="taskScriptUrl" placeholder="https://script.google.com/macros/s/.../exec" class="w-full bg-white dark:bg-zinc-900 border border-slate-200 dark:border-zinc-700 rounded-xl p-2.5 text-xs text-m3-onSurface dark:text-m3-darkOnSurface font-mono outline-none focus:border-m3-primary">
                     
                     <div class="flex flex-wrap items-center justify-between gap-2 text-[11px] pt-1">
-                        <span class="text-neutral-600 dark:text-neutral-400 font-bold">Syncs Task Status</span>
-                        <div class="flex gap-1.5">
-                            <button onclick="fetchTasksFromSheet()" class="px-2.5 py-1 bg-earth-stone text-white border-2 border-earth-border rounded-lg font-black text-[10px] uppercase shadow-neo-sm flex items-center gap-1">
-                                <i data-lucide="download" class="w-3 h-3 stroke-[3]"></i> Fetch
+                        <span class="text-m3-onSurfaceVariant dark:text-m3-darkOnSurfaceVariant font-medium">Automatic 2-way cloud sync</span>
+                        <div class="flex gap-2">
+                            <button onclick="fetchTasksFromSheet()" class="px-3 py-1.5 bg-slate-200/80 dark:bg-zinc-700 text-m3-onSurface dark:text-m3-darkOnSurface rounded-full font-semibold text-[11px] flex items-center gap-1 hover:bg-slate-300">
+                                <i data-lucide="download" class="w-3 h-3 stroke-[2.5]"></i> Fetch
                             </button>
-                            <button onclick="pushTasksToSheet()" class="px-2.5 py-1 bg-earth-sage text-white border-2 border-earth-border rounded-lg font-black text-[10px] uppercase shadow-neo-sm flex items-center gap-1">
-                                <i data-lucide="upload" class="w-3 h-3 stroke-[3]"></i> Push
+                            <button onclick="pushTasksToSheet()" class="px-3 py-1.5 bg-m3-primary text-white rounded-full font-semibold text-[11px] flex items-center gap-1 shadow-m3-1">
+                                <i data-lucide="upload" class="w-3 h-3 stroke-[2.5]"></i> Push
                             </button>
                         </div>
                     </div>
                 </div>
 
-                <button onclick="saveAllSyncSettings()" class="w-full bg-earth-ochre text-earth-border border-2 border-earth-border font-black uppercase py-2.5 rounded-xl text-xs shadow-neo-sm hover:shadow-neo transition-all">Save Backend URLs</button>
+                <button onclick="saveAllSyncSettings()" class="w-full bg-m3-primary hover:bg-m3-primaryHover text-white font-semibold py-2.5 rounded-full text-xs shadow-m3-1 transition">Save Backend URLs</button>
 
                 <!-- Security PIN Update -->
-                <div class="border-t-2 border-earth-border dark:border-earth-darkBorder pt-3">
-                    <label class="block font-black uppercase text-neutral-600 dark:text-neutral-400 text-[10px] mb-1">Change Security PIN</label>
+                <div class="border-t border-slate-100 dark:border-zinc-800 pt-3.5">
+                    <label class="block font-semibold text-m3-onSurfaceVariant dark:text-m3-darkOnSurfaceVariant text-xs mb-1.5">Change Security PIN</label>
                     <div class="flex gap-2">
-                        <input type="password" id="newPinInput" maxlength="4" placeholder="New 4-digit PIN" class="flex-1 bg-earth-sandLight/60 dark:bg-neutral-900 border-2 border-earth-border dark:border-earth-darkBorder rounded-xl px-3 py-1.5 text-xs font-bold text-earth-border dark:text-earth-darkBorder outline-none">
-                        <button onclick="changeSecurityPin()" class="px-3.5 py-1.5 bg-earth-sandLight dark:bg-neutral-800 text-earth-border dark:text-earth-darkBorder border-2 border-earth-border dark:border-earth-darkBorder text-xs font-black uppercase rounded-xl shadow-neo-sm transition">Update PIN</button>
+                        <input type="password" id="newPinInput" maxlength="4" placeholder="New 4-digit PIN" class="flex-1 bg-slate-50 dark:bg-zinc-800/80 border border-slate-200 dark:border-zinc-700 rounded-full px-4 py-2 text-xs font-medium text-m3-onSurface dark:text-m3-darkOnSurface outline-none focus:border-m3-primary">
+                        <button onclick="changeSecurityPin()" class="px-4 py-2 bg-slate-200/80 dark:bg-zinc-700 text-m3-onSurface dark:text-m3-darkOnSurface text-xs font-semibold rounded-full hover:bg-slate-300 transition">Update PIN</button>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- ========================================== -->
-    <!-- TOAST NOTIFICATION                         -->
-    <!-- ========================================== -->
-    <div id="toast" class="fixed top-20 sm:top-24 right-3 sm:right-6 z-[60] transform -translate-y-16 opacity-0 transition-all duration-200 pointer-events-none max-w-[calc(100vw-24px)]">
-        <div class="bg-white dark:bg-neutral-900 text-earth-border dark:text-earth-darkBorder px-4 py-2.5 sm:py-3 rounded-xl shadow-neo-lg flex items-center space-x-2.5 text-xs font-black uppercase border-2 border-earth-border dark:border-earth-darkBorder">
-            <div id="toastIcon" class="p-1 rounded-md bg-earth-ochre text-earth-border border border-earth-border shrink-0">
-                <i data-lucide="info" class="w-4 h-4 stroke-[3]"></i>
+    <!-- MODAL 6: PWA Mobile Install Guide Modal -->
+    <div id="pwaModal" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/40 backdrop-blur-sm hidden">
+        <div class="bg-white dark:bg-m3-darkSurfaceContainer border border-slate-200/80 dark:border-m3-darkOutlineVariant rounded-3xl max-w-sm w-full p-6 shadow-m3-4 relative max-h-[90vh] overflow-y-auto">
+            <button onclick="closeModal('pwaModal')" class="absolute top-5 right-5 w-8 h-8 rounded-full hover:bg-slate-100 dark:hover:bg-zinc-800 flex items-center justify-center text-slate-400 hover:text-slate-600 transition">
+                <i data-lucide="x" class="w-4 h-4 stroke-[2.5]"></i>
+            </button>
+            
+            <div class="w-14 h-14 bg-m3-primaryContainer dark:bg-m3-darkPrimaryContainer text-m3-onPrimaryContainer dark:text-m3-darkOnPrimaryContainer rounded-3xl flex items-center justify-center mx-auto mb-3 shadow-m3-1">
+                <i data-lucide="smartphone" class="w-7 h-7 stroke-[2]"></i>
             </div>
-            <p id="toastMessage" class="truncate">Notification message</p>
+
+            <h2 class="text-lg font-bold text-center text-m3-onSurface dark:text-m3-darkOnSurface mb-1">Install atldash</h2>
+            <p class="text-xs font-medium text-center text-m3-onSurfaceVariant dark:text-m3-darkOnSurfaceVariant mb-4">Install as a standalone native app on your home screen</p>
+
+            <div id="pwaModalContent" class="space-y-3 text-xs font-medium text-m3-onSurface dark:text-m3-darkOnSurface">
+                <!-- Dynamically populated based on device (iOS vs Android/Desktop) -->
+            </div>
+
+            <div class="pt-4 mt-3 border-t border-slate-100 dark:border-zinc-800 flex justify-end">
+                <button onclick="closeModal('pwaModal')" class="w-full py-2.5 bg-m3-primary hover:bg-m3-primaryHover text-white text-xs font-semibold rounded-full shadow-m3-1 transition">Got it</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ========================================== -->
+    <!-- MATERIAL 3 SNACKBAR / TOAST NOTIFICATION   -->
+    <!-- ========================================== -->
+    <div id="toast" class="fixed top-20 sm:top-24 right-3 sm:right-6 z-[60] transform -translate-y-16 opacity-0 transition-all duration-300 pointer-events-none max-w-[calc(100vw-24px)]">
+        <div class="bg-zinc-900 dark:bg-zinc-100 text-white dark:text-zinc-900 px-5 py-3 rounded-full shadow-m3-3 flex items-center space-x-3 text-xs font-semibold border border-zinc-800 dark:border-zinc-200">
+            <div id="toastIcon" class="w-5 h-5 rounded-full bg-m3-primary text-white flex items-center justify-center shrink-0">
+                <i data-lucide="info" class="w-3.5 h-3.5 stroke-[2.5]"></i>
+            </div>
+            <p id="toastMessage" class="truncate font-medium">Notification message</p>
         </div>
     </div>
 
@@ -866,15 +905,15 @@
                 tabTasks.classList.remove('hidden');
                 tabLeaderboard.classList.add('hidden');
 
-                btnTasks.className = "flex-1 md:flex-none flex items-center justify-center gap-1.5 px-4 sm:px-6 py-1.5 rounded-lg text-xs sm:text-sm font-black uppercase transition-all bg-earth-ochre text-earth-border border-2 border-earth-border shadow-neo-sm";
-                btnLeaderboard.className = "flex-1 md:flex-none flex items-center justify-center gap-1.5 px-4 sm:px-6 py-1.5 rounded-lg text-xs sm:text-sm font-black uppercase transition-all text-neutral-600 dark:text-neutral-300 hover:text-earth-border dark:hover:text-white";
+                btnTasks.className = "flex-1 md:flex-none flex items-center justify-center gap-2 px-5 sm:px-6 py-1.5 rounded-full text-xs sm:text-sm font-semibold transition-all bg-m3-primary text-white shadow-m3-1";
+                btnLeaderboard.className = "flex-1 md:flex-none flex items-center justify-center gap-2 px-5 sm:px-6 py-1.5 rounded-full text-xs sm:text-sm font-semibold transition-all text-m3-onSurfaceVariant dark:text-m3-darkOnSurfaceVariant hover:text-m3-onSurface dark:hover:text-white";
                 renderTasks();
             } else {
                 tabTasks.classList.add('hidden');
                 tabLeaderboard.classList.remove('hidden');
 
-                btnLeaderboard.className = "flex-1 md:flex-none flex items-center justify-center gap-1.5 px-4 sm:px-6 py-1.5 rounded-lg text-xs sm:text-sm font-black uppercase transition-all bg-earth-ochre text-earth-border border-2 border-earth-border shadow-neo-sm";
-                btnTasks.className = "flex-1 md:flex-none flex items-center justify-center gap-1.5 px-4 sm:px-6 py-1.5 rounded-lg text-xs sm:text-sm font-black uppercase transition-all text-neutral-600 dark:text-neutral-300 hover:text-earth-border dark:hover:text-white";
+                btnLeaderboard.className = "flex-1 md:flex-none flex items-center justify-center gap-2 px-5 sm:px-6 py-1.5 rounded-full text-xs sm:text-sm font-semibold transition-all bg-m3-primary text-white shadow-m3-1";
+                btnTasks.className = "flex-1 md:flex-none flex items-center justify-center gap-2 px-5 sm:px-6 py-1.5 rounded-full text-xs sm:text-sm font-semibold transition-all text-m3-onSurfaceVariant dark:text-m3-darkOnSurfaceVariant hover:text-m3-onSurface dark:hover:text-white";
                 updateLeaderboardMetrics();
                 renderGroupDropdown();
                 renderStudentList();
@@ -953,10 +992,10 @@
             for (let i = 0; i < 4; i++) {
                 const dot = document.getElementById(`dot-${i}`);
                 if (i < currentPin.length) {
-                    dot.className = "w-9 h-9 sm:w-10 sm:h-10 rounded-lg border-2 border-earth-border dark:border-earth-darkBorder bg-earth-ochre text-earth-border flex items-center justify-center font-black text-lg scale-105 transition-all shadow-neo-sm";
+                    dot.className = "w-10 h-10 rounded-2xl bg-m3-primary dark:bg-m3-darkPrimary text-white dark:text-m3-darkOnPrimary flex items-center justify-center font-bold text-lg scale-105 transition-all shadow-m3-1";
                     dot.textContent = '●';
                 } else {
-                    dot.className = "w-9 h-9 sm:w-10 sm:h-10 rounded-lg border-2 border-earth-border dark:border-earth-darkBorder bg-earth-sandLight dark:bg-neutral-800 flex items-center justify-center font-black text-lg transition-all";
+                    dot.className = "w-10 h-10 rounded-2xl border border-slate-300 dark:border-zinc-700 bg-slate-50 dark:bg-zinc-800/80 flex items-center justify-center font-bold text-lg transition-all";
                     dot.textContent = '';
                 }
             }
@@ -1045,68 +1084,93 @@
         }
 
         function setupPWA() {
-            const manifest = {
-                name: "atldash - Tasks & Leaderboard",
-                short_name: "atldash",
-                description: "Tasks & Student Points Tracker Dashboard",
-                start_url: "./",
-                display: "standalone",
-                background_color: "#F9F7F2",
-                theme_color: "#D99B38",
-                icons: [
-                    {
-                        src: "https://placehold.co/192x192/D99B38/282522?text=ATL",
-                        sizes: "192x192",
-                        type: "image/png"
-                    },
-                    {
-                        src: "https://placehold.co/512x512/D99B38/282522?text=ATL",
-                        sizes: "512x512",
-                        type: "image/png"
-                    }
-                ]
-            };
-            const manifestBlob = new Blob([JSON.stringify(manifest)], { type: 'application/json' });
-            const manifestUrl = URL.createObjectURL(manifestBlob);
-            const linkEl = document.getElementById('manifestLink');
-            if (linkEl) linkEl.href = manifestUrl;
+            const isStandalone = window.matchMedia('(display-mode: standalone)').matches || (window.navigator.standalone === true);
+            const installBtn = document.getElementById('pwaInstallBtn');
+
+            if (isStandalone) {
+                if (installBtn) installBtn.classList.add('hidden');
+            } else {
+                if (installBtn) {
+                    installBtn.classList.remove('hidden');
+                    installBtn.classList.add('flex');
+                }
+            }
 
             if ('serviceWorker' in navigator) {
-                const swCode = `
-                    self.addEventListener('install', (e) => self.skipWaiting());
-                    self.addEventListener('activate', (e) => self.clients.claim());
-                    self.addEventListener('fetch', (e) => {
-                        e.respondWith(fetch(e.request).catch(() => caches.match(e.request)));
-                    });
-                `;
-                const swBlob = new Blob([swCode], { type: 'application/javascript' });
-                navigator.serviceWorker.register(URL.createObjectURL(swBlob)).catch(() => {});
+                navigator.serviceWorker.register('sw.js').catch(() => {
+                    const swCode = `
+                        self.addEventListener('install', (e) => self.skipWaiting());
+                        self.addEventListener('activate', (e) => self.clients.claim());
+                        self.addEventListener('fetch', (e) => {
+                            if (e.request.method !== 'GET') return;
+                            e.respondWith(fetch(e.request).catch(() => caches.match(e.request)));
+                        });
+                    `;
+                    const swBlob = new Blob([swCode], { type: 'application/javascript' });
+                    navigator.serviceWorker.register(URL.createObjectURL(swBlob)).catch(() => {});
+                });
             }
 
             window.addEventListener('beforeinstallprompt', (e) => {
                 e.preventDefault();
                 deferredPrompt = e;
-                const installBtn = document.getElementById('pwaInstallBtn');
-                if (installBtn) {
+                if (installBtn && !isStandalone) {
                     installBtn.classList.remove('hidden');
                     installBtn.classList.add('flex');
                 }
             });
+
+            window.addEventListener('appinstalled', () => {
+                deferredPrompt = null;
+                if (installBtn) installBtn.classList.add('hidden');
+                showToast('atldash installed successfully!', 'success');
+            });
         }
 
         async function installPWA() {
-            if (!deferredPrompt) {
-                showToast('Open browser menu (⋮) and tap "Add to Home Screen".', 'info');
+            const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
+            const contentEl = document.getElementById('pwaModalContent');
+
+            if (deferredPrompt) {
+                deferredPrompt.prompt();
+                const { outcome } = await deferredPrompt.userChoice;
+                if (outcome === 'accepted') {
+                    showToast('Installing atldash...', 'success');
+                }
+                deferredPrompt = null;
                 return;
             }
-            deferredPrompt.prompt();
-            const { outcome } = await deferredPrompt.userChoice;
-            if (outcome === 'accepted') {
-                showToast('App installed!', 'success');
+
+            if (isIOS) {
+                contentEl.innerHTML = `
+                    <div class="p-3.5 bg-slate-50 dark:bg-zinc-800/80 rounded-2xl border border-slate-200 dark:border-zinc-700 flex items-start gap-3">
+                        <span class="w-6 h-6 rounded-full bg-m3-primary text-white flex items-center justify-center font-bold shrink-0 text-xs">1</span>
+                        <p class="leading-relaxed">Tap the <span class="px-2 py-0.5 bg-slate-200 dark:bg-zinc-700 rounded-md font-semibold inline-flex items-center gap-1">Share <i data-lucide="share" class="w-3.5 h-3.5 inline"></i></span> icon in Safari.</p>
+                    </div>
+                    <div class="p-3.5 bg-slate-50 dark:bg-zinc-800/80 rounded-2xl border border-slate-200 dark:border-zinc-700 flex items-start gap-3">
+                        <span class="w-6 h-6 rounded-full bg-m3-primary text-white flex items-center justify-center font-bold shrink-0 text-xs">2</span>
+                        <p class="leading-relaxed">Scroll down and select <span class="px-2 py-0.5 bg-slate-200 dark:bg-zinc-700 rounded-md font-semibold inline-flex items-center gap-1">Add to Home Screen <i data-lucide="plus-square" class="w-3.5 h-3.5 inline"></i></span>.</p>
+                    </div>
+                    <div class="p-3.5 bg-slate-50 dark:bg-zinc-800/80 rounded-2xl border border-slate-200 dark:border-zinc-700 flex items-start gap-3">
+                        <span class="w-6 h-6 rounded-full bg-m3-primary text-white flex items-center justify-center font-bold shrink-0 text-xs">3</span>
+                        <p class="leading-relaxed">Tap <span class="font-bold text-m3-primary">Add</span> in the top right.</p>
+                    </div>
+                `;
+            } else {
+                contentEl.innerHTML = `
+                    <div class="p-3.5 bg-slate-50 dark:bg-zinc-800/80 rounded-2xl border border-slate-200 dark:border-zinc-700 flex items-start gap-3">
+                        <span class="w-6 h-6 rounded-full bg-m3-primary text-white flex items-center justify-center font-bold shrink-0 text-xs">1</span>
+                        <p class="leading-relaxed">Tap the browser menu <span class="px-2 py-0.5 bg-slate-200 dark:bg-zinc-700 rounded-md font-mono font-bold">⋮</span> in the top right.</p>
+                    </div>
+                    <div class="p-3.5 bg-slate-50 dark:bg-zinc-800/80 rounded-2xl border border-slate-200 dark:border-zinc-700 flex items-start gap-3">
+                        <span class="w-6 h-6 rounded-full bg-m3-primary text-white flex items-center justify-center font-bold shrink-0 text-xs">2</span>
+                        <p class="leading-relaxed">Select <span class="px-2 py-0.5 bg-slate-200 dark:bg-zinc-700 rounded-md font-semibold inline-flex items-center gap-1">Install app / Add to Home screen <i data-lucide="download" class="w-3.5 h-3.5 inline"></i></span>.</p>
+                    </div>
+                `;
             }
-            deferredPrompt = null;
-            const installBtn = document.getElementById('pwaInstallBtn');
-            if (installBtn) installBtn.classList.add('hidden');
+
+            openModal('pwaModal');
+            lucide.createIcons();
         }
 
         // ==========================================
@@ -1159,7 +1223,7 @@
             renderTasks();
 
             input.value = '';
-            showToast('Task added!', 'success');
+            showToast('Task created!', 'success');
         }
 
         function openEditTaskModal(id) {
@@ -1192,7 +1256,7 @@
                 saveLocalTasks(true);
                 renderTasks();
                 closeModal('editTaskModal');
-                showToast('Task updated successfully!', 'success');
+                showToast('Task updated!', 'success');
             }
         }
 
@@ -1219,12 +1283,12 @@
         function setTaskFilter(filter) {
             taskFilter = filter;
             document.querySelectorAll('.task-filter-chip').forEach(btn => {
-                btn.className = "task-filter-chip px-3.5 py-1.5 rounded-xl text-xs font-black uppercase whitespace-nowrap transition-all border-2 border-earth-border dark:border-earth-darkBorder bg-earth-sandLight dark:bg-neutral-800 text-earth-border dark:text-earth-darkBorder shrink-0";
+                btn.className = "task-filter-chip px-4 py-1.5 rounded-full text-xs font-semibold whitespace-nowrap transition-all bg-slate-100 dark:bg-zinc-800 text-m3-onSurfaceVariant dark:text-m3-darkOnSurfaceVariant border border-slate-200 dark:border-zinc-700 hover:bg-slate-200/70 shrink-0";
             });
 
             const activeBtn = document.getElementById(`filter-${filter}`);
             if (activeBtn) {
-                activeBtn.className = "task-filter-chip px-3.5 py-1.5 rounded-xl text-xs font-black uppercase whitespace-nowrap transition-all border-2 border-earth-border shadow-neo-sm bg-earth-ochre text-earth-border shrink-0";
+                activeBtn.className = "task-filter-chip px-4 py-1.5 rounded-full text-xs font-semibold whitespace-nowrap transition-all bg-m3-primaryContainer dark:bg-m3-darkPrimaryContainer text-m3-onPrimaryContainer dark:text-m3-darkOnPrimaryContainer border border-m3-primary/30 shrink-0";
             }
 
             renderTasks();
@@ -1294,35 +1358,35 @@
 
                 filtered.forEach(task => {
                     const card = document.createElement('div');
-                    card.className = `group bg-white dark:bg-earth-darkCard border-2 border-earth-border dark:border-earth-darkBorder rounded-2xl p-3.5 sm:p-4 shadow-neo-sm hover:shadow-neo hover:translate-x-[-1px] hover:translate-y-[-1px] transition-all flex items-center justify-between gap-2.5 cursor-pointer select-none ${task.completed ? 'opacity-65' : ''}`;
+                    card.className = `group bg-white dark:bg-m3-darkSurfaceContainer border border-slate-200/80 dark:border-m3-darkOutlineVariant rounded-2xl p-4 shadow-m3-1 hover:shadow-m3-2 transition-all flex items-center justify-between gap-3 cursor-pointer select-none ${task.completed ? 'opacity-60' : ''}`;
 
                     const priorityBadgeColor = 
-                        task.priority === 'High' ? 'bg-earth-terracottaLight text-earth-terracotta border border-earth-border' :
-                        task.priority === 'Medium' ? 'bg-earth-ochreLight text-earth-border border border-earth-border' :
-                        'bg-earth-sageLight text-earth-sage border border-earth-border';
+                        task.priority === 'High' ? 'bg-rose-100 text-rose-700 dark:bg-rose-950/60 dark:text-rose-300' :
+                        task.priority === 'Medium' ? 'bg-amber-100 text-amber-800 dark:bg-amber-950/60 dark:text-amber-300' :
+                        'bg-emerald-100 text-emerald-800 dark:bg-emerald-950/60 dark:text-emerald-300';
 
                     const safeId = String(task.id).replace(/'/g, "\\'");
                     const formattedDate = formatDisplayDate(task.dueDate);
                     const overdue = isTaskOverdue(task.dueDate, task.completed);
                     const dateBadgeClass = overdue 
-                        ? 'text-earth-terracotta bg-earth-terracottaLight px-2 py-0.5 rounded-md font-black border border-earth-border' 
-                        : 'text-neutral-600 dark:text-neutral-300 font-bold';
+                        ? 'text-rose-700 dark:text-rose-400 bg-rose-100 dark:bg-rose-950/60 px-2 py-0.5 rounded-full font-semibold' 
+                        : 'text-m3-onSurfaceVariant dark:text-m3-darkOnSurfaceVariant font-medium';
 
                     card.innerHTML = `
-                        <div onclick="toggleTask('${safeId}')" class="flex items-start sm:items-center gap-3 flex-1 min-w-0 py-0.5">
-                            <button type="button" onclick="event.stopPropagation(); toggleTask('${safeId}')" class="w-6 h-6 rounded-lg border-2 border-earth-border dark:border-earth-darkBorder flex items-center justify-center shrink-0 transition-all mt-0.5 sm:mt-0 ${task.completed ? 'bg-earth-sage text-white' : 'bg-earth-sandLight dark:bg-neutral-800'}">
+                        <div onclick="toggleTask('${safeId}')" class="flex items-start sm:items-center gap-3.5 flex-1 min-w-0 py-0.5">
+                            <button type="button" onclick="event.stopPropagation(); toggleTask('${safeId}')" class="w-6 h-6 rounded-lg border-2 ${task.completed ? 'border-m3-primary bg-m3-primary text-white' : 'border-slate-300 dark:border-zinc-600 bg-slate-50 dark:bg-zinc-800'} flex items-center justify-center shrink-0 transition-all mt-0.5 sm:mt-0">
                                 ${task.completed ? '<i data-lucide="check" class="w-4 h-4 stroke-[3]"></i>' : ''}
                             </button>
                             
                             <div class="flex flex-col min-w-0 flex-1 gap-1">
-                                <span class="text-xs sm:text-sm font-bold text-earth-border dark:text-earth-darkBorder break-words ${task.completed ? 'line-through text-neutral-400 dark:text-neutral-500' : ''}">
+                                <span class="text-xs sm:text-sm font-semibold text-m3-onSurface dark:text-m3-darkOnSurface break-words ${task.completed ? 'line-through text-slate-400 dark:text-zinc-500 font-normal' : ''}">
                                     ${escapeHtml(task.title)}
                                 </span>
-                                <div class="flex items-center gap-2 flex-wrap text-[10px] sm:text-[11px]">
-                                    <span class="px-2 py-0.5 rounded-md font-black uppercase ${priorityBadgeColor}">${task.priority}</span>
+                                <div class="flex items-center gap-2 flex-wrap text-[11px]">
+                                    <span class="px-2.5 py-0.5 rounded-full font-bold uppercase text-[10px] ${priorityBadgeColor}">${task.priority}</span>
                                     ${task.dueDate ? `
                                         <span class="${dateBadgeClass} flex items-center gap-1">
-                                            <i data-lucide="${overdue ? 'alert-circle' : 'calendar'}" class="w-3 h-3 stroke-[2.5]"></i>
+                                            <i data-lucide="${overdue ? 'alert-circle' : 'calendar'}" class="w-3 h-3 stroke-[2]"></i>
                                             <span>${escapeHtml(formattedDate)}</span>
                                         </span>
                                     ` : ''}
@@ -1331,11 +1395,11 @@
                         </div>
 
                         <div class="flex items-center space-x-1 shrink-0">
-                            <button type="button" onclick="event.stopPropagation(); openEditTaskModal('${safeId}')" title="Edit task" class="p-1.5 sm:p-2 rounded-xl text-neutral-500 hover:text-earth-border hover:bg-earth-sandLight border border-transparent hover:border-earth-border transition-all">
-                                <i data-lucide="pencil" class="w-3.5 h-3.5 sm:w-4 sm:h-4 stroke-[2.5]"></i>
+                            <button type="button" onclick="event.stopPropagation(); openEditTaskModal('${safeId}')" title="Edit task" class="w-8 h-8 rounded-full text-slate-400 hover:text-m3-primary hover:bg-slate-100 dark:hover:bg-zinc-800 flex items-center justify-center transition">
+                                <i data-lucide="pencil" class="w-4 h-4 stroke-[2]"></i>
                             </button>
-                            <button type="button" onclick="event.stopPropagation(); deleteTask('${safeId}')" title="Delete task" class="p-1.5 sm:p-2 rounded-xl text-neutral-400 hover:text-white hover:bg-earth-terracotta border border-transparent hover:border-earth-border transition-all">
-                                <i data-lucide="trash-2" class="w-3.5 h-3.5 sm:w-4 sm:h-4 stroke-[2.5]"></i>
+                            <button type="button" onclick="event.stopPropagation(); deleteTask('${safeId}')" title="Delete task" class="w-8 h-8 rounded-full text-slate-400 hover:text-rose-600 hover:bg-rose-50 dark:hover:bg-rose-950/40 flex items-center justify-center transition">
+                                <i data-lucide="trash-2" class="w-4 h-4 stroke-[2]"></i>
                             </button>
                         </div>
                     `;
@@ -1491,45 +1555,45 @@
         }
 
         function getRankBadge(rank) {
-            if (rank === 1) return '<span class="px-2 py-0.5 rounded-md text-[10px] font-black uppercase bg-earth-ochre text-earth-border border border-earth-border">#1 Gold 👑</span>';
-            if (rank === 2) return '<span class="px-2 py-0.5 rounded-md text-[10px] font-black uppercase bg-earth-sand text-earth-border border border-earth-border">#2 Silver 🥈</span>';
-            if (rank === 3) return '<span class="px-2 py-0.5 rounded-md text-[10px] font-black uppercase bg-earth-terracottaLight text-earth-terracotta border border-earth-border">#3 Bronze 🥉</span>';
-            return `<span class="text-[10px] sm:text-[11px] font-black text-neutral-400">#${rank}</span>`;
+            if (rank === 1) return '<span class="px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-amber-100 text-amber-800 dark:bg-amber-950/60 dark:text-amber-300">#1 Gold 👑</span>';
+            if (rank === 2) return '<span class="px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-slate-200 text-slate-700 dark:bg-zinc-700 dark:text-zinc-200">#2 Silver 🥈</span>';
+            if (rank === 3) return '<span class="px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-orange-100 text-orange-800 dark:bg-orange-950/60 dark:text-orange-300">#3 Bronze 🥉</span>';
+            return `<span class="text-xs font-semibold text-slate-400">#${rank}</span>`;
         }
 
         function createStudentCard(student, rank) {
             const card = document.createElement('div');
-            card.className = "bg-white dark:bg-earth-darkCard p-3.5 sm:p-4 rounded-2xl border-2 border-earth-border dark:border-earth-darkBorder shadow-neo-sm hover:shadow-neo hover:translate-x-[-1px] hover:translate-y-[-1px] flex flex-col justify-between gap-3 transition-all";
+            card.className = "bg-white dark:bg-m3-darkSurfaceContainer p-4 sm:p-5 rounded-3xl border border-slate-200/80 dark:border-m3-darkOutlineVariant shadow-m3-1 hover:shadow-m3-2 flex flex-col justify-between gap-3.5 transition-all";
 
             card.innerHTML = `
-                <div class="flex items-start space-x-3 min-w-0">
-                    <div class="w-10 h-10 sm:w-11 sm:h-11 rounded-xl bg-earth-ochre text-earth-border border-2 border-earth-border flex items-center justify-center font-black text-xs sm:text-sm flex-shrink-0 shadow-neo-sm">
+                <div class="flex items-start space-x-3.5 min-w-0">
+                    <div class="w-11 h-11 sm:w-12 sm:h-12 rounded-2xl bg-m3-primaryContainer dark:bg-m3-darkPrimaryContainer text-m3-onPrimaryContainer dark:text-m3-darkOnPrimaryContainer flex items-center justify-center font-bold text-sm shrink-0 shadow-m3-1">
                         ${getInitials(student.name)}
                     </div>
 
                     <div class="min-w-0 flex-1">
-                        <div class="flex items-center space-x-1.5 flex-wrap gap-y-1">
-                            <h3 class="text-xs sm:text-base font-black text-earth-border dark:text-earth-darkBorder break-words">${escapeHtml(student.name)}</h3>
-                            <span class="text-[9px] sm:text-[10px] px-1.5 py-0.5 rounded-md bg-earth-sandLight dark:bg-neutral-800 text-earth-border dark:text-earth-darkBorder font-bold border border-earth-border dark:border-earth-darkBorder">${escapeHtml(student.group || 'General')}</span>
+                        <div class="flex items-center space-x-2 flex-wrap gap-y-1">
+                            <h3 class="text-sm sm:text-base font-bold text-m3-onSurface dark:text-m3-darkOnSurface break-words">${escapeHtml(student.name)}</h3>
+                            <span class="text-[10px] px-2 py-0.5 rounded-full bg-slate-100 dark:bg-zinc-800 text-m3-onSurfaceVariant dark:text-m3-darkOnSurfaceVariant font-semibold">${escapeHtml(student.group || 'General')}</span>
                             ${getRankBadge(rank)}
                         </div>
-                        <div class="text-[11px] sm:text-xs font-bold text-neutral-600 dark:text-neutral-400 mt-1">
-                            Points: <span class="font-black text-earth-border dark:text-earth-darkBorder text-xs sm:text-sm">${student.points}</span> pts
+                        <div class="text-xs font-medium text-m3-onSurfaceVariant dark:text-m3-darkOnSurfaceVariant mt-1">
+                            Score: <span class="font-bold text-m3-primary dark:text-m3-darkPrimary text-sm">${student.points}</span> pts
                         </div>
                     </div>
                 </div>
 
-                <div class="flex items-center justify-between gap-2 border-t-2 border-earth-border dark:border-earth-darkBorder pt-2.5">
-                    <button onclick="openAddPointsModal('${student.id}')" class="flex-1 px-2.5 sm:px-3 py-1.5 bg-earth-sage text-white border-2 border-earth-border rounded-xl text-xs font-black uppercase shadow-neo-sm active:scale-95 transition-all flex items-center justify-center gap-1">
-                        <i data-lucide="plus-circle" class="w-3.5 h-3.5 stroke-[2.5]"></i> Add Points
+                <div class="flex items-center justify-between gap-2 border-t border-slate-100 dark:border-zinc-800 pt-3">
+                    <button onclick="openAddPointsModal('${student.id}')" class="flex-1 px-3 py-1.5 bg-emerald-50 dark:bg-emerald-950/40 hover:bg-emerald-100 text-emerald-700 dark:text-emerald-300 rounded-full text-xs font-semibold active:scale-95 transition-all flex items-center justify-center gap-1.5">
+                        <i data-lucide="plus-circle" class="w-4 h-4 stroke-[2]"></i> Add Points
                     </button>
 
                     <div class="flex items-center space-x-1 shrink-0">
-                        <button onclick="editStudent('${student.id}')" class="p-1.5 text-earth-border dark:text-earth-darkBorder hover:bg-earth-sandLight border border-transparent hover:border-earth-border rounded-lg transition" title="Edit Student">
-                            <i data-lucide="edit" class="w-3.5 h-3.5 sm:w-4 sm:h-4 stroke-[2.5]"></i>
+                        <button onclick="editStudent('${student.id}')" class="w-8 h-8 rounded-full text-slate-400 hover:text-m3-primary hover:bg-slate-100 dark:hover:bg-zinc-800 flex items-center justify-center transition" title="Edit Student">
+                            <i data-lucide="edit" class="w-4 h-4 stroke-[2]"></i>
                         </button>
-                        <button onclick="deleteStudent('${student.id}')" class="p-1.5 text-earth-border dark:text-earth-darkBorder hover:bg-earth-terracotta hover:text-white border border-transparent hover:border-earth-border rounded-lg transition" title="Delete Student">
-                            <i data-lucide="trash-2" class="w-3.5 h-3.5 sm:w-4 sm:h-4 stroke-[2.5]"></i>
+                        <button onclick="deleteStudent('${student.id}')" class="w-8 h-8 rounded-full text-slate-400 hover:text-rose-600 hover:bg-rose-50 dark:hover:bg-rose-950/40 flex items-center justify-center transition" title="Delete Student">
+                            <i data-lucide="trash-2" class="w-4 h-4 stroke-[2]"></i>
                         </button>
                     </div>
                 </div>
@@ -1539,22 +1603,22 @@
 
         function createStudentTableRow(student, rank) {
             const tr = document.createElement('tr');
-            tr.className = "hover:bg-earth-ochre/15 transition-colors";
+            tr.className = "hover:bg-slate-50 dark:hover:bg-zinc-800/50 transition-colors";
 
             tr.innerHTML = `
-                <td class="px-3.5 py-3 font-black">${getRankBadge(rank)}</td>
-                <td class="px-3.5 py-3 font-bold text-earth-border dark:text-earth-darkBorder">${escapeHtml(student.name)}</td>
-                <td class="px-3.5 py-3 text-xs text-neutral-600 dark:text-neutral-300 font-bold">${escapeHtml(student.group || 'General')}</td>
-                <td class="px-3.5 py-3 text-center font-black text-earth-border dark:text-earth-darkBorder text-sm sm:text-base">${student.points}</td>
-                <td class="px-3.5 py-3 text-center">
-                    <button onclick="openAddPointsModal('${student.id}')" class="px-3 py-1 bg-earth-sage text-white border-2 border-earth-border rounded-xl text-xs font-black uppercase shadow-neo-sm inline-flex items-center gap-1 active:scale-95">
-                        <i data-lucide="plus-circle" class="w-3.5 h-3.5 stroke-[2.5]"></i> Add Points
+                <td class="px-4 py-3.5 font-bold">${getRankBadge(rank)}</td>
+                <td class="px-4 py-3.5 font-semibold text-m3-onSurface dark:text-m3-darkOnSurface">${escapeHtml(student.name)}</td>
+                <td class="px-4 py-3.5 text-xs text-m3-onSurfaceVariant dark:text-m3-darkOnSurfaceVariant">${escapeHtml(student.group || 'General')}</td>
+                <td class="px-4 py-3.5 text-center font-bold text-m3-primary dark:text-m3-darkPrimary text-sm sm:text-base">${student.points}</td>
+                <td class="px-4 py-3.5 text-center">
+                    <button onclick="openAddPointsModal('${student.id}')" class="px-3.5 py-1.5 bg-emerald-50 dark:bg-emerald-950/40 text-emerald-700 dark:text-emerald-300 rounded-full text-xs font-semibold inline-flex items-center gap-1 active:scale-95">
+                        <i data-lucide="plus-circle" class="w-3.5 h-3.5 stroke-[2]"></i> Add Points
                     </button>
                 </td>
-                <td class="px-3.5 py-3 text-center">
+                <td class="px-4 py-3.5 text-center">
                     <div class="flex items-center justify-center space-x-1">
-                        <button onclick="editStudent('${student.id}')" class="p-1 hover:bg-earth-sandLight rounded border border-transparent hover:border-earth-border"><i data-lucide="edit" class="w-4 h-4 stroke-[2.5]"></i></button>
-                        <button onclick="deleteStudent('${student.id}')" class="p-1 hover:bg-earth-terracotta hover:text-white rounded border border-transparent hover:border-earth-border"><i data-lucide="trash-2" class="w-4 h-4 stroke-[2.5]"></i></button>
+                        <button onclick="editStudent('${student.id}')" class="w-8 h-8 rounded-full hover:bg-slate-100 dark:hover:bg-zinc-800 flex items-center justify-center text-slate-400 hover:text-m3-primary transition"><i data-lucide="edit" class="w-4 h-4 stroke-[2]"></i></button>
+                        <button onclick="deleteStudent('${student.id}')" class="w-8 h-8 rounded-full hover:bg-rose-50 dark:hover:bg-rose-950/40 flex items-center justify-center text-slate-400 hover:text-rose-600 transition"><i data-lucide="trash-2" class="w-4 h-4 stroke-[2]"></i></button>
                     </div>
                 </td>
             `;
@@ -1583,7 +1647,7 @@
 
             activeAddPointsStudentId = id;
             document.getElementById('addPointsStudentName').textContent = student.name;
-            document.getElementById('addPointsCurrentPts').textContent = `Current Points: ${student.points} pts`;
+            document.getElementById('addPointsCurrentPts').textContent = `Current Score: ${student.points} pts`;
             document.getElementById('customPointsInput').value = '';
 
             openModal('addPointsModal');
@@ -1676,16 +1740,16 @@
 
             students.forEach((s) => {
                 const row = document.createElement('div');
-                row.className = "flex items-center justify-between bg-earth-sandLight/60 dark:bg-neutral-900 p-2.5 sm:p-3 rounded-xl border-2 border-earth-border dark:border-earth-darkBorder gap-2";
+                row.className = "flex items-center justify-between bg-slate-50 dark:bg-zinc-800/80 p-3 rounded-2xl border border-slate-200 dark:border-zinc-700 gap-3";
                 row.innerHTML = `
                     <div class="min-w-0 flex-1">
-                        <div class="font-black text-earth-border dark:text-earth-darkBorder text-xs sm:text-sm truncate">${escapeHtml(s.name)}</div>
-                        <div class="text-[10px] sm:text-[11px] font-bold text-neutral-500 dark:text-neutral-400">${escapeHtml(s.group || 'General')} | Curr: ${s.points} pts</div>
+                        <div class="font-bold text-m3-onSurface dark:text-m3-darkOnSurface text-xs sm:text-sm truncate">${escapeHtml(s.name)}</div>
+                        <div class="text-[11px] font-medium text-m3-onSurfaceVariant dark:text-m3-darkOnSurfaceVariant">${escapeHtml(s.group || 'General')} | Current: ${s.points} pts</div>
                     </div>
                     <div class="flex items-center space-x-2 shrink-0">
                         <div class="w-20 sm:w-24">
-                            <label class="block text-[8px] sm:text-[9px] uppercase font-black text-neutral-500 dark:text-neutral-400">+ Points</label>
-                            <input type="number" data-id="${s.id}" data-field="addPoints" value="0" class="batch-input w-full bg-white dark:bg-neutral-800 border-2 border-earth-border dark:border-earth-darkBorder rounded-lg p-1 text-xs font-black text-earth-border dark:text-earth-darkBorder text-center outline-none">
+                            <label class="block text-[9px] uppercase font-bold text-m3-onSurfaceVariant dark:text-m3-darkOnSurfaceVariant text-center">+ Points</label>
+                            <input type="number" data-id="${s.id}" data-field="addPoints" value="0" class="batch-input w-full bg-white dark:bg-zinc-900 border border-slate-200 dark:border-zinc-700 rounded-xl p-1.5 text-xs font-bold text-m3-onSurface dark:text-m3-darkOnSurface text-center outline-none focus:border-m3-primary">
                         </div>
                     </div>
                 `;
@@ -1788,13 +1852,13 @@
             const tableContainer = document.getElementById('tableContainer');
 
             if (mode === 'cards') {
-                cardBtn.className = "px-2.5 sm:px-3 py-1 rounded-lg text-xs font-black uppercase bg-earth-ochre text-earth-border border-2 border-earth-border shadow-neo-sm transition";
-                tableBtn.className = "px-2.5 sm:px-3 py-1 rounded-lg text-xs font-black uppercase text-neutral-600 dark:text-neutral-400 hover:text-earth-border dark:hover:text-white transition";
+                cardBtn.className = "px-3.5 py-1.5 rounded-full text-xs font-semibold bg-white dark:bg-zinc-700 text-m3-primary dark:text-m3-darkPrimary shadow-m3-1 transition";
+                tableBtn.className = "px-3.5 py-1.5 rounded-full text-xs font-semibold text-m3-onSurfaceVariant dark:text-m3-darkOnSurfaceVariant hover:text-m3-onSurface dark:hover:text-white transition";
                 cardContainer.classList.remove('hidden');
                 tableContainer.classList.add('hidden');
             } else {
-                tableBtn.className = "px-2.5 sm:px-3 py-1 rounded-lg text-xs font-black uppercase bg-earth-ochre text-earth-border border-2 border-earth-border shadow-neo-sm transition";
-                cardBtn.className = "px-2.5 sm:px-3 py-1 rounded-lg text-xs font-black uppercase text-neutral-600 dark:text-neutral-400 hover:text-earth-border dark:hover:text-white transition";
+                tableBtn.className = "px-3.5 py-1.5 rounded-full text-xs font-semibold bg-white dark:bg-zinc-700 text-m3-primary dark:text-m3-darkPrimary shadow-m3-1 transition";
+                cardBtn.className = "px-3.5 py-1.5 rounded-full text-xs font-semibold text-m3-onSurfaceVariant dark:text-m3-darkOnSurfaceVariant hover:text-m3-onSurface dark:hover:text-white transition";
                 tableContainer.classList.remove('hidden');
                 cardContainer.classList.add('hidden');
             }
@@ -1892,14 +1956,14 @@
             messageEl.textContent = msg;
 
             if (type === 'success') {
-                iconEl.className = "p-1 rounded-md bg-earth-sage text-white border border-earth-border shrink-0";
-                iconEl.innerHTML = '<i data-lucide="check-circle" class="w-4 h-4 stroke-[3]"></i>';
+                iconEl.className = "w-5 h-5 rounded-full bg-emerald-500 text-white flex items-center justify-center shrink-0";
+                iconEl.innerHTML = '<i data-lucide="check" class="w-3.5 h-3.5 stroke-[3]"></i>';
             } else if (type === 'error') {
-                iconEl.className = "p-1 rounded-md bg-earth-terracotta text-white border border-earth-border shrink-0";
-                iconEl.innerHTML = '<i data-lucide="alert-triangle" class="w-4 h-4 stroke-[3]"></i>';
+                iconEl.className = "w-5 h-5 rounded-full bg-rose-500 text-white flex items-center justify-center shrink-0";
+                iconEl.innerHTML = '<i data-lucide="alert-triangle" class="w-3.5 h-3.5 stroke-[3]"></i>';
             } else {
-                iconEl.className = "p-1 rounded-md bg-earth-ochre text-earth-border border border-earth-border shrink-0";
-                iconEl.innerHTML = '<i data-lucide="info" class="w-4 h-4 stroke-[3]"></i>';
+                iconEl.className = "w-5 h-5 rounded-full bg-m3-primary text-white flex items-center justify-center shrink-0";
+                iconEl.innerHTML = '<i data-lucide="info" class="w-3.5 h-3.5 stroke-[3]"></i>';
             }
 
             lucide.createIcons();
